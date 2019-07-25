@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="JuanCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="99"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Eo-xA-DdM">
+                        <rect key="frame" x="16" y="16" width="288" height="80"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="150" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FeP-O6-cLo">
+                                <rect key="frame" x="196" y="18" width="44" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="ORp-3v-Hap"/>
+                                    <constraint firstAttribute="width" constant="44" id="llv-CQ-USN"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="textColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="满200减50" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JQq-B0-Rkc">
+                                <rect key="frame" x="194" y="44" width="91" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="9An-Cf-OTM"/>
+                                    <constraint firstAttribute="width" constant="91" id="xpH-NR-SaS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="punot.png" translatesAutoresizingMaskIntoConstraints="NO" id="6lc-q9-IF4">
+                                <rect key="frame" x="38" y="18" width="150" height="50"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="元券" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5QZ-Np-GkD">
+                                <rect key="frame" x="240" y="21" width="30" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15.5" id="4Tt-0M-Cax"/>
+                                    <constraint firstAttribute="width" constant="30" id="5ri-Uf-u1A"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="6lc-q9-IF4" secondAttribute="trailing" constant="100" id="53g-Cc-52o"/>
+                            <constraint firstItem="6lc-q9-IF4" firstAttribute="leading" secondItem="1Eo-xA-DdM" secondAttribute="leading" constant="38" id="Bf2-La-xX7"/>
+                            <constraint firstItem="FeP-O6-cLo" firstAttribute="top" secondItem="1Eo-xA-DdM" secondAttribute="top" constant="18" id="dZC-CO-fms"/>
+                            <constraint firstItem="5QZ-Np-GkD" firstAttribute="leading" secondItem="FeP-O6-cLo" secondAttribute="trailing" id="eOA-5T-ScU"/>
+                            <constraint firstAttribute="trailing" secondItem="JQq-B0-Rkc" secondAttribute="trailing" constant="3" id="fOX-jp-3ed"/>
+                            <constraint firstItem="6lc-q9-IF4" firstAttribute="top" secondItem="1Eo-xA-DdM" secondAttribute="top" constant="18" id="fUf-mw-lTc"/>
+                            <constraint firstItem="JQq-B0-Rkc" firstAttribute="top" secondItem="FeP-O6-cLo" secondAttribute="bottom" constant="5" id="jYz-Yt-Fjj"/>
+                            <constraint firstAttribute="bottom" secondItem="6lc-q9-IF4" secondAttribute="bottom" constant="12" id="spc-rh-1iN"/>
+                            <constraint firstAttribute="trailing" secondItem="5QZ-Np-GkD" secondAttribute="trailing" constant="18" id="tKM-26-I6I"/>
+                            <constraint firstItem="5QZ-Np-GkD" firstAttribute="top" secondItem="1Eo-xA-DdM" secondAttribute="top" constant="21" id="xKE-UU-AxK"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottomMargin" secondItem="1Eo-xA-DdM" secondAttribute="bottom" constant="-4.5" id="0wI-yc-7sv"/>
+                    <constraint firstItem="1Eo-xA-DdM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="CsI-gQ-pNh"/>
+                    <constraint firstItem="1Eo-xA-DdM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="8" id="aVm-If-Krr"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="1Eo-xA-DdM" secondAttribute="trailing" constant="8" id="cVO-8U-jN8"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="backView" destination="1Eo-xA-DdM" id="105-dR-qjz"/>
+                <outlet property="headImv" destination="6lc-q9-IF4" id="YRD-qc-0AW"/>
+                <outlet property="manLabel" destination="JQq-B0-Rkc" id="UAM-Xx-DjJ"/>
+                <outlet property="priceLabel" destination="FeP-O6-cLo" id="nXG-YR-Kwz"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="punot.png" width="286" height="286"/>
+    </resources>
+</document>

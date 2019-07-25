@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>version</key>
+	<real>1</real>
+	<key>packages</key>
+	<array>
+		<dict>
+			<key>id</key>
+			<string>com.meidebi.bibi</string>
+			<key>file_name</key>
+			<string>bibi</string>
+			<key>version</key>
+			<integer>0</integer>
+			<key>display_only</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>id</key>
+			<string>com.meidebi.default</string>
+			<key>file_name</key>
+			<string>default</string>
+			<key>version</key>
+			<integer>0</integer>
+			<key>display_only</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>id</key>
+			<string>com.meidebi.dog</string>
+			<key>file_name</key>
+			<string>dog</string>
+			<key>version</key>
+			<integer>0</integer>
+			<key>display_only</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>id</key>
+			<string>com.meidebi.deer</string>
+			<key>file_name</key>
+			<string>deer</string>
+			<key>version</key>
+			<integer>0</integer>
+			<key>display_only</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+</dict>
+</plist>

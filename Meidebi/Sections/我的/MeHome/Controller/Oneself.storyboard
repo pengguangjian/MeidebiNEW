@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--One User View Controller-->
+        <scene sceneID="Ygb-UD-MlN">
+            <objects>
+                <viewController storyboardIdentifier="com.mdb.OneUserViewC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="edl-ag-J4B" customClass="OneUserViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="WxN-UC-0T7"/>
+                        <viewControllerLayoutGuide type="bottom" id="1jN-q2-BbB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="t8A-UG-jVH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t4H-df-fL6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="402" y="318"/>
+        </scene>
+        <!--My Share View Controller-->
+        <scene sceneID="JOv-R8-pbg">
+            <objects>
+                <viewController storyboardIdentifier="com.mdb.MyShareViewC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="F1p-Z3-VHw" customClass="MyShareViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="DiR-Fa-Sfc"/>
+                        <viewControllerLayoutGuide type="bottom" id="JIw-4G-5ih"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="HxB-Rn-vKR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ntM-wJ-LAQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="841" y="296"/>
+        </scene>
+        <!--My Broke News View Controller-->
+        <scene sceneID="V7e-Dg-WPP">
+            <objects>
+                <viewController storyboardIdentifier="com.mdb.MyBrokeNewsViewC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="KAF-Cn-wVJ" customClass="MyBrokeNewsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Q4H-ty-jT9"/>
+                        <viewControllerLayoutGuide type="bottom" id="w5Q-DC-Bq7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5fe-hv-euP">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jZk-d4-N2T" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1222" y="203"/>
+        </scene>
+        <!--Myhouse View Controller-->
+        <scene sceneID="fw7-oD-G2f">
+            <objects>
+                <viewController storyboardIdentifier="com.mdb.MyhouseViewC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ngt-Kn-B6F" customClass="MyhouseViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="tN4-qd-7OT"/>
+                        <viewControllerLayoutGuide type="bottom" id="fOc-w8-OKq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="odH-lk-Hbq">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CSZ-wf-IiZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1609" y="156"/>
+        </scene>
+        <!--My Inform View Controller-->
+        <scene sceneID="MBE-Sg-gr8">
+            <objects>
+                <viewController storyboardIdentifier="com.mdb.MyInformViewC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Hva-fA-QNR" customClass="MyInformViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ajO-ux-Qua"/>
+                        <viewControllerLayoutGuide type="bottom" id="6U6-T6-U3W"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="V4P-17-jI5">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Oec-kL-l7q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2018" y="-8"/>
+        </scene>
+        <!--My Coupons View Controller-->
+        <scene sceneID="cTw-dk-HI3">
+            <objects>
+                <viewController storyboardIdentifier="com.mdb.MyCouponsVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bod-rX-CVL" customClass="MyCouponsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mhl-eY-qpu"/>
+                        <viewControllerLayoutGuide type="bottom" id="mrQ-my-5qR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Wct-E4-GF8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wre-Mb-I07" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2359" y="7"/>
+        </scene>
+        <!--Push Seting View Controoler-->
+        <scene sceneID="ldb-lu-ncv">
+            <objects>
+                <viewController storyboardIdentifier="com.mdb.SignVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="RL9-6j-GzP" customClass="PushSetingViewControoler" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Jkw-uc-vng"/>
+                        <viewControllerLayoutGuide type="bottom" id="kXS-dB-OLl"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="AXq-q9-bpb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VYh-yw-zP9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2726" y="-144"/>
+        </scene>
+        <!--Lost View Controller-->
+        <scene sceneID="SKF-6V-ebb">
+            <objects>
+                <viewController storyboardIdentifier="com.mdb.VKLostVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="551-ho-WNd" customClass="VKLostViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="KaI-L8-OYy"/>
+                        <viewControllerLayoutGuide type="bottom" id="KK8-Z9-CFB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="qHc-Q8-PBZ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6t0-to-Dqs">
+                                <rect key="frame" x="-8" y="53" width="336" height="1"/>
+                                <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="Erw-Ic-8FP"/>
+                                </constraints>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="backtext.png" translatesAutoresizingMaskIntoConstraints="NO" id="iWR-f2-uSJ">
+                                <rect key="frame" x="12" y="97" width="296" height="43"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="43" id="5bl-uo-ieN"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="邮箱" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zlI-jS-FpK">
+                                <rect key="frame" x="23" y="106" width="38" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="38" id="utO-yS-yeq"/>
+                                    <constraint firstAttribute="height" constant="25" id="zKS-wx-Yfs"/>
+                                </constraints>
+                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入邮箱" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kKw-1r-eXg">
+                                <rect key="frame" x="69" y="101" width="227" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="AYf-ue-9iS"/>
+                                </constraints>
+                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <connections>
+                                    <outlet property="delegate" destination="551-ho-WNd" id="1cm-Oz-J1Y"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" alpha="0.89999997615814209" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C1H-T8-xya">
+                                <rect key="frame" x="12" y="204" width="296" height="45"/>
+                                <color key="backgroundColor" red="0.99215686270000003" green="0.47843137250000001" blue="0.058823529409999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="XBZ-w7-XRm"/>
+                                </constraints>
+                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="确定">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" red="0.95019611299999995" green="0.98431372549999996" blue="0.97821816920000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <state key="highlighted" title="登录" backgroundImage="btn_login_h.png"/>
+                                <connections>
+                                    <action selector="butSure:" destination="551-ho-WNd" eventType="touchUpInside" id="brN-rx-ZIX"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="邮箱验证找回密码" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eP4-PO-cTo">
+                                <rect key="frame" x="104" y="45" width="112" height="17"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6t0-to-Dqs" firstAttribute="top" secondItem="KaI-L8-OYy" secondAttribute="bottom" constant="33" id="BQi-qQ-I8y"/>
+                            <constraint firstItem="C1H-T8-xya" firstAttribute="top" secondItem="iWR-f2-uSJ" secondAttribute="bottom" constant="64" id="GMM-s6-Ba0"/>
+                            <constraint firstItem="iWR-f2-uSJ" firstAttribute="trailing" secondItem="qHc-Q8-PBZ" secondAttribute="trailingMargin" constant="4" id="Vg8-6r-JsO"/>
+                            <constraint firstItem="iWR-f2-uSJ" firstAttribute="top" secondItem="eP4-PO-cTo" secondAttribute="bottom" constant="35" id="VwY-U5-aFd"/>
+                            <constraint firstItem="6t0-to-Dqs" firstAttribute="leading" secondItem="qHc-Q8-PBZ" secondAttribute="leadingMargin" constant="-24" id="XYw-wv-A9S"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="kKw-1r-eXg" secondAttribute="trailing" constant="8" id="ajA-2I-g04"/>
+                            <constraint firstItem="C1H-T8-xya" firstAttribute="width" secondItem="iWR-f2-uSJ" secondAttribute="width" id="ayz-gx-49V"/>
+                            <constraint firstAttribute="centerX" secondItem="C1H-T8-xya" secondAttribute="centerX" id="bf1-zH-fRM"/>
+                            <constraint firstItem="eP4-PO-cTo" firstAttribute="centerY" secondItem="6t0-to-Dqs" secondAttribute="centerY" id="deK-SB-4pB"/>
+                            <constraint firstItem="kKw-1r-eXg" firstAttribute="centerY" secondItem="zlI-jS-FpK" secondAttribute="centerY" id="dmK-WA-nyk"/>
+                            <constraint firstItem="zlI-jS-FpK" firstAttribute="centerY" secondItem="iWR-f2-uSJ" secondAttribute="centerY" id="mTa-KG-DaV"/>
+                            <constraint firstItem="zlI-jS-FpK" firstAttribute="leading" secondItem="qHc-Q8-PBZ" secondAttribute="leadingMargin" constant="7" id="nW4-XK-cLE"/>
+                            <constraint firstItem="kKw-1r-eXg" firstAttribute="leading" secondItem="zlI-jS-FpK" secondAttribute="trailing" constant="8" id="nZL-4g-xpA"/>
+                            <constraint firstAttribute="centerX" secondItem="eP4-PO-cTo" secondAttribute="centerX" id="qDf-cl-Sxb"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6t0-to-Dqs" secondAttribute="trailing" constant="-24" id="whr-qV-stU"/>
+                            <constraint firstItem="iWR-f2-uSJ" firstAttribute="leading" secondItem="qHc-Q8-PBZ" secondAttribute="leadingMargin" constant="-4" id="xas-LJ-4SL"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="textField" destination="kKw-1r-eXg" id="7sh-tU-FeH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bf7-Ln-dMP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3301.5" y="-237.75"/>
+        </scene>
+        <!--My Order Main View Controller-->
+        <scene sceneID="1Gz-Yf-Qxd">
+            <objects>
+                <viewController storyboardIdentifier="com.mdb.MyorderViewC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="KSd-lm-HxO" customClass="MyOrderMainViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Kvn-cR-cbr"/>
+                        <viewControllerLayoutGuide type="bottom" id="EE4-g7-TOv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0qR-X1-r9h">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eFP-mG-UAD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-25" y="170"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="backtext.png" width="320" height="40"/>
+        <image name="btn_login_h.png" width="320" height="40"/>
+    </resources>
+</document>
