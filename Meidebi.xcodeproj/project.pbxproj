@@ -3897,12 +3897,12 @@
 		7737389322E7EEE400CDABDD /* 爆料详情 */ = {
 			isa = PBXGroup;
 			children = (
+				77C37BB11F1DE65E00DDEED0 /* ProductInfoViewController.h */,
+				77C37BB21F1DE65E00DDEED0 /* ProductInfoViewController.m */,
 				775A59E820EB112F00E340B8 /* GuanLianYuDuViewController.h */,
 				775A59E920EB112F00E340B8 /* GuanLianYuDuViewController.m */,
 				77C37BAC1F1DE65E00DDEED0 /* CourseViewController.h */,
 				77C37BAD1F1DE65E00DDEED0 /* CourseViewController.m */,
-				77C37BB11F1DE65E00DDEED0 /* ProductInfoViewController.h */,
-				77C37BB21F1DE65E00DDEED0 /* ProductInfoViewController.m */,
 			);
 			path = "爆料详情";
 			sourceTree = "<group>";

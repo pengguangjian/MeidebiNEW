@@ -63,6 +63,10 @@
         if(state)
         {
             [self dataValue:dataControl.dicreuselt];
+            /*
+             order_exception->code 1  无异常 2  异常 3  异常已处理
+             order_exception->msg 异常描述
+             */
         }
         else
         {

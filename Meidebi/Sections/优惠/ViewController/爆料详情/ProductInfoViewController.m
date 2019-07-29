@@ -694,6 +694,7 @@ int innumshare = 1;
 //    kmanager.actId = @"没得比";
 //    kmanager.ext = @"没得比";
     NSDictionary *dicinfo = @{@"keplerCustomerInfo":@"没得比"};
+//    urlLink = @"https://u.jd.com/veKR6U";
     [kmanager openKeplerPageWithURL:urlLink sourceController:self jumpType:2 userInfo:dicinfo];
     
 }
