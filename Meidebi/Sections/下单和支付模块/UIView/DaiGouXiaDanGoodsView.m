@@ -10,7 +10,6 @@
 
 #import "DaiGouXiaDanGoodsTableViewCell.h"
 
-#import "DaiGouXiaDanGoodsTableViewCell.h"
 
 @interface DaiGouXiaDanGoodsView ()<UITableViewDelegate,UITableViewDataSource,DaiGouXiaDanGoodsTableViewCellDelegate>
 {
