@@ -21,8 +21,8 @@
 #import <ShareSDKExtension/SSEShareHelper.h>
 #import <ShareSDKUI/ShareSDK+SSUI.h>
 #import <ShareSDKUI/SSUIShareActionSheetStyle.h>
-#import <ShareSDKUI/SSUIShareActionSheetCustomItem.h>
-#import <ShareSDKUI/SSUIShareActionSheetController.h>
+//#import <ShareSDKUI/SSUIShareActionSheetCustomItem.h>
+//#import <ShareSDKUI/SSUIShareActionSheetController.h>
 #import <ShareSDK/ShareSDK+Base.h>
 #import <ShareSDKExtension/ShareSDK+Extension.h>
 @interface TaskHomeViewController ()
@@ -112,33 +112,56 @@ UIAlertViewDelegate
                                       title:@"网购省钱没得比，好友叫您领红包了！"
                                        type:SSDKContentTypeAuto];
     
-    [shareParams SSDKSetupSinaWeiboShareParamsByText:[NSString stringWithFormat:@"网购省钱没得比，好友叫您领红包了！%@",urlLink] title:nil image:images url:[NSURL URLWithString:urlLink] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+//    [shareParams SSDKSetupSinaWeiboShareParamsByText:[NSString stringWithFormat:@"网购省钱没得比，好友叫您领红包了！%@",urlLink] title:nil image:images url:[NSURL URLWithString:urlLink] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+    ///分享更改
+    [shareParams SSDKSetupSinaWeiboShareParamsByText:[NSString stringWithFormat:@"网购省钱没得比，好友叫您领红包了！%@",urlLink] title:nil images:images video:nil url:[NSURL URLWithString:urlLink] latitude:0 longitude:0 objectID:nil isShareToStory:NO type:SSDKContentTypeAuto];
+    
+    
     
     [shareParams SSDKSetupTencentWeiboShareParamsByText:[NSString stringWithFormat:@"网购省钱没得比，好友叫您领红包了！%@",urlLink] images:images latitude:0 longitude:0 type:SSDKContentTypeAuto];
-    
+    ///分享更改
+    NSArray *arritems = @[@(SSDKPlatformTypeSinaWeibo),@(SSDKPlatformTypeWechat), @(SSDKPlatformTypeQQ)];
+    [ShareSDK showShareActionSheet:self.view customItems:arritems shareParams:shareParams sheetConfiguration:nil onStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+        switch (state) {
+                
+            case SSDKResponseStateSuccess:
+            {
+                [MDB_UserDefault setFinishShareDate:[NSDate date]];
+                [_subjectView updateData];
+                break;
+            }
+            case SSDKResponseStateFail:
+            {
+                
+                break;
+            }
+            default:
+                break;
+        }
+    }];
     //2、分享
-    [ShareSDK showShareActionSheet:self.view
-                             items:nil
-                       shareParams:shareParams
-               onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
-                   
-                   switch (state) {
-
-                       case SSDKResponseStateSuccess:
-                       {
-                           [MDB_UserDefault setFinishShareDate:[NSDate date]];
-                           [_subjectView updateData];
-                           break;
-                       }
-                       case SSDKResponseStateFail:
-                       {
-                           
-                           break;
-                       }
-                       default:
-                           break;
-                   }
-               }];
+//    [ShareSDK showShareActionSheet:self.view
+//                             items:nil
+//                       shareParams:shareParams
+//               onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+//
+//                   switch (state) {
+//
+//                       case SSDKResponseStateSuccess:
+//                       {
+//                           [MDB_UserDefault setFinishShareDate:[NSDate date]];
+//                           [_subjectView updateData];
+//                           break;
+//                       }
+//                       case SSDKResponseStateFail:
+//                       {
+//
+//                           break;
+//                       }
+//                       default:
+//                           break;
+//                   }
+//               }];
 }
 
 

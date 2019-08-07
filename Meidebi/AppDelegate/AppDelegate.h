@@ -12,7 +12,8 @@
 
 #import "WXApi.h"
 
-#import <JDKeplerSDK/KeplerApiManager.h>
+//#import <JDKeplerSDK/KeplerApiManager.h>
+#import <JDKeplerSDK/JDKeplerSDK.h>
 
 @interface phtoClas : NSObject
 

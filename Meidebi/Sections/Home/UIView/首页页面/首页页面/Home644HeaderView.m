@@ -27,6 +27,8 @@
 
 #import "DaiGouFenLeiTableViewController.h"
 
+#import "DaShangViewController.h"
+
 @interface Home644HeaderView ()<ImagePlayerViewDelegate>
 {
     float fmovelast;
@@ -134,6 +136,10 @@
 {
     JiangJiaZhiBoViewController *jvc = [[JiangJiaZhiBoViewController alloc] init];
     [self.viewController.navigationController pushViewController:jvc animated:YES];
+    
+//    DaShangViewController *jvc = [[DaShangViewController alloc] init];
+//    [self.viewController.navigationController pushViewController:jvc animated:YES];
+    
 }
 
 -(void)haitaoAction

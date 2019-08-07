@@ -148,9 +148,15 @@ BargainActivityDetailSubjectViewDelegate
                                        type:SSDKContentTypeAuto];
     
     NSString *shareStr = [NSString stringWithFormat:@"%@ %@%@",model.title,model.content,model.url];
-    [shareParams SSDKSetupSinaWeiboShareParamsByText:shareStr title:nil image:@[image] url:[NSURL URLWithString:model.url] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+//    [shareParams SSDKSetupSinaWeiboShareParamsByText:shareStr title:nil image:@[image] url:[NSURL URLWithString:model.url] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+    ///分享更改
+    [shareParams SSDKSetupSinaWeiboShareParamsByText:shareStr title:nil images:@[image] video:nil url:[NSURL URLWithString:model.url] latitude:0 longitude:0 objectID:nil isShareToStory:NO type:SSDKContentTypeAuto];
+    
+    
     [shareParams SSDKSetupTencentWeiboShareParamsByText:shareStr images:@[image] latitude:0 longitude:0 type:SSDKContentTypeAuto];
-    [shareParams SSDKSetupWeChatParamsByText:model.content title:[NSString stringWithFormat:@"%@%@",model.title,model.content] url:[NSURL URLWithString:model.url] thumbImage:nil image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+//    [shareParams SSDKSetupWeChatParamsByText:model.content title:[NSString stringWithFormat:@"%@%@",model.title,model.content] url:[NSURL URLWithString:model.url] thumbImage:nil image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+    ///分享更改
+    [shareParams SSDKSetupWeChatParamsByText:model.content title:[NSString stringWithFormat:@"%@%@",model.title,model.content] url:[NSURL URLWithString:model.url] thumbImage:nil image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil sourceFileExtension:nil sourceFileData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
     //进行分享
     [ShareSDK share:platformType
          parameters:shareParams

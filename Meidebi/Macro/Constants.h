@@ -20,11 +20,11 @@ typedef NS_ENUM(NSInteger,RegCodeType) {
 ///http://192.168.1.117/index.php/
 //#define URL_HR @"http://api.mdb6.com/new.php/"///108 102  api.mdb5.com
 //#define URL_HR @"http://192.168.1.218/index.php/"///108 102  api.mdb5.com
-#define URL_HR @"http://192.168.1.142/"///108 102  api.mdb5.com
+//#define URL_HR @"http://192.168.1.142/"///108 102  api.mdb5.com
 //#define URL_HR @"http://api.mdb5.com/index.php/"///108 102
 //#define URL_HR @"http://api.mdb6.com/"///108 102
 //#define URL_HR @"http://114.55.101.95:80/new.php/"
-//#define URL_HR @"https://a.meidebi.com/new.php/"
+#define URL_HR @"https://a.meidebi.com/new.php/"
 
 //单个链接接口（包含单品，优惠活动，优惠卷活动）
 #define URL_onlink [NSString stringWithFormat:@"%@Share-onelink",URL_HR]

@@ -31,7 +31,7 @@
 #import <ShareSDKExtension/SSEShareHelper.h>
 #import <ShareSDKUI/ShareSDK+SSUI.h>
 #import <ShareSDKUI/SSUIShareActionSheetStyle.h>
-#import <ShareSDKUI/SSUIShareActionSheetCustomItem.h>
+//#import <ShareSDKUI/SSUIShareActionSheetCustomItem.h>
 #import <ShareSDK/ShareSDK+Base.h>
 #import <ShareSDKExtension/ShareSDK+Extension.h>
 @interface OriginalDetailViewController ()
@@ -151,13 +151,21 @@ OriginalDetailSubjectViewDelegate
                                       title:_shareObject.qqsharetitle
                                        type:SSDKContentTypeAuto];
     NSString *contentStr = [NSString stringWithFormat:@"%@%@",_shareObject.qqsharetitle,_shareObject.url];
-    [shareParams SSDKSetupSinaWeiboShareParamsByText:contentStr title:nil image:_shareObject.image url:[NSURL URLWithString:_shareObject.url] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+//    [shareParams SSDKSetupSinaWeiboShareParamsByText:contentStr title:nil image:_shareObject.image url:[NSURL URLWithString:_shareObject.url] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+    ///分享更改
+    [shareParams SSDKSetupSinaWeiboShareParamsByText:contentStr title:nil images:_shareObject.image video:nil url:[NSURL URLWithString:_shareObject.url] latitude:0 longitude:0 objectID:nil isShareToStory:NO type:SSDKContentTypeAuto];
+    
 //    [shareParams SSDKSetupTencentWeiboShareParamsByText:contentStr images:images latitude:0 longitude:0 type:SSDKContentTypeAuto];
-    [ShareSDK showShareActionSheet:self.view
-                             items:nil
-                       shareParams:shareParams
-               onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
-               }];
+    ///分享更改
+    NSArray *arritems = @[@(SSDKPlatformTypeSinaWeibo),@(SSDKPlatformTypeWechat), @(SSDKPlatformTypeQQ)];
+    [ShareSDK showShareActionSheet:self.view customItems:arritems shareParams:shareParams sheetConfiguration:nil onStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+        
+    }];
+//    [ShareSDK showShareActionSheet:self.view
+//                             items:nil
+//                       shareParams:shareParams
+//               onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+//               }];
 }
 #pragma mark - OriginalDetailSubjectViewDelegate
 - (void)originalDetailSubjectViewDidSelectTableViewCellWithID:(NSString *)originalID{

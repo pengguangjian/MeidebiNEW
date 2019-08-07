@@ -180,9 +180,28 @@ TaoBaoWebViewViewControllerDelegate
         return;
     }
    
+    ///这里添加邀请码
+    ///将邀请码发送给后台
+    NSString *stryaoqingma = [NSString nullToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"meb_user_yaoqingma"]];
+    NSMutableDictionary *dictemp = [[NSMutableDictionary alloc] initWithDictionary:dicll];
     
+    if(stryaoqingma.length>6)
+    {
+        NSString *strtimec = [MDB_UserDefault getNowTimeTimestamp];
+        
+        NSArray *arrtemp = [stryaoqingma componentsSeparatedByString:@"-"];
+        if(arrtemp.count == 2)
+        {
+            NSString *strtimecL = arrtemp[1];
+            if(([strtimec integerValue] - [strtimecL integerValue])<=1296000)
+            {
+                [dictemp setObject:arrtemp[0] forKey:@"pucode"];
+            }
+        }
+        
+    }
     
-    [HTTPManager sendRequestUrlToService:url_login_IsBangding withParametersDictionry:dicll view:self.view completeHandle:^(NSURLSessionTask *opration, id responceObjct, NSError *error) {
+    [HTTPManager sendRequestUrlToService:url_login_IsBangding withParametersDictionry:dictemp view:self.view completeHandle:^(NSURLSessionTask *opration, id responceObjct, NSError *error) {
         if (responceObjct) {
             
             NSString* hexString = [[NSString alloc]initWithData:responceObjct encoding:NSUTF8StringEncoding];
@@ -193,15 +212,15 @@ TaoBaoWebViewViewControllerDelegate
                 if([[NSString nullToString:[dicdata objectForKey:@"warn"]] integerValue] == 1)
                 {///需要绑定
                     OtherLoginBangDingAccountViewController *ovc = [[OtherLoginBangDingAccountViewController alloc] init];
-                    ovc.strname = [NSString nullToString:[dicll objectForKey:nickname]];
+                    ovc.strname = [NSString nullToString:[dictemp objectForKey:nickname]];
                     ovc.strtype = strdenglutype;
-                    ovc.dicparams = dicll;
+                    ovc.dicparams = dictemp;
                     ovc.strpushurl = url;
                     [self.navigationController pushViewController:ovc animated:YES];
                 }
                 else
                 {///不需要绑定
-                    [self otherLogindValue:dicll andurl:url];
+                    [self otherLogindValue:dictemp andurl:url];
                 }
             }
             else

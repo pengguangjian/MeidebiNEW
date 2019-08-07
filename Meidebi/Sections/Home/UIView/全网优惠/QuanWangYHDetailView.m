@@ -26,7 +26,7 @@
 #import <ShareSDKExtension/SSEShareHelper.h>
 #import <ShareSDKUI/ShareSDK+SSUI.h>
 #import <ShareSDKUI/SSUIShareActionSheetStyle.h>
-#import <ShareSDKUI/SSUIShareActionSheetCustomItem.h>
+//#import <ShareSDKUI/SSUIShareActionSheetCustomItem.h>
 #import <ShareSDK/ShareSDK+Base.h>
 #import <ShareSDKExtension/ShareSDK+Extension.h>
 #import "UIImage+Extensions.h"
@@ -97,7 +97,7 @@
 ///获取数据
 -(void)loadData
 {
-    NSDictionary *dicpush = @{@"id":strgoodsid};
+    NSDictionary *dicpush = @{@"id":strgoodsid,@"userkey":[NSString nullToString:[MDB_UserDefault defaultInstance].usertoken]};
     [HTTPManager sendGETRequestUrlToService:DiscountDetailUrl withParametersDictionry:dicpush view:self completeHandle:^(NSURLSessionTask *opration, id responceObjct, NSError *error) {
        
         BOOL state = NO;
@@ -410,21 +410,31 @@ tradeProcessSuccessCallback:^(AlibcTradeResult * _Nullable result) {
                                           title:share.qqsharetitle
                                            type:SSDKContentTypeAuto];
         
-        [shareParams SSDKSetupSinaWeiboShareParamsByText:share.sinaweibocontent title:nil image:share.image url:[NSURL URLWithString:share.url] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+//        [shareParams SSDKSetupSinaWeiboShareParamsByText:share.sinaweibocontent title:nil image:share.image url:[NSURL URLWithString:share.url] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+        ///分享更改
+        [shareParams SSDKSetupSinaWeiboShareParamsByText:share.sinaweibocontent title:nil images:share.image video:nil url:[NSURL URLWithString:share.url] latitude:0 longitude:0 objectID:nil isShareToStory:NO type:SSDKContentTypeAuto];
         
         [shareParams SSDKSetupTencentWeiboShareParamsByText:share.qqweibocontent images:images latitude:0 longitude:0 type:SSDKContentTypeAuto];
         
         NSString *shareWeChatTitle = share.qqsharetitle;
         
-        [shareParams SSDKSetupWeChatParamsByText:share.qqsharecontent title:shareWeChatTitle url:[NSURL URLWithString:share.url] thumbImage:nil image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+//        [shareParams SSDKSetupWeChatParamsByText:share.qqsharecontent title:shareWeChatTitle url:[NSURL URLWithString:share.url] thumbImage:nil image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+        ///分享更改
+        [shareParams SSDKSetupWeChatParamsByText:share.qqsharecontent title:shareWeChatTitle url:[NSURL URLWithString:share.url] thumbImage:nil image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil sourceFileExtension:nil sourceFileData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+        
+        NSArray *arritems = @[@(SSDKPlatformTypeSinaWeibo),@(SSDKPlatformTypeWechat), @(SSDKPlatformTypeQQ)];
+        ///分享更改
+        [ShareSDK showShareActionSheet:self customItems:arritems shareParams:shareParams sheetConfiguration:nil onStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+            
+        }];
         
         //2、分享
-        SSUIShareActionSheetController *sheet = [ShareSDK showShareActionSheet:self items:nil
-                                                                   shareParams:shareParams
-                                                           onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
-                                                               
-                                                               
-                                                           }];
+//        SSUIShareActionSheetController *sheet = [ShareSDK showShareActionSheet:self items:nil
+//                                                                   shareParams:shareParams
+//                                                           onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+//
+//
+//                                                           }];
         
         
     }else{

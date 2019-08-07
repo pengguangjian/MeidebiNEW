@@ -23,7 +23,7 @@
 #import <ShareSDKExtension/SSEShareHelper.h>
 #import <ShareSDKUI/ShareSDK+SSUI.h>
 #import <ShareSDKUI/SSUIShareActionSheetStyle.h>
-#import <ShareSDKUI/SSUIShareActionSheetCustomItem.h>
+//#import <ShareSDKUI/SSUIShareActionSheetCustomItem.h>
 #import <ShareSDK/ShareSDK+Base.h>
 #import <ShareSDKExtension/ShareSDK+Extension.h>
 #import "PersonalInfoIndexViewController.h"
@@ -224,17 +224,26 @@ ParticipationActAlertViewDelegate
                                            type:SSDKContentTypeAuto];
         
         NSString *shareStr = [NSString stringWithFormat:@"%@%@%@",share.qqsharecontent,share.qqsharetitle,share.url];
-        [shareParams SSDKSetupSinaWeiboShareParamsByText:shareStr title:nil image:imageArray url:[NSURL URLWithString:share.url] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+//        [shareParams SSDKSetupSinaWeiboShareParamsByText:shareStr title:nil image:imageArray url:[NSURL URLWithString:share.url] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+        ////分享更改
+        [shareParams SSDKSetupSinaWeiboShareParamsByText:shareStr title:nil images:imageArray video:nil url:[NSURL URLWithString:share.url] latitude:0 longitude:0 objectID:nil isShareToStory:NO type:SSDKContentTypeAuto];
         
         [shareParams SSDKSetupTencentWeiboShareParamsByText:shareStr images:imageArray latitude:0 longitude:0 type:SSDKContentTypeAuto];
         
-        [shareParams SSDKSetupWeChatParamsByText:share.qqsharecontent title:[NSString stringWithFormat:@"%@%@",share.qqsharecontent,share.qqsharetitle] url:[NSURL URLWithString:share.url] thumbImage:nil image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
-        //2、分享
-        [ShareSDK showShareActionSheet:self.view
-                                 items:nil
-                           shareParams:shareParams
-                   onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
-                   }];
+//        [shareParams SSDKSetupWeChatParamsByText:share.qqsharecontent title:[NSString stringWithFormat:@"%@%@",share.qqsharecontent,share.qqsharetitle] url:[NSURL URLWithString:share.url] thumbImage:nil image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+        ////分享更改
+        [shareParams SSDKSetupWeChatParamsByText:share.qqsharecontent title:[NSString stringWithFormat:@"%@%@",share.qqsharecontent,share.qqsharetitle] url:[NSURL URLWithString:share.url] thumbImage:nil image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil sourceFileExtension:nil sourceFileData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+        NSArray *arritems = @[@(SSDKPlatformTypeSinaWeibo),@(SSDKPlatformTypeWechat), @(SSDKPlatformTypeQQ)];
+        ////分享更改
+        [ShareSDK showShareActionSheet:self.view customItems:arritems shareParams:shareParams sheetConfiguration:nil onStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+            
+        }];
+//        //2、分享
+//        [ShareSDK showShareActionSheet:self.view
+//                                 items:nil
+//                           shareParams:shareParams
+//                   onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+//                   }];
         
     }else{
         [self.rewardsDataController requestShareSubjectDataWithCommodityid:self.recommendId
@@ -251,36 +260,37 @@ ParticipationActAlertViewDelegate
 #pragma mark - ParticipationActAlertViewDelegate
 - (void)shareAlertViewDidClickedShareButtonAtType:(ActAlertHandleShareType)type{
     NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
-    [shareParams SSDKEnableUseClientShare];
-    SSDKPlatformType platformType;
-    switch (type) {
-        case ActAlertHandleShareTypeWeChat:
-        {
-            platformType = SSDKPlatformSubTypeWechatSession;
-        }
-            break;
-            
-        case ActAlertHandleShareTypeWeMoments:
-        {
-            platformType = SSDKPlatformSubTypeWechatTimeline;
-        }
-            break;
-            
-        case ActAlertHandleShareTypeQQ:
-        {
-            platformType = SSDKPlatformSubTypeQQFriend;
-        }
-            break;
-            
-        case ActAlertHandleShareTypeSinaWeibo:
-        {
-            platformType = SSDKPlatformTypeSinaWeibo;
-        }
-            break;
-            
-        default:
-            break;
-    }
+    ///分享更改
+    //    [shareParams SSDKEnableUseClientShare];
+//    SSDKPlatformType platformType;
+//    switch (type) {
+//        case ActAlertHandleShareTypeWeChat:
+//        {
+//            platformType = SSDKPlatformSubTypeWechatSession;
+//        }
+//            break;
+//
+//        case ActAlertHandleShareTypeWeMoments:
+//        {
+//            platformType = SSDKPlatformSubTypeWechatTimeline;
+//        }
+//            break;
+//
+//        case ActAlertHandleShareTypeQQ:
+//        {
+//            platformType = SSDKPlatformSubTypeQQFriend;
+//        }
+//            break;
+//
+//        case ActAlertHandleShareTypeSinaWeibo:
+//        {
+//            platformType = SSDKPlatformTypeSinaWeibo;
+//        }
+//            break;
+//
+//        default:
+//            break;
+//    }
     
     Qqshare *share = self.rewardsDataController.resultShareInfo;
     if (share) {
@@ -294,16 +304,25 @@ ParticipationActAlertViewDelegate
                                            type:SSDKContentTypeAuto];
         
         NSString *shareStr = [NSString stringWithFormat:@"%@%@%@",share.qqsharecontent,share.qqsharetitle,share.url];
-        [shareParams SSDKSetupSinaWeiboShareParamsByText:shareStr title:nil image:imageArray url:[NSURL URLWithString:share.url] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+//        [shareParams SSDKSetupSinaWeiboShareParamsByText:shareStr title:nil image:imageArray url:[NSURL URLWithString:share.url] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+        ///分享更改
+        [shareParams SSDKSetupSinaWeiboShareParamsByText:shareStr title:nil images:imageArray video:nil url:[NSURL URLWithString:share.url] latitude:0 longitude:0 objectID:nil isShareToStory:NO type:SSDKContentTypeAuto];
+        
         
         [shareParams SSDKSetupTencentWeiboShareParamsByText:shareStr images:imageArray latitude:0 longitude:0 type:SSDKContentTypeAuto];
         
-        [shareParams SSDKSetupWeChatParamsByText:share.qqsharecontent title:[NSString stringWithFormat:@"%@%@",share.qqsharecontent,share.qqsharetitle] url:[NSURL URLWithString:share.url] thumbImage:nil image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
-        //2、分享
-        [ShareSDK share:platformType
-             parameters:shareParams
-         onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
-         }];
+//        [shareParams SSDKSetupWeChatParamsByText:share.qqsharecontent title:[NSString stringWithFormat:@"%@%@",share.qqsharecontent,share.qqsharetitle] url:[NSURL URLWithString:share.url] thumbImage:nil image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+        ///分享更改
+        [shareParams SSDKSetupWeChatParamsByText:share.qqsharecontent title:[NSString stringWithFormat:@"%@%@",share.qqsharecontent,share.qqsharetitle] url:[NSURL URLWithString:share.url] thumbImage:nil image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil sourceFileExtension:nil sourceFileData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+        
+        [ShareSDK showShareActionSheet:self.view customItems:nil shareParams:shareParams sheetConfiguration:nil onStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+            
+        }];
+//        //2、分享
+//        [ShareSDK share:platformType
+//             parameters:shareParams
+//         onStateChanged:^(SSDKResponseState state, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error) {
+//         }];
     }
 }
 #pragma mark - setters and getters

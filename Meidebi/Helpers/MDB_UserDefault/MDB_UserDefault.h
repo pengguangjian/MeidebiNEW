@@ -248,6 +248,10 @@ typedef NS_ENUM(NSInteger, attendanceStatus) {
 +(NSString *)strTimefromData:(NSInteger)times dataFormat:(NSString *)dataFormat;
 +(NSString *)strTimefromDatas:(NSDate *)times dataFormat:(NSString *)dataFormat;
 +(BOOL)isSameDay:(NSDate *)iTime1 Time2:(NSDate *)iTime2;
+
+///获取当前时间戳
++(NSString *)getNowTimeTimestamp;
+
 //提示
 +(void)showNotifyHUDwithtext:(NSString *)notify_str inView:(UIView *)view;
 

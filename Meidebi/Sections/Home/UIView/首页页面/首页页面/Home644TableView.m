@@ -33,8 +33,8 @@
 
 #import <QNMD5.h>
 ///KeplerApiManager
+//#import <JDKeplerSDK/JDKeplerSDK.h>
 #import <JDKeplerSDK/JDKeplerSDK.h>
-
 
 static NSString *cellIdentifier = @"cellhome";
 static NSString *cellIdentifier1 = @"cell1home";

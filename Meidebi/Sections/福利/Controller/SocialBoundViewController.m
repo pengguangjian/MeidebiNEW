@@ -92,15 +92,16 @@ SocialBoundSubjectViewDelegate
          if (state == SSDKResponseStateSuccess)
          {
              if (sharePlatform == SSDKPlatformTypeQQ) {
-                 [self.datacontroller requestBoundQQWithInView:_subjectView token:user.credential.token openid:user.uid nickname:user.nickname expiresIn:[NSString stringWithFormat:@"%@",@(user.credential.expired.timeIntervalSince1970)] callback:^(NSError *error, BOOL state, NSString *describle) {
+                 [self.datacontroller requestBoundQQWithInView:_subjectView token:user.credential.token openid:user.uid nickname:user.nickname expiresIn:[NSString stringWithFormat:@"%@",@(user.credential.expired)] callback:^(NSError *error, BOOL state, NSString *describle) {
                      if (state) {
+                         
                          [self loadData];
                      }else{
                          [MDB_UserDefault showNotifyHUDwithtext:describle inView:_subjectView];
                      }
                  }];
              }else if (sharePlatform == SSDKPlatformTypeSinaWeibo){
-                 [self.datacontroller requestBoundSinaWithInView:_subjectView token:user.credential.token uid:user.uid nickname:user.nickname expiresIn:[NSString stringWithFormat:@"%@",@(user.credential.expired.timeIntervalSince1970)] callback:^(NSError *error, BOOL state, NSString *describle) {
+                 [self.datacontroller requestBoundSinaWithInView:_subjectView token:user.credential.token uid:user.uid nickname:user.nickname expiresIn:[NSString stringWithFormat:@"%@",@(user.credential.expired)] callback:^(NSError *error, BOOL state, NSString *describle) {
                      if (state) {
                          [self loadData];
                      }else{

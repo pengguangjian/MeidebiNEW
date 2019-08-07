@@ -219,7 +219,10 @@ PersonalInfoSubjectViewDelegate
                                       title:strtitle
                                        type:SSDKContentTypeAuto];
     NSString *sinaShareText = [NSString stringWithFormat:@"%@%@%@",strtitle,content,link];
-    [shareParams SSDKSetupSinaWeiboShareParamsByText:sinaShareText title:strtitle image:@[images] url:[NSURL URLWithString:[NSString nullToString:link]] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+//    [shareParams SSDKSetupSinaWeiboShareParamsByText:sinaShareText title:strtitle image:@[images] url:[NSURL URLWithString:[NSString nullToString:link]] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+    ///分享更改
+    [shareParams SSDKSetupSinaWeiboShareParamsByText:sinaShareText title:strtitle images:@[images] video:nil url:[NSURL URLWithString:[NSString nullToString:link]] latitude:0 longitude:0 objectID:nil isShareToStory:NO type:SSDKContentTypeAuto];
+    
     [shareParams SSDKSetupTencentWeiboShareParamsByText:sinaShareText images:@[images] latitude:0 longitude:0 type:SSDKContentTypeAuto];
     //进行分享
     [ShareSDK share:platformType

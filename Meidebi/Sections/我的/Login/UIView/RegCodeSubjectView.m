@@ -48,6 +48,40 @@ UITextFieldDelegate
     return self;
 }
 
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    ///这里添加邀请码
+    ////将邀请码自动添加到verifyCodeTextField中
+    NSString *strtemp = [NSString nullToString:[[NSUserDefaults standardUserDefaults] objectForKey:@"meb_user_yaoqingma"]];
+    if(strtemp.length>6)
+    {
+        NSString *strtimec = [MDB_UserDefault getNowTimeTimestamp];
+        
+        NSArray *arrtemp = [strtemp componentsSeparatedByString:@"-"];
+        if(arrtemp.count == 2)
+        {
+            NSString *strtimecL = arrtemp[1];
+            if(([strtimec integerValue] - [strtimecL integerValue])<=1296000)
+            {
+                [_inviteTextField setText:arrtemp[0]];
+            }
+        }
+        
+    }
+}
+
+
+
+- (BOOL)isNum:(NSString *)checkedNumString {
+    checkedNumString = [checkedNumString stringByTrimmingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet]];
+    if(checkedNumString.length > 0) {
+        return NO;
+    }
+    return YES;
+}
+
 - (void)setupSubviews{
     
     UIImageView *imageV = [[UIImageView alloc] init];

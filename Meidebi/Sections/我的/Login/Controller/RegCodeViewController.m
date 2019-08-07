@@ -54,6 +54,12 @@ RegCodeSubjectViewDelegate
     
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [_subView layoutSubviews];
+}
+
 -(void)setnavigation{
     UIButton *butleft=[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
     [butleft setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];

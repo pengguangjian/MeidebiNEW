@@ -28,7 +28,7 @@
 #import <ShareSDKExtension/SSEShareHelper.h>
 #import <ShareSDKUI/ShareSDK+SSUI.h>
 #import <ShareSDKUI/SSUIShareActionSheetStyle.h>
-#import <ShareSDKUI/SSUIShareActionSheetCustomItem.h>
+//#import <ShareSDKUI/SSUIShareActionSheetCustomItem.h>
 #import <ShareSDK/ShareSDK+Base.h>
 #import <ShareSDKExtension/ShareSDK+Extension.h>
 
@@ -52,10 +52,11 @@
 
 
 #import "WeiboSDK.h"
-
+//SSUIShareSheetConfiguration
 #import <ShareSDKConnector/ShareSDKConnector.h>
-
-#import <JDKeplerSDK/KeplerApiManager.h>
+#import <ShareSDKUI/ShareSDKUI.h>
+//#import <JDKeplerSDK/KeplerApiManager.h>
+#import <JDKeplerSDK/JDKeplerSDK.h>
 
 #import "WXApi.h"
 
@@ -266,7 +267,9 @@ int innumshare = 1;
 //        
 //        return;
         
-        [shareParams SSDKSetupSinaWeiboShareParamsByText:share.sinaweibocontent title:nil image:share.image url:[NSURL URLWithString:share.url] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+//        [shareParams SSDKSetupSinaWeiboShareParamsByText:share.sinaweibocontent title:nil image:share.image url:[NSURL URLWithString:share.url] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+        ///分享更改
+        [shareParams SSDKSetupSinaWeiboShareParamsByText:share.sinaweibocontent title:nil images:share.image video:nil url:[NSURL URLWithString:share.url] latitude:0 longitude:0 objectID:nil isShareToStory:NO type:SSDKContentTypeAuto];
         
         [shareParams SSDKSetupTencentWeiboShareParamsByText:share.qqweibocontent images:images latitude:0 longitude:0 type:SSDKContentTypeAuto];
         
@@ -274,7 +277,9 @@ int innumshare = 1;
         if (_viewModel.commodityPirce.string) {
             shareWeChatTitle = [NSString stringWithFormat:@"%@！%@",shareWeChatTitle,_viewModel.commodityPirce.string];
         }
-        [shareParams SSDKSetupWeChatParamsByText:share.qqsharecontent title:shareWeChatTitle url:[NSURL URLWithString:share.url] thumbImage:nil image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+//        [shareParams SSDKSetupWeChatParamsByText:share.qqsharecontent title:shareWeChatTitle url:[NSURL URLWithString:share.url] thumbImage:nil image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+        ///分享更改
+        [shareParams SSDKSetupWeChatParamsByText:share.qqsharecontent title:shareWeChatTitle url:[NSURL URLWithString:share.url] thumbImage:nil image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil sourceFileExtension:nil sourceFileData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
         
         if(share.applet_url.length>6)
         {
@@ -295,45 +300,68 @@ int innumshare = 1;
                 images=[images imageByScalingProportionallyToSize:CGSizeMake(images.size.width*0.8, images.size.height*0.8)];
             }
             ////小程序分享  需要判断是否需要分享小程序
-            [shareParams SSDKSetupWeChatParamsByTitle:shareWeChatTitle description:share.qqsharecontent webpageUrl:[NSURL URLWithString:share.url] path:share.applet_url thumbImage:images userName:WXXiaoChengXuID forPlatformSubType:SSDKPlatformSubTypeWechatSession];
+//            [shareParams SSDKSetupWeChatParamsByTitle:shareWeChatTitle description:share.qqsharecontent webpageUrl:[NSURL URLWithString:share.url] path:share.applet_url thumbImage:images userName:WXXiaoChengXuID forPlatformSubType:SSDKPlatformSubTypeWechatSession];
+            ///分享更改
+            [shareParams SSDKSetupWeChatMiniProgramShareParamsByTitle:shareWeChatTitle description:share.qqsharecontent webpageUrl:[NSURL URLWithString:share.url] path:share.applet_url thumbImage:images hdThumbImage:nil userName:WXXiaoChengXuID withShareTicket:NO miniProgramType:0 forPlatformSubType:SSDKPlatformSubTypeWechatSession];
         }
         
         
         
         ///SSDKContentTypeMiniProgram  SSDKContentTypeAuto
+        
+        ///分享更改
+        SSUIShareSheetConfiguration *config = [[SSUIShareSheetConfiguration alloc] init];
+        NSArray *arritems = @[@(SSDKPlatformTypeSinaWeibo),@(SSDKPlatformTypeWechat), @(SSDKPlatformTypeQQ),@(SSDKPlatformTypeCopy)];
+        config.directSharePlatforms = arritems;
+        [ShareSDK showShareActionSheet:self.view customItems:arritems shareParams:shareParams sheetConfiguration:config onStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+                                                                   if(platformType == SSDKPlatformTypeCopy)
+                                                                   {
+                                                                       UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+                                                                       pasteboard.string = share.url;
+                                                                       [MDB_UserDefault showNotifyHUDwithtext:@"链接复制成功" inView:self.view.window];
+                                                                   }
+                                                                   else if(platformType == SSDKPlatformTypeSinaWeibo)
+                                                                   {
+//                                                                       [ShareSDKConnector connectWeibo:[WeiboSDK class]];
+                                                                      
+                                                                       
+                                                                   }
+                                                                   else
+                                                                   {
+                                                                       [self.dataController requestShareRecordDataWithUrl:share.url callback:^(NSError *error, BOOL state, NSString *describle) {
+                                                                       }];
+                                                                   }
+                                                               }];
+        
         //2、分享
-        SSUIShareActionSheetController *sheet = [ShareSDK showShareActionSheet:self.view items:@[@(SSDKPlatformTypeSinaWeibo),
-//                                                                                                 @(SSDKPlatformTypeTencentWeibo),
-                                                                                                 @(SSDKPlatformTypeWechat),
-                                                                                                 @(SSDKPlatformTypeQQ),
-                                                                                                 @(SSDKPlatformTypeCopy)]
-                                                                   shareParams:shareParams
-                                                           onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
-                                                               if(platformType == SSDKPlatformTypeCopy)
-                                                               {
-                                                                   UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-                                                                   pasteboard.string = share.url;
-                                                                   [MDB_UserDefault showNotifyHUDwithtext:@"链接复制成功" inView:self.view.window];
-                                                               }
-                                                               else if(platformType == SSDKPlatformTypeSinaWeibo)
-                                                               {
-//                                                                   WBAuthorizeRequest *authrequest = [WBAuthorizeRequest request];
-//                                                                   authrequest.redirectURI = share.url;
-//                                                                   authrequest.scope = @"all";
-                                                                   
-                                                                   [ShareSDKConnector connectWeibo:[WeiboSDK class]];
-                                                                   
-                                                               }
-                                                               else
-                                                               {
-                                                                   [self.dataController requestShareRecordDataWithUrl:share.url callback:^(NSError *error, BOOL state, NSString *describle) {
-                                                                   }];
-                                                               }
-                                                               
-                                                           }];
-        
-        [sheet.directSharePlatforms addObject:@(SSDKPlatformTypeCopy)];
-        
+//        SSUIShareActionSheetController *sheet = [ShareSDK showShareActionSheet:self.view items:@[@(SSDKPlatformTypeSinaWeibo),
+////                                                                                                 @(SSDKPlatformTypeTencentWeibo),
+//                                                                                                 @(SSDKPlatformTypeWechat),
+//                                                                                                 @(SSDKPlatformTypeQQ),
+//                                                                                                 @(SSDKPlatformTypeCopy)]
+//                                                                   shareParams:shareParams
+//                                                           onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+//                                                               if(platformType == SSDKPlatformTypeCopy)
+//                                                               {
+//                                                                   UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+//                                                                   pasteboard.string = share.url;
+//                                                                   [MDB_UserDefault showNotifyHUDwithtext:@"链接复制成功" inView:self.view.window];
+//                                                               }
+//                                                               else if(platformType == SSDKPlatformTypeSinaWeibo)
+//                                                               {
+//                                                                   [ShareSDKConnector connectWeibo:[WeiboSDK class]];
+//
+//                                                               }
+//                                                               else
+//                                                               {
+//                                                                   [self.dataController requestShareRecordDataWithUrl:share.url callback:^(NSError *error, BOOL state, NSString *describle) {
+//                                                                   }];
+//                                                               }
+//
+//                                                           }];
+//
+//        [sheet.directSharePlatforms addObject:@(SSDKPlatformTypeCopy)];
+//
     }else{
         [self.dataController requestShareSubjectDataWithCommodityid:self.dataController.resultDict[@"id"]
                                                              inView:self.view
@@ -438,41 +466,74 @@ int innumshare = 1;
                                           title:strtitle
                                            type:SSDKContentTypeAuto];
         
-        [shareParams SSDKSetupSinaWeiboShareParamsByText:strtitle title:nil image:images url:[NSURL URLWithString:share.url] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+//        [shareParams SSDKSetupSinaWeiboShareParamsByText:strtitle title:nil image:images url:[NSURL URLWithString:share.url] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+        ///分享更改
+        [shareParams SSDKSetupSinaWeiboShareParamsByText:strtitle title:nil images:share.image video:nil url:[NSURL URLWithString:share.url] latitude:0 longitude:0 objectID:nil isShareToStory:NO type:SSDKContentTypeAuto];
+        
         
         [shareParams SSDKSetupTencentWeiboShareParamsByText:strtitle images:images latitude:0 longitude:0 type:SSDKContentTypeAuto];
         
         NSString *shareWeChatTitle =strtitle;
-        [shareParams SSDKSetupWeChatParamsByText:strcontent title:shareWeChatTitle url:[NSURL URLWithString:share.url] thumbImage:nil image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+//        [shareParams SSDKSetupWeChatParamsByText:strcontent title:shareWeChatTitle url:[NSURL URLWithString:share.url] thumbImage:nil image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+        ///分享更改
+        [shareParams SSDKSetupWeChatParamsByText:strcontent title:shareWeChatTitle url:[NSURL URLWithString:share.url] thumbImage:nil image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil sourceFileExtension:nil sourceFileData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+        
         
         //2、分享
-        SSUIShareActionSheetController *sheet = [ShareSDK showShareActionSheet:self.view items:nil
-                                                                   shareParams:shareParams
-                                                           onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
-                                                               
-                                                               
-                                                               if(state != SSDKResponseStateBegin && platformType != SSDKPlatformTypeUnknown)
-                                                               {
-                                                                   _istljshare=YES;
-                                                                   _subjectView.istljshare = YES;
-                                                                   [_subjectView zhidalianjiezidong];
-                                                               }
-                                                               
-                                                               if(platformType == SSDKPlatformTypeCopy)
-                                                               {
-                                                                   UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-                                                                   pasteboard.string = share.url;
-                                                                   [MDB_UserDefault showNotifyHUDwithtext:@"链接复制成功" inView:self.view.window];
-                                                               }
-                                                               else
-                                                               {
-                                                                   [self.dataController requestShareRecordDataWithUrl:share.url callback:^(NSError *error, BOOL state, NSString *describle) {
-                                                                   }];
-                                                               }
-                                                               
-                                                           }];
+        ///分享更改
+        SSUIShareSheetConfiguration *config = [[SSUIShareSheetConfiguration alloc] init];
+        NSArray *arritems = @[@(SSDKPlatformTypeSinaWeibo),@(SSDKPlatformTypeWechat), @(SSDKPlatformTypeQQ),@(SSDKPlatformTypeCopy)];
+        config.directSharePlatforms = arritems;
+        [ShareSDK showShareActionSheet:self.view customItems:arritems shareParams:shareParams sheetConfiguration:config onStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+                                                                   
+                                                                   if(state != SSDKResponseStateBegin && platformType != SSDKPlatformTypeUnknown)
+                                                                   {
+                                                                       _istljshare=YES;
+                                                                       _subjectView.istljshare = YES;
+                                                                       [_subjectView zhidalianjiezidong];
+                                                                   }
+                                                                   if(platformType == SSDKPlatformTypeCopy)
+                                                                   {
+                                                                       UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+                                                                       pasteboard.string = share.url;
+                                                                       [MDB_UserDefault showNotifyHUDwithtext:@"链接复制成功" inView:self.view.window];
+                                                                       
+                                                                   }
+                                                                   else
+                                                                   {
+                                                                       [self.dataController requestShareRecordDataWithUrl:share.url callback:^(NSError *error, BOOL state, NSString *describle) {
+                                                                       }];
+                                                                   }
+
+                                                               }];
         
-        [sheet.directSharePlatforms addObject:@(SSDKPlatformTypeCopy)];
+//        SSUIShareActionSheetController *sheet = [ShareSDK showShareActionSheet:self.view items:nil
+//                                                                   shareParams:shareParams
+//                                                           onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+//
+//
+//                                                               if(state != SSDKResponseStateBegin && platformType != SSDKPlatformTypeUnknown)
+//                                                               {
+//                                                                   _istljshare=YES;
+//                                                                   _subjectView.istljshare = YES;
+//                                                                   [_subjectView zhidalianjiezidong];
+//                                                               }
+//
+//                                                               if(platformType == SSDKPlatformTypeCopy)
+//                                                               {
+//                                                                   UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+//                                                                   pasteboard.string = share.url;
+//                                                                   [MDB_UserDefault showNotifyHUDwithtext:@"链接复制成功" inView:self.view.window];
+//                                                               }
+//                                                               else
+//                                                               {
+//                                                                   [self.dataController requestShareRecordDataWithUrl:share.url callback:^(NSError *error, BOOL state, NSString *describle) {
+//                                                                   }];
+//                                                               }
+//
+//                                                           }];
+//
+//        [sheet.directSharePlatforms addObject:@(SSDKPlatformTypeCopy)];
         
     }else{
         [self.dataController requestShareSubjectDataWithCommodityid:self.dataController.resultDict[@"id"]

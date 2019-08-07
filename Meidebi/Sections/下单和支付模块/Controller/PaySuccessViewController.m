@@ -12,7 +12,7 @@
 #import <ShareSDKExtension/SSEShareHelper.h>
 #import <ShareSDKUI/ShareSDK+SSUI.h>
 #import <ShareSDKUI/SSUIShareActionSheetStyle.h>
-#import <ShareSDKUI/SSUIShareActionSheetCustomItem.h>
+//#import <ShareSDKUI/SSUIShareActionSheetCustomItem.h>
 #import <ShareSDK/ShareSDK+Base.h>
 #import <ShareSDKExtension/ShareSDK+Extension.h>
 
@@ -150,10 +150,14 @@
                             {
                                 NSDictionary *dicdatatemp = [dicAll1 objectForKey:@"data"];
                                 @try {
-                                    if(strsharecouurl.length<10)
+                                    if([[NSString nullToString:[dicdatatemp objectForKey:@"landurl"]] length] > 5)
                                     {
                                         strsharecouurl = [NSString nullToString:[dicdatatemp objectForKey:@"landurl"]];
                                     }
+//                                    if(strsharecouurl.length<10)
+//                                    {
+//                                        strsharecouurl = [NSString nullToString:[dicdatatemp objectForKey:@"landurl"]];
+//                                    }
                                     
                                 } @catch (NSException *exception) {
                                     
@@ -214,17 +218,23 @@
     //    [shareParams SSDKSetupTencentWeiboShareParamsByText:strcontent images:images latitude:0 longitude:0 type:SSDKContentTypeAuto];
     
     NSString *shareWeChatTitle = strtitle;
-    [shareParams SSDKSetupWeChatParamsByText:strcontent title:shareWeChatTitle url:[NSURL URLWithString:strsharecouurl] thumbImage:nil image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+//    [shareParams SSDKSetupWeChatParamsByText:strcontent title:shareWeChatTitle url:[NSURL URLWithString:strsharecouurl] thumbImage:nil image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+    ///分享更改
+    [shareParams SSDKSetupWeChatParamsByText:strcontent title:shareWeChatTitle url:[NSURL URLWithString:strsharecouurl] thumbImage:nil image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil sourceFileExtension:nil sourceFileData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
     
+    ///分享更改
+    [ShareSDK showShareActionSheet:self.view customItems:@[@(SSDKPlatformSubTypeWechatSession),@(SSDKPlatformSubTypeWechatTimeline)] shareParams:shareParams sheetConfiguration:nil onStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+        
+    }];
     //2、分享
-    [ShareSDK showShareActionSheet:self.view
-                             items:@[@(SSDKPlatformSubTypeWechatSession),@(SSDKPlatformSubTypeWechatTimeline)]
-                       shareParams:shareParams
-               onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
-                   //                           [self.dataController requestShareRecordDataWithUrl:share.url callback:^(NSError *error, BOOL state, NSString *describle) {
-                   //                           }];
-                   NSLog(@"sdfasdf");
-               }];
+//    [ShareSDK showShareActionSheet:self.view
+//                             items:@[@(SSDKPlatformSubTypeWechatSession),@(SSDKPlatformSubTypeWechatTimeline)]
+//                       shareParams:shareParams
+//               onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+//                   //                           [self.dataController requestShareRecordDataWithUrl:share.url callback:^(NSError *error, BOOL state, NSString *describle) {
+//                   //                           }];
+//                   NSLog(@"sdfasdf");
+//               }];
     
 }
 
@@ -466,15 +476,23 @@
             NSString *strimageurl =[NSString nullToString:[dicinfo objectForKey:@"image"]];
             if(strimageurl.length>6)
             {
-                [shareParams SSDKSetupSinaWeiboShareParamsByText:strcontent title:nil image:strimageurl url:[NSURL URLWithString:[NSString nullToString:dicinfo[@"link"]]] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+//                [shareParams SSDKSetupSinaWeiboShareParamsByText:strcontent title:nil image:strimageurl url:[NSURL URLWithString:[NSString nullToString:dicinfo[@"link"]]] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+                ///分享更改
+                [shareParams SSDKSetupSinaWeiboShareParamsByText:strcontent title:nil images:strimageurl video:nil url:[NSURL URLWithString:[NSString nullToString:dicinfo[@"link"]]] latitude:0 longitude:0 objectID:nil isShareToStory:NO type:SSDKContentTypeAuto];
             }
             else
             {
-                [shareParams SSDKSetupSinaWeiboShareParamsByText:strcontent title:nil image:images url:[NSURL URLWithString:[NSString nullToString:dicinfo[@"link"]]] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+//                [shareParams SSDKSetupSinaWeiboShareParamsByText:strcontent title:nil image:images url:[NSURL URLWithString:[NSString nullToString:dicinfo[@"link"]]] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+                
+                ///分享更改
+                [shareParams SSDKSetupSinaWeiboShareParamsByText:strcontent title:nil images:images video:strimageurl url:[NSURL URLWithString:[NSString nullToString:dicinfo[@"link"]]] latitude:0 longitude:0 objectID:nil isShareToStory:NO type:SSDKContentTypeAuto];
             }
             
             
-            [shareParams SSDKSetupWeChatParamsByText:strcontent title:strtitle url:[NSURL URLWithString:[NSString nullToString:dicinfo[@"link"]]] thumbImage:nil image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+//            [shareParams SSDKSetupWeChatParamsByText:strcontent title:strtitle url:[NSURL URLWithString:[NSString nullToString:dicinfo[@"link"]]] thumbImage:nil image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+            ///分享更改
+            [shareParams SSDKSetupWeChatParamsByText:strcontent title:strtitle url:[NSURL URLWithString:[NSString nullToString:dicinfo[@"link"]]] thumbImage:nil image:nil musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil sourceFileExtension:nil sourceFileData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline];
+            
             
             
             NSString *strwxxcxurl =[NSString nullToString:[dicinfo objectForKey:@"applet_url"]];
@@ -499,19 +517,25 @@
                 }
                 
                 ////小程序分享  需要判断是否需要分享小程序
-                [shareParams SSDKSetupWeChatParamsByTitle:strtitle description:strcontent webpageUrl:[NSURL URLWithString:[NSString nullToString:dicinfo[@"link"]]] path:strwxxcxurl thumbImage:images userName:WXXiaoChengXuID forPlatformSubType:SSDKPlatformSubTypeWechatSession];
+//                [shareParams SSDKSetupWeChatParamsByTitle:strtitle description:strcontent webpageUrl:[NSURL URLWithString:[NSString nullToString:dicinfo[@"link"]]] path:strwxxcxurl thumbImage:images userName:WXXiaoChengXuID forPlatformSubType:SSDKPlatformSubTypeWechatSession];
+                ///分享更改
+                [shareParams SSDKSetupWeChatMiniProgramShareParamsByTitle:strtitle description:strcontent webpageUrl:[NSURL URLWithString:[NSString nullToString:dicinfo[@"link"]]] path:strwxxcxurl thumbImage:images hdThumbImage:nil userName:WXXiaoChengXuID withShareTicket:NO miniProgramType:0 forPlatformSubType:SSDKPlatformSubTypeWechatSession];
             }
             
-            
-            //2、分享
-            [ShareSDK showShareActionSheet:self.view
-                                     items:nil
-                               shareParams:shareParams
-                       onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
-//                           [self.dataController requestShareRecordDataWithUrl:share.url callback:^(NSError *error, BOOL state, NSString *describle) {
-//                           }];
-                           NSLog(@"sdfasdf");
-                       }];
+            NSArray *arritems = @[@(SSDKPlatformTypeSinaWeibo),@(SSDKPlatformTypeWechat), @(SSDKPlatformTypeQQ)];
+            ///分享更改
+            [ShareSDK showShareActionSheet:self.view customItems:arritems shareParams:shareParams sheetConfiguration:nil onStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+                
+            }];
+//            //2、分享
+//            [ShareSDK showShareActionSheet:self.view
+//                                     items:nil
+//                               shareParams:shareParams
+//                       onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+////                           [self.dataController requestShareRecordDataWithUrl:share.url callback:^(NSError *error, BOOL state, NSString *describle) {
+////                           }];
+//                           NSLog(@"sdfasdf");
+//                       }];
         }
             break;
         case 1:

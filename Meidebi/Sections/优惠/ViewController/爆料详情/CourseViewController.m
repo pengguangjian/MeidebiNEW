@@ -14,7 +14,7 @@
 #import <ShareSDKExtension/SSEShareHelper.h>
 #import <ShareSDKUI/ShareSDK+SSUI.h>
 #import <ShareSDKUI/SSUIShareActionSheetStyle.h>
-#import <ShareSDKUI/SSUIShareActionSheetCustomItem.h>
+//#import <ShareSDKUI/SSUIShareActionSheetCustomItem.h>
 #import <ShareSDK/ShareSDK+Base.h>
 #import <ShareSDKExtension/ShareSDK+Extension.h>
 
@@ -80,25 +80,30 @@ UIWebViewDelegate
                                       title:title
                                        type:SSDKContentTypeAuto];
     
-    //2、分享
-    [ShareSDK showShareActionSheet:self.view
-                             items:nil
-                       shareParams:shareParams
-               onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
-                   
-                   switch (state) {
-                       case SSDKResponseStateSuccess:
-                       {
-                           break;
-                       }
-                       case SSDKResponseStateFail:
-                       {
-                           break;
-                       }
-                       default:
-                           break;
-                   }
-               }];
+    NSArray *arritems = @[@(SSDKPlatformTypeSinaWeibo),@(SSDKPlatformTypeWechat), @(SSDKPlatformTypeQQ)];
+    ///分享更改
+    [ShareSDK showShareActionSheet:self.view customItems:arritems shareParams:shareParams sheetConfiguration:nil onStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+        
+    }];
+//    //2、分享
+//    [ShareSDK showShareActionSheet:self.view
+//                             items:nil
+//                       shareParams:shareParams
+//               onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+//
+//                   switch (state) {
+//                       case SSDKResponseStateSuccess:
+//                       {
+//                           break;
+//                       }
+//                       case SSDKResponseStateFail:
+//                       {
+//                           break;
+//                       }
+//                       default:
+//                           break;
+//                   }
+//               }];
 }
 
 #pragma mark - MDBwebDelegate

@@ -26,7 +26,7 @@
 #import <ShareSDKExtension/SSEShareHelper.h>
 #import <ShareSDKUI/ShareSDK+SSUI.h>
 #import <ShareSDKUI/SSUIShareActionSheetStyle.h>
-#import <ShareSDKUI/SSUIShareActionSheetCustomItem.h>
+//#import <ShareSDKUI/SSUIShareActionSheetCustomItem.h>
 #import <ShareSDK/ShareSDK+Base.h>
 #import <ShareSDKExtension/ShareSDK+Extension.h>
 
@@ -278,28 +278,35 @@ AddressListSelectViewControllerDelegate
                                       title:_qqshare.qqsharetitle
                                        type:SSDKContentTypeAuto];
     NSString *contentStr = [NSString stringWithFormat:@"%@%@",_qqshare.qqsharetitle,_qqshare.url];
-    [shareParams SSDKSetupSinaWeiboShareParamsByText:contentStr title:nil image:images url:[NSURL URLWithString:_qqshare.url] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+//    [shareParams SSDKSetupSinaWeiboShareParamsByText:contentStr title:nil image:images url:[NSURL URLWithString:_qqshare.url] latitude:0 longitude:0 objectID:nil type:SSDKContentTypeAuto];
+    ///分享更改
+    [shareParams SSDKSetupSinaWeiboShareParamsByText:contentStr title:nil images:images video:nil url:[NSURL URLWithString:_qqshare.url] latitude:0 longitude:0 objectID:nil isShareToStory:NO type:SSDKContentTypeAuto];
     
     [shareParams SSDKSetupTencentWeiboShareParamsByText:contentStr images:images latitude:0 longitude:0 type:SSDKContentTypeAuto];
     //2、分享
-    [ShareSDK showShareActionSheet:self.view
-                             items:nil
-                       shareParams:shareParams
-               onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
-                   
-                   switch (state) {
-                       case SSDKResponseStateSuccess:
-                       {
-                           break;
-                       }
-                       case SSDKResponseStateFail:
-                       {
-                           break;
-                       }
-                       default:
-                           break;
-                   }
-               }];
+    ///分享更改
+    NSArray *arritems = @[@(SSDKPlatformTypeSinaWeibo),@(SSDKPlatformTypeWechat), @(SSDKPlatformTypeQQ)];
+    [ShareSDK showShareActionSheet:self.view customItems:arritems shareParams:shareParams sheetConfiguration:nil onStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+        
+    }];
+//    [ShareSDK showShareActionSheet:self.view
+//                             items:nil
+//                       shareParams:shareParams
+//               onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+//                   
+//                   switch (state) {
+//                       case SSDKResponseStateSuccess:
+//                       {
+//                           break;
+//                       }
+//                       case SSDKResponseStateFail:
+//                       {
+//                           break;
+//                       }
+//                       default:
+//                           break;
+//                   }
+//               }];
     
 }
 ////1 礼品兑换（1个按钮） 2礼品兑换（2个按钮） 3优惠券兑换（1个按钮） 4优惠券兑换（2个按钮） isgongxian:是否是贡献值兑换

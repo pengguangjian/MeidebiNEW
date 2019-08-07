@@ -880,7 +880,33 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    
+    ///这里添加邀请码
+    ///去读取粘贴板中的邀请码
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    NSString *strValue = pasteboard.string;
+    if(strValue.length > 6)
+    {
+        if([[strValue substringWithRange:NSMakeRange(0, 1)] isEqualToString:@"¥"] && [[strValue substringWithRange:NSMakeRange(strValue.length-1, 1)] isEqualToString:@"¥"])
+        {
+            strValue = [strValue stringByReplacingOccurrencesOfString:@"¥" withString:@""];
+            if([self isNum:strValue] == YES)
+            {
+                NSString *strtimec = [MDB_UserDefault getNowTimeTimestamp];
+                strValue = [NSString stringWithFormat:@"%@-%@",strValue,strtimec];
+                [[NSUserDefaults standardUserDefaults] setObject:strValue forKey:@"meb_user_yaoqingma"];
+            }
+        }
+        
+    }
+}
 
+- (BOOL)isNum:(NSString *)checkedNumString {
+    checkedNumString = [checkedNumString stringByTrimmingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet]];
+    if(checkedNumString.length > 0) {
+        return NO;
+    }
+    return YES;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -992,6 +1018,8 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
         // 处理其他app跳转到自己的app
     }
     
+    ///这里添加邀请码
+    ////外部连接中带过来的邀请码
     
     NSString *string =url.absoluteString;
     if ([string hasPrefix:@"meidebi://"])
@@ -1009,6 +1037,16 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
                     [dictemp setObject:arr[1] forKey:arr[0]];
                 }
                 
+            }
+            
+            
+            NSString *strpucode = [NSString nullToString:[dictemp objectForKey:@"pucode"]];
+            ///邀请码
+            if([strpucode length] > 6 && [self isNum:strpucode] == YES)
+            {
+                NSString *strtimec = [MDB_UserDefault getNowTimeTimestamp];
+                strpucode = [NSString stringWithFormat:@"%@-%@",strpucode,strtimec];
+                [[NSUserDefaults standardUserDefaults] setObject:strpucode forKey:@"meb_user_yaoqingma"];
             }
             
             if([[dictemp objectForKey:@"type"] intValue] == 1)
@@ -1094,6 +1132,8 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
         //处理其他app跳转到自己的app，如果百川处理过会返回YES
     }
     
+    ///这里添加邀请码
+    ////外部连接中带过来的邀请码
     
     NSString *string =url.absoluteString;
     if ([string hasPrefix:@"meidebi://"])
@@ -1112,6 +1152,15 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
                     [dictemp setObject:arr[1] forKey:arr[0]];
                 }
                 
+            }
+            
+            NSString *strpucode = [NSString nullToString:[dictemp objectForKey:@"pucode"]];
+            ///邀请码
+            if([strpucode length] > 6 && [self isNum:strpucode] == YES)
+            {
+                NSString *strtimec = [MDB_UserDefault getNowTimeTimestamp];
+                strpucode = [NSString stringWithFormat:@"%@-%@",strpucode,strtimec];
+                [[NSUserDefaults standardUserDefaults] setObject:strpucode forKey:@"meb_user_yaoqingma"];
             }
             
             if([[dictemp objectForKey:@"type"] intValue] == 1)
@@ -1423,6 +1472,13 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
 #pragma mark - shareSDK
 -(void)AuthshareSDKSetting{
     
+    [ShareSDK registPlatforms:^(SSDKRegister *platformsRegister) {
+        [platformsRegister setupQQWithAppId:@"100311602" appkey:@"1563d7a829419609adc8e8bb39f290bc"];
+        [platformsRegister setupWeChatWithAppId:@"wx482499aac0e8d8f7" appSecret:@"9ffaba8e19183fbddb27120482b0fa76"];
+        [platformsRegister setupSinaWeiboWithAppkey:@"2987262446" appSecret:@"dee4382cba2ceed538402f0e9cf877af" redirectUrl:@"http://www.meidebi.com.app"];
+    }];
+    
+    /*
     [ShareSDK registerActivePlatforms:@[@(SSDKPlatformTypeSinaWeibo),
 //                                        @(SSDKPlatformTypeTencentWeibo),
                                         @(SSDKPlatformTypeWechat),
@@ -1475,6 +1531,7 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
                                          break;
                                  }
                              }];
+     */
 }
 
 #pragma mark - Status bar touch tracking
