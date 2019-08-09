@@ -149,6 +149,6 @@ static NSString * const kTalkingDataAppKey = @"A45FA9434D9394605607829E81C93F4E"
 #else
 
 #define DebugLog(s, ... )
-#define NSLog(...)
+//#define NSLog(...)
 
 #endif

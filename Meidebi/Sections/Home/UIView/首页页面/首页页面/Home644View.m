@@ -102,11 +102,12 @@
         [self drawUI];
         flastss = 0.0;
         fisfooterRef = 0.0;
+        
         _btzhiding = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50*kScale, 50*kScale)];
         [_btzhiding.layer setMasksToBounds:YES];
         [_btzhiding.layer setCornerRadius:_btzhiding.height/2.0];
         [_btzhiding setRight:BOUNDS_WIDTH-10];
-        [_btzhiding setBottom:frame.size.height-50];
+        [_btzhiding setBottom:kMainScreenH-kTopHeight-kTabBarHeight-50];
         [_btzhiding setImage:[UIImage imageNamed:@"zhiding_list"] forState:UIControlStateNormal];
         [_btzhiding setBackgroundColor:RGB(248, 248, 248)];
         [self addSubview:_btzhiding];

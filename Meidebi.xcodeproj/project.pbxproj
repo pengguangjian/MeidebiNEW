@@ -580,6 +580,10 @@
 		779C2A0A1CAA717200974D87 /* ZYQAssetPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 779C29641CAA717200974D87 /* ZYQAssetPickerController.m */; };
 		779C9C4A1FB40A52004EDD6B /* UINavigationBar+FixMargin.m in Sources */ = {isa = PBXBuildFile; fileRef = 779C9C491FB40A52004EDD6B /* UINavigationBar+FixMargin.m */; };
 		779FCA60208F0CA0009219E7 /* OrderRefundVCDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 779FCA5F208F0CA0009219E7 /* OrderRefundVCDataController.m */; };
+		779FCDFF22FBB31D002C2911 /* DaShangAlterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 779FCDFE22FBB31D002C2911 /* DaShangAlterView.m */; };
+		779FCE0222FBBA8D002C2911 /* DaShangSuccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 779FCE0122FBBA8D002C2911 /* DaShangSuccessView.m */; };
+		779FCE0522FBC0DE002C2911 /* DaShangJiLuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 779FCE0422FBC0DE002C2911 /* DaShangJiLuTableViewController.m */; };
+		779FCE0822FBC2CD002C2911 /* DaShangJiLuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 779FCE0722FBC2CD002C2911 /* DaShangJiLuTableViewCell.m */; };
 		77A0707122374C79009A0BA5 /* OtherLoginBangDingPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A0707022374C79009A0BA5 /* OtherLoginBangDingPhoneViewController.m */; };
 		77A0707422374CD3009A0BA5 /* OtherLoginBangDingPhoneView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A0707322374CD3009A0BA5 /* OtherLoginBangDingPhoneView.m */; };
 		77A28E561F5FFF47009474E4 /* HotShowdanTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A28E551F5FFF47009474E4 /* HotShowdanTableViewCell.m */; };
@@ -2159,6 +2163,14 @@
 		779C9C491FB40A52004EDD6B /* UINavigationBar+FixMargin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+FixMargin.m"; sourceTree = "<group>"; };
 		779FCA5E208F0CA0009219E7 /* OrderRefundVCDataController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OrderRefundVCDataController.h; sourceTree = "<group>"; };
 		779FCA5F208F0CA0009219E7 /* OrderRefundVCDataController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderRefundVCDataController.m; sourceTree = "<group>"; };
+		779FCDFD22FBB31D002C2911 /* DaShangAlterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DaShangAlterView.h; sourceTree = "<group>"; };
+		779FCDFE22FBB31D002C2911 /* DaShangAlterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DaShangAlterView.m; sourceTree = "<group>"; };
+		779FCE0022FBBA8D002C2911 /* DaShangSuccessView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DaShangSuccessView.h; sourceTree = "<group>"; };
+		779FCE0122FBBA8D002C2911 /* DaShangSuccessView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DaShangSuccessView.m; sourceTree = "<group>"; };
+		779FCE0322FBC0DE002C2911 /* DaShangJiLuTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DaShangJiLuTableViewController.h; sourceTree = "<group>"; };
+		779FCE0422FBC0DE002C2911 /* DaShangJiLuTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DaShangJiLuTableViewController.m; sourceTree = "<group>"; };
+		779FCE0622FBC2CD002C2911 /* DaShangJiLuTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DaShangJiLuTableViewCell.h; sourceTree = "<group>"; };
+		779FCE0722FBC2CD002C2911 /* DaShangJiLuTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DaShangJiLuTableViewCell.m; sourceTree = "<group>"; };
 		77A0706F22374C79009A0BA5 /* OtherLoginBangDingPhoneViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OtherLoginBangDingPhoneViewController.h; sourceTree = "<group>"; };
 		77A0707022374C79009A0BA5 /* OtherLoginBangDingPhoneViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OtherLoginBangDingPhoneViewController.m; sourceTree = "<group>"; };
 		77A0707222374CD3009A0BA5 /* OtherLoginBangDingPhoneView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OtherLoginBangDingPhoneView.h; sourceTree = "<group>"; };
@@ -5107,6 +5119,8 @@
 			children = (
 				778CA61122FAB85400D2FE12 /* DaShangViewController.h */,
 				778CA61222FAB85400D2FE12 /* DaShangViewController.m */,
+				779FCE0322FBC0DE002C2911 /* DaShangJiLuTableViewController.h */,
+				779FCE0422FBC0DE002C2911 /* DaShangJiLuTableViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -5116,6 +5130,12 @@
 			children = (
 				778CA61422FAB86300D2FE12 /* DaShangView.h */,
 				778CA61522FAB86300D2FE12 /* DaShangView.m */,
+				779FCDFD22FBB31D002C2911 /* DaShangAlterView.h */,
+				779FCDFE22FBB31D002C2911 /* DaShangAlterView.m */,
+				779FCE0022FBBA8D002C2911 /* DaShangSuccessView.h */,
+				779FCE0122FBBA8D002C2911 /* DaShangSuccessView.m */,
+				779FCE0622FBC2CD002C2911 /* DaShangJiLuTableViewCell.h */,
+				779FCE0722FBC2CD002C2911 /* DaShangJiLuTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -8378,6 +8398,7 @@
 				77C42CA41FDE7E4900026C09 /* XHInputView.m in Sources */,
 				778DDDAE2251E8180095BB82 /* WoGuanZhuPeopleModel.m in Sources */,
 				77FC141E1F98920A00FED147 /* BargainParticipationViewModel.m in Sources */,
+				779FCE0522FBC0DE002C2911 /* DaShangJiLuTableViewController.m in Sources */,
 				77A9E96F207B0401006BDA63 /* OrderLogisticsViewController.m in Sources */,
 				77C3DD9A1FD546140034DDD1 /* XHDatePickerView.m in Sources */,
 				77DAF56820E38B2D00F8D5C1 /* TFHpple.m in Sources */,
@@ -8462,6 +8483,7 @@
 				7766CFC2215C6E0F00591D4E /* JinRiPinDanListTableViewCell.m in Sources */,
 				77C37B021F1DE47B00DDEED0 /* FollowSubjectView.m in Sources */,
 				77741DD81F5E8A8A006C612E /* RewardDataController.m in Sources */,
+				779FCE0222FBBA8D002C2911 /* DaShangSuccessView.m in Sources */,
 				7766CFBE215C6E0F00591D4E /* DaiGouSearchViewController.m in Sources */,
 				7766CFC1215C6E0F00591D4E /* JinRiPinDanListMainModel.m in Sources */,
 				776D647B20B413F3001DC083 /* TKECamOrPhotosView.m in Sources */,
@@ -8563,6 +8585,7 @@
 				77715DAF1E4D9DB300A137A4 /* RemarkHomeInputTabBarView.m in Sources */,
 				77F754BC1CB6086C000D1916 /* CategoryCollectionViewCell.m in Sources */,
 				779299372249D22E00B032F9 /* WoGuanZhuBiaoQianTableViewCell.m in Sources */,
+				779FCE0822FBC2CD002C2911 /* DaShangJiLuTableViewCell.m in Sources */,
 				77EB843C1F4BC6710085ADB3 /* FlagItemCollectionViewCell.m in Sources */,
 				774B391A1F7CEE130055B249 /* LottoRuleViewController.m in Sources */,
 				775C94871F00F4CB00591768 /* WelfareDynamicTableViewCell.m in Sources */,
@@ -8598,6 +8621,7 @@
 				77C37B231F1DE47B00DDEED0 /* VKLostViewController.m in Sources */,
 				775024121F7DF5BA002AEF6D /* SpecialViewModel.m in Sources */,
 				7753A1171DE3E9920060339D /* ZLJuniorMenuCollectionViewCell.m in Sources */,
+				779FCDFF22FBB31D002C2911 /* DaShangAlterView.m in Sources */,
 				7761FDA11F70F890005ADD4B /* DailyLottoAlertView.m in Sources */,
 				7706A2711F29EE630097D7D1 /* CouponSimpleViewController.m in Sources */,
 				777EBE292056698800136BF6 /* SearchYuanChuangTableViewCell.m in Sources */,

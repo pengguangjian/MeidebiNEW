@@ -1742,7 +1742,7 @@
     NSDate *newsDateFormatted = [dateFormatter dateFromString:newsDate];
     NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];[dateFormatter setTimeZone:timeZone];
     NSDate* current_date = [[NSDate alloc] init];
-    NSTimeInterval time=[current_date timeIntervalSinceDate:newsDateFormatted];//间隔的秒数
+    NSTimeInterval time=[newsDateFormatted timeIntervalSinceDate:current_date];//间隔的秒数
     int year =((int)time)/(3600*24*30*12);
     int month=((int)time)/(3600*24*30);
     NSString *dateContent;

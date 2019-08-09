@@ -9,6 +9,20 @@
 #import "DaShangView.h"
 #import "MDB_UserDefault.h"
 
+#import "DaShangAlterView.h"
+
+#import "DaShangSuccessView.h"
+
+#import "DaShangJiLuTableViewController.h"
+
+@interface DaShangView () <DaShangAlterViewDelegate>
+{
+    float fdashangmoney;
+    UIButton *btlastselect;
+}
+@end
+
+
 @implementation DaShangView
 
 /*
@@ -23,6 +37,8 @@
 {
     if(self = [super initWithFrame:frame])
     {
+        btlastselect = nil;
+        fdashangmoney = 0.0;
         [self drawUI];
         
     }
@@ -157,6 +173,8 @@
             [btitem setBackgroundColor:RGB(246, 246, 246)];
             [btitem.layer setMasksToBounds:YES];
             [btitem.layer setCornerRadius:3];
+            [btitem setTag:i*3+j];
+            [btitem addTarget:self action:@selector(itemAction:) forControlEvents:UIControlEventTouchUpInside];
             
         }
         
@@ -184,7 +202,9 @@
     [viewleiji.layer setMasksToBounds:YES];
     [viewleiji.layer setCornerRadius:3];
     [self drawleijiView:viewleiji];
-    
+    [viewleiji setUserInteractionEnabled:YES];
+    UITapGestureRecognizer *tapview = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(jiLuAction)];
+    [viewleiji addGestureRecognizer:tapview];
     
     
     
@@ -224,7 +244,7 @@
     [scvback mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(viewcenter.mas_bottom).offset(20);
     }];
-    
+    [btlijidashang addTarget:self action:@selector(daShangAction) forControlEvents:UIControlEventTouchUpInside];
 }
 ////累计收到20次打赏
 -(void)drawleijiView:(UIView *)view
@@ -265,6 +285,70 @@
         [imgvitem.layer setCornerRadius:30*kScale/2.0];
         viewleft = imgvitem;
     }
+    
+    
+}
+
+///选择打赏多少
+-(void)itemAction:(UIButton *)sender
+{
+    NSArray *arrimage = @[@"dashang04_nomo",@"dashang01_nomo",@"dashang02_nomo",@"dashang03_nomo"];
+    NSArray *arrimageselect = @[@"dashang04_select",@"dashang01_select",@"dashang02_select",@"dashang03_select"];
+    if(btlastselect!= nil)
+    {
+        [btlastselect setBackgroundColor:RGB(246, 246, 246)];
+        [btlastselect setImage:[UIImage imageNamed:arrimage[btlastselect.tag]] forState:UIControlStateNormal];
+        [btlastselect setTitleColor:RGB(120, 120, 120) forState:UIControlStateNormal];
+    }
+    if(sender.tag == 4)
+    {
+        
+        
+        btlastselect = nil;
+        fdashangmoney = 0;
+        DaShangAlterView *dview = [[DaShangAlterView alloc] init];
+        [dview setDelegate:self];
+        [self addSubview:dview];
+        [dview mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self);
+        }];
+    }
+    else
+    {
+        btlastselect = sender;
+        [btlastselect setBackgroundColor:RGB(255, 247, 226)];
+        [btlastselect setImage:[UIImage imageNamed:arrimageselect[btlastselect.tag]] forState:UIControlStateNormal];
+        [btlastselect setTitleColor:RadMenuColor forState:UIControlStateNormal];
+        
+        
+        NSArray *arrmoney = @[@"2.00",@"5.00",@"8.00",@"10.00"];
+        fdashangmoney = [arrmoney[sender.tag] floatValue];
+    }
+    
+}
+///打赏其他金额
+-(void)DaShangAlterViewDaShangAction:(NSString *)value
+{
+    fdashangmoney = value.floatValue;
+    [self daShangAction];
+}
+///打赏
+-(void)daShangAction
+{
+    if(fdashangmoney<=0)return;
+    
+    DaShangSuccessView *dview = [[DaShangSuccessView alloc] init];
+    [self addSubview:dview];
+    [dview mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self);
+    }];
+}
+
+///打赏记录
+-(void)jiLuAction
+{
+    DaShangJiLuTableViewController *dvc = [[DaShangJiLuTableViewController alloc] init];
+    [self.viewController.navigationController pushViewController:dvc animated:YES];
     
     
 }
