@@ -66,17 +66,26 @@
     }];
 }
 
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [mview loadData];
+    
+}
+
 -(void)rightAction
 {
-    /*
+    
     DaiGouGuiZheViewController *dvc = [[DaiGouGuiZheViewController alloc] init];
-    dvc.strtitle = @"运费说明";
+    dvc.strtitle = @"提现说明";
     dvc.strurl = WenZheng_ALL_rol;
     NSMutableDictionary *dicpush = [NSMutableDictionary new];
     [dicpush setObject:@"freight_xpln" forKey:@"key"];
     dvc.dicpush = dicpush;
     [self.navigationController pushViewController:dvc animated:YES];
-    */
+    
 }
 
 /*

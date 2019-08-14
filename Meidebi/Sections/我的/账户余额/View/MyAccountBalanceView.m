@@ -16,9 +16,15 @@
 
 #import "MyAccountFLMXViewController.h"
 
+#import "MyAccountDataController.h"
+
 @interface MyAccountBalanceView ()
 {
+    MyAccountDataController *dataController;
     
+    UILabel *lbprice;
+    
+    UILabel *lbpricemx;
 }
 
 @end
@@ -38,8 +44,41 @@
     if(self = [super initWithFrame:frame])
     {
         [self drawUI];
+        dataController = [[MyAccountDataController alloc] init];
+//        [self loadData];
     }
     return self;
+}
+
+-(void)loadData
+{
+    NSDictionary *dicpush = @{@"userkey":[NSString nullToString:[MDB_UserDefault defaultInstance].usertoken]};
+    [dataController requestDGAccountYEInfoDataInView:self dicpush:dicpush Callback:^(NSError *error, BOOL state, NSString *describle) {
+        if(state)
+        {
+            [self loadValue];
+        }
+        else
+        {
+            [MDB_UserDefault showNotifyHUDwithtext:describle inView:self];
+        }
+    }];
+}
+
+-(void)loadValue
+{
+    NSString *strbalance = [NSString stringWithFormat:@"￥%@",[NSString nullToString:[dataController.dicresult objectForKey:@"balance"]]];
+    strbalance = [strbalance stringByReplacingOccurrencesOfString:@"," withString:@""];
+    
+    [lbprice setText:strbalance];
+    
+    [lbprice setAttributedText:[MDB_UserDefault arrstring:lbprice.text andstart:0 andend:1 andfont:[UIFont boldSystemFontOfSize:25] andcolor:[UIColor blackColor]]];
+    
+    NSString *strnot_balance_accounts = [NSString stringWithFormat:@"￥%@",[NSString nullToString:[dataController.dicresult objectForKey:@"not_balance_accounts"]]];
+    strnot_balance_accounts = [strnot_balance_accounts stringByReplacingOccurrencesOfString:@"," withString:@""];
+    
+    [lbpricemx setText:[NSString stringWithFormat:@"（可提现金额%@，%@待生效）",strbalance,strnot_balance_accounts]];
+    
 }
 
 -(void)drawUI
@@ -54,7 +93,7 @@
     }];
     
     
-    UILabel *lbprice = [[UILabel alloc] init];
+    lbprice = [[UILabel alloc] init];
     [lbprice setText:@"￥0.00"];
     [lbprice setTextColor:[UIColor blackColor]];
     [lbprice setTextAlignment:NSTextAlignmentCenter];
@@ -68,11 +107,12 @@
     }];
     [lbprice setAttributedText:[MDB_UserDefault arrstring:lbprice.text andstart:0 andend:1 andfont:[UIFont boldSystemFontOfSize:25] andcolor:[UIColor blackColor]]];
     
-    UILabel *lbpricemx = [[UILabel alloc] init];
+    lbpricemx = [[UILabel alloc] init];
     [lbpricemx setText:@"（可提现金额￥0.0，￥0.0待生效）"];
     [lbpricemx setTextColor:RGB(150, 150, 150)];
     [lbpricemx setTextAlignment:NSTextAlignmentCenter];
     [lbpricemx setFont:[UIFont systemFontOfSize:14]];
+    [lbpricemx setNumberOfLines:2];
     [self addSubview:lbpricemx];
     [lbpricemx mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.offset(10);

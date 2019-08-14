@@ -24,6 +24,8 @@
 
 #import "MyOrderMainViewController.h"
 
+#import "MyAccountDataController.h"
+
 
 @interface DaiGouZhiFuViewController ()
 {
@@ -32,6 +34,11 @@
     UIButton *btnowselect;
     
     BOOL ispay;
+    
+    MyAccountDataController *dataControl;
+    UIButton *btyuebt;
+    ///有多少余额
+    float fyuemoney;
     
 }
 @end
@@ -46,6 +53,21 @@
     
     [self drawSubview];
     [self setNavBarBackBtn];
+    
+    
+    dataControl = [MyAccountDataController new];
+    NSDictionary *dicpush = @{@"userkey":[NSString nullToString:[MDB_UserDefault defaultInstance].usertoken]};
+    [dataControl requestDGAccountYEInfoDataInView:self.view dicpush:dicpush Callback:^(NSError *error, BOOL state, NSString *describle) {
+       if(state)
+       {
+           fyuemoney = [[[NSString nullToString:[dataControl.dicresult objectForKey:@"balance"]] stringByReplacingOccurrencesOfString:@"," withString:@""] floatValue];
+           UILabel *lbtemp = [btyuebt viewWithTag:10000];
+           [lbtemp setText:[NSString stringWithFormat:@"账号余额（%.2lf）",fyuemoney]];
+           
+           
+           
+       }
+    }];
     
 }
 - (void)setNavBarBackBtn{
@@ -122,7 +144,7 @@
     [viewddmx addSubview:lbddmx];
     
     
-    NSArray *arrlist = [NSArray arrayWithObjects:@"支付宝",@"微信",@"账号余额（568.6）", nil];//@"微信",
+    NSArray *arrlist = [NSArray arrayWithObjects:@"支付宝",@"微信",@"账号余额（0.00）", nil];//@"微信",
 //    NSArray *arrimage = [NSArray arrayWithObjects:@"payzhifubao",@"payweixin",@"payweixin", nil];///@"payweixin",
     
     float fbottom = 0.0;
@@ -138,6 +160,10 @@
             btnowselect = btitem;
             UIImageView *imgv = [btnowselect viewWithTag:200];
             [imgv setImage:[UIImage imageNamed:@"zhifu_select_yes_green"]];
+        }
+        if(i==2)
+        {
+            btyuebt = btitem;
         }
     }
     
@@ -188,11 +214,12 @@
     [bt addSubview:imgv];
     
     
-    UILabel *lbkd = [[UILabel alloc] initWithFrame:CGRectMake(imgv.right+13, 0, 150, bt.height)];
+    UILabel *lbkd = [[UILabel alloc] initWithFrame:CGRectMake(imgv.right+13, 0, 250, bt.height)];
     [lbkd setText:strtitle];
     [lbkd setTextColor:RGB(102,102,102)];
     [lbkd setTextAlignment:NSTextAlignmentLeft];
     [lbkd setFont:[UIFont systemFontOfSize:16]];
+    [lbkd setTag:10000];
     [bt addSubview:lbkd];
     
     
@@ -206,6 +233,15 @@
 #pragma mark - 选择支付方式
 -(void)itemAction:(UIButton *)sender
 {
+    if(sender.tag==2)
+    {
+        if(fyuemoney<_strprice.floatValue)
+        {
+            [MDB_UserDefault showNotifyHUDwithtext:@"余额不足" inView:self.view];
+            return;
+        }
+    }
+    
     if(btnowselect!=nil)
     {
         UIImageView *imgv = [btnowselect viewWithTag:200];

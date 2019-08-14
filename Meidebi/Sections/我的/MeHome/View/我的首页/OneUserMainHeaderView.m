@@ -355,7 +355,9 @@
     NSString *_commentnum = [[NSUserDefaults standardUserDefaults] objectForKey:@"commentnum"];
     NSString *_zannum = [[NSUserDefaults standardUserDefaults] objectForKey:@"votenum"];
     NSString *_orderunm = [[NSUserDefaults standardUserDefaults] objectForKey:@"ordernum"];
-    if(_commentnum.integerValue+_zannum.integerValue+_orderunm.integerValue>0)
+    NSString *_messagenum = [[NSUserDefaults standardUserDefaults] objectForKey:@"messagenum"];
+    
+    if(_commentnum.integerValue+_zannum.integerValue+_orderunm.integerValue+_messagenum.integerValue>0)
     {
         [viewxxRed setHidden:NO];
     }

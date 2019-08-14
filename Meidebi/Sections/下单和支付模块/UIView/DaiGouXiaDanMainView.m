@@ -149,6 +149,10 @@
     
     ///是否有规格的商品
     BOOL isyouguige;
+    
+    ///国外转运费和国外本土邮费折扣
+    float fcarriage_discount;
+    
 }
 @end
 
@@ -207,6 +211,9 @@
 
 -(void)bindData:(NSDictionary *)dicvalue andstrpindan_id:(NSString *)strpindan_id
 {
+    
+    fcarriage_discount = [[NSString nullToString:[dicvalue objectForKey:@"carriage_discount"]] floatValue]/10.0;
+    
     if([[dicvalue objectForKey:@"defaultaddress"] isKindOfClass:[NSDictionary class]])
     {
         addressmodel = [AddressListModel dicChangeToModel:[dicvalue objectForKey:@"defaultaddress"]];
@@ -375,6 +382,7 @@
     [viewGoodsMessage setDelegate:self];
     viewGoodsMessage.iseditnumber = _iseditnumber;
     viewGoodsMessage.igoodsnomonum = igoodsnomonum;
+    viewGoodsMessage.fcarriage_discount = fcarriage_discount;
     [scvback addSubview:viewGoodsMessage];
     
     
@@ -1344,18 +1352,33 @@
         for(OrderGoodsInfoModel *goodsmodel in shopmodel.arrgoods)
         {
             OrderGoodsMoneyInfoModel *moneyModel = goodsmodel.incidentals[goodsmodel.iselectnumber-1];
-            if(goodsmodel.transfertype.intValue == 1)
-            {
-                fallprice+= goodsmodel.price.floatValue*moneyModel.ikey+moneyModel.tariff.floatValue+moneyModel.transfermoney.floatValue+moneyModel.hpostage.floatValue;
-                
+            
+            if(goodsmodel.isspotgoods.integerValue == 1)
+            {///现货
+                if(goodsmodel.transfertype.intValue == 1)
+                {///转运
+                    fallprice+= goodsmodel.price.floatValue*moneyModel.ikey+moneyModel.tariff.floatValue+moneyModel.transfermoney.floatValue+moneyModel.hpostage.floatValue;
+                    
+                }
+                else
+                {
+                    fallprice+= goodsmodel.price.floatValue*moneyModel.ikey+moneyModel.tariff.floatValue+moneyModel.directmailmoney.floatValue;
+                    
+                }
             }
             else
             {
-                fallprice+= goodsmodel.price.floatValue*moneyModel.ikey+moneyModel.tariff.floatValue+moneyModel.directmailmoney.floatValue;
-                
+                if(goodsmodel.transfertype.intValue == 1)
+                {///转运
+                    fallprice+= goodsmodel.price.floatValue*moneyModel.ikey+moneyModel.tariff.floatValue+(moneyModel.transfermoney.floatValue+moneyModel.hpostage.floatValue)*fcarriage_discount;
+                    
+                }
+                else
+                {
+                    fallprice+= goodsmodel.price.floatValue*moneyModel.ikey+moneyModel.tariff.floatValue+moneyModel.directmailmoney.floatValue;
+                    
+                }
             }
-            
-            
         }
     }
     return fallprice;

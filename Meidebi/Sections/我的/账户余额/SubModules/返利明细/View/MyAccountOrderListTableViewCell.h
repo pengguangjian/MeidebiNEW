@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyAccountFanLiOrderListModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MyAccountOrderListTableViewCell : UITableViewCell
+
+@property (nonatomic , retain) MyAccountFanLiOrderModel *model;
 
 @end
 

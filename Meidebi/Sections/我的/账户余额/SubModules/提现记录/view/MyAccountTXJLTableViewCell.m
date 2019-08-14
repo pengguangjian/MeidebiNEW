@@ -10,7 +10,17 @@
 
 
 @interface MyAccountTXJLTableViewCell ()
-
+{
+    
+    UILabel *lbtime;
+    
+    UILabel *lbstate;
+    
+    UILabel *lbmoney;
+    
+    UIView *viewline;
+    
+}
 @end
 
 @implementation MyAccountTXJLTableViewCell
@@ -51,7 +61,7 @@
             make.height.offset(20);
         }];
         
-        UILabel *lbtime = [[UILabel alloc] init];
+        lbtime = [[UILabel alloc] init];
         [lbtime setTextColor:RGB(150, 150, 150)];
         [lbtime setTextAlignment:NSTextAlignmentLeft];
         [lbtime setText:@"06.12  15:00"];
@@ -60,12 +70,12 @@
         [lbtime mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(lbtx);
             make.top.equalTo(lbtx.mas_bottom);
-            make.width.offset(100);
+            make.width.offset(200);
             make.height.offset(20);
         }];
         
         
-        UILabel *lbstate = [[UILabel alloc] init];
+        lbstate = [[UILabel alloc] init];
         [lbstate setTextColor:RGB(130, 130, 130)];
         [lbstate setTextAlignment:NSTextAlignmentCenter];
         [lbstate setText:@"审核中"];
@@ -79,10 +89,10 @@
         }];
         
         
-        UILabel *lbmoney = [[UILabel alloc] init];
+        lbmoney = [[UILabel alloc] init];
         [lbmoney setTextColor:RadMenuColor];
         [lbmoney setTextAlignment:NSTextAlignmentRight];
-        [lbmoney setText:@"-60"];
+        [lbmoney setText:@"0"];
         [lbmoney setFont:[UIFont boldSystemFontOfSize:14]];
         [viewback addSubview:lbmoney];
         [lbmoney mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -94,7 +104,7 @@
         
         
         
-        UIView *viewline = [[UIView alloc] init];
+        viewline = [[UIView alloc] init];
         [viewline setBackgroundColor:RGB(234, 234, 234)];
         [viewback addSubview:viewline];
         [viewline mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -107,6 +117,21 @@
         
     }
     return self;
+}
+
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    
+    [lbtime setText:_model.tixian_time];
+    
+    [lbstate setText:_model.status_text];
+    
+    [lbmoney setText:[NSString stringWithFormat:@"-%@",_model.money]];
+    
+    
+    [viewline setHidden:_ishidenline];
 }
 
 @end

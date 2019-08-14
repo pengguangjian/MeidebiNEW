@@ -149,6 +149,10 @@
 		771008822294008F00AFA0DD /* ZiZhuDaiGouHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 771008812294008F00AFA0DD /* ZiZhuDaiGouHomeViewController.m */; };
 		77100885229400CF00AFA0DD /* ZiZhuDaiGouHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77100884229400CF00AFA0DD /* ZiZhuDaiGouHomeView.m */; };
 		77100D4E1CD9E70A009D8C82 /* Articlel.m in Sources */ = {isa = PBXBuildFile; fileRef = 77100D4D1CD9E70A009D8C82 /* Articlel.m */; };
+		77112254230261BB00075A4D /* MyAccountOrderListDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77112253230261BB00075A4D /* MyAccountOrderListDataController.m */; };
+		771122572302638C00075A4D /* MyAccountFanLiOrderListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 771122562302638C00075A4D /* MyAccountFanLiOrderListModel.m */; };
+		7711225A23028EDB00075A4D /* MyAccountTXJLDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7711225923028EDB00075A4D /* MyAccountTXJLDataController.m */; };
+		7711225D2302910C00075A4D /* MyAccountTXJLListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7711225C2302910C00075A4D /* MyAccountTXJLListModel.m */; };
 		771302361CF5A36400E47D8F /* ic_no_network@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 771302351CF5A36400E47D8F /* ic_no_network@2x.png */; };
 		77143CEC22CF3C050020639E /* OneUserMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77143CEB22CF3C050020639E /* OneUserMainView.m */; };
 		77143CF022CF44B60020639E /* OneUserMainHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77143CEF22CF44B60020639E /* OneUserMainHeaderView.m */; };
@@ -931,6 +935,8 @@
 		77D2366221BA6E9600C0B6DA /* GuiGeLianXiModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D2366121BA6E9600C0B6DA /* GuiGeLianXiModel.m */; };
 		77D6EAF51CEB057E008966F6 /* CLocationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D6EAF41CEB057E008966F6 /* CLocationHelper.m */; };
 		77D7236620BD55D8000C1B1A /* MyShareTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D7236520BD55D8000C1B1A /* MyShareTableViewController.m */; };
+		77D7F6E123010A5400D9D67F /* OneUserShareBuyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D7F6E023010A5400D9D67F /* OneUserShareBuyController.m */; };
+		77D7F6E4230153A500D9D67F /* MyAccountDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D7F6E3230153A500D9D67F /* MyAccountDataController.m */; };
 		77D836241EFB7B8F0002FA03 /* MDBShareActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D836231EFB7B8F0002FA03 /* MDBShareActionSheet.m */; };
 		77DAF55E20E345F200F8D5C1 /* Home644TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DAF55D20E345F200F8D5C1 /* Home644TableViewController.m */; };
 		77DAF56820E38B2D00F8D5C1 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DAF56320E38B2C00F8D5C1 /* TFHpple.m */; };
@@ -1403,6 +1409,14 @@
 		77100884229400CF00AFA0DD /* ZiZhuDaiGouHomeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZiZhuDaiGouHomeView.m; sourceTree = "<group>"; };
 		77100D4C1CD9E70A009D8C82 /* Articlel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Articlel.h; sourceTree = "<group>"; };
 		77100D4D1CD9E70A009D8C82 /* Articlel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Articlel.m; sourceTree = "<group>"; };
+		77112252230261BB00075A4D /* MyAccountOrderListDataController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyAccountOrderListDataController.h; sourceTree = "<group>"; };
+		77112253230261BB00075A4D /* MyAccountOrderListDataController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyAccountOrderListDataController.m; sourceTree = "<group>"; };
+		771122552302638C00075A4D /* MyAccountFanLiOrderListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyAccountFanLiOrderListModel.h; sourceTree = "<group>"; };
+		771122562302638C00075A4D /* MyAccountFanLiOrderListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyAccountFanLiOrderListModel.m; sourceTree = "<group>"; };
+		7711225823028EDB00075A4D /* MyAccountTXJLDataController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyAccountTXJLDataController.h; sourceTree = "<group>"; };
+		7711225923028EDB00075A4D /* MyAccountTXJLDataController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyAccountTXJLDataController.m; sourceTree = "<group>"; };
+		7711225B2302910C00075A4D /* MyAccountTXJLListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyAccountTXJLListModel.h; sourceTree = "<group>"; };
+		7711225C2302910C00075A4D /* MyAccountTXJLListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyAccountTXJLListModel.m; sourceTree = "<group>"; };
 		771302351CF5A36400E47D8F /* ic_no_network@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_no_network@2x.png"; sourceTree = "<group>"; };
 		77143CEA22CF3C050020639E /* OneUserMainView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OneUserMainView.h; sourceTree = "<group>"; };
 		77143CEB22CF3C050020639E /* OneUserMainView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OneUserMainView.m; sourceTree = "<group>"; };
@@ -2692,6 +2706,10 @@
 		77D6EAF41CEB057E008966F6 /* CLocationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLocationHelper.m; sourceTree = "<group>"; };
 		77D7236420BD55D8000C1B1A /* MyShareTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyShareTableViewController.h; sourceTree = "<group>"; };
 		77D7236520BD55D8000C1B1A /* MyShareTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyShareTableViewController.m; sourceTree = "<group>"; };
+		77D7F6DF23010A5400D9D67F /* OneUserShareBuyController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OneUserShareBuyController.h; sourceTree = "<group>"; };
+		77D7F6E023010A5400D9D67F /* OneUserShareBuyController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OneUserShareBuyController.m; sourceTree = "<group>"; };
+		77D7F6E2230153A500D9D67F /* MyAccountDataController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyAccountDataController.h; sourceTree = "<group>"; };
+		77D7F6E3230153A500D9D67F /* MyAccountDataController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyAccountDataController.m; sourceTree = "<group>"; };
 		77D836221EFB7B8F0002FA03 /* MDBShareActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDBShareActionSheet.h; sourceTree = "<group>"; };
 		77D836231EFB7B8F0002FA03 /* MDBShareActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDBShareActionSheet.m; sourceTree = "<group>"; };
 		77DAF55C20E345F200F8D5C1 /* Home644TableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Home644TableViewController.h; sourceTree = "<group>"; };
@@ -5005,6 +5023,8 @@
 		77826F2322D5C612006C4BFE /* DataController */ = {
 			isa = PBXGroup;
 			children = (
+				77D7F6E2230153A500D9D67F /* MyAccountDataController.h */,
+				77D7F6E3230153A500D9D67F /* MyAccountDataController.m */,
 			);
 			path = DataController;
 			sourceTree = "<group>";
@@ -6144,6 +6164,8 @@
 				77C18D1B22E00706001411BA /* OneUserShareBuyViewController.m */,
 				77C18D1D22E0074F001411BA /* OneUserShareBuyView.h */,
 				77C18D1E22E0074F001411BA /* OneUserShareBuyView.m */,
+				77D7F6DF23010A5400D9D67F /* OneUserShareBuyController.h */,
+				77D7F6E023010A5400D9D67F /* OneUserShareBuyController.m */,
 			);
 			path = "分享购买";
 			sourceTree = "<group>";
@@ -7308,6 +7330,8 @@
 		77F681EA22DC0C8E00B15C9A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7711225B2302910C00075A4D /* MyAccountTXJLListModel.h */,
+				7711225C2302910C00075A4D /* MyAccountTXJLListModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -7315,6 +7339,8 @@
 		77F681EB22DC0C9500B15C9A /* DataController */ = {
 			isa = PBXGroup;
 			children = (
+				7711225823028EDB00075A4D /* MyAccountTXJLDataController.h */,
+				7711225923028EDB00075A4D /* MyAccountTXJLDataController.m */,
 			);
 			path = DataController;
 			sourceTree = "<group>";
@@ -7322,6 +7348,8 @@
 		77F681EC22DC0C9E00B15C9A /* DataController */ = {
 			isa = PBXGroup;
 			children = (
+				77112252230261BB00075A4D /* MyAccountOrderListDataController.h */,
+				77112253230261BB00075A4D /* MyAccountOrderListDataController.m */,
 			);
 			path = DataController;
 			sourceTree = "<group>";
@@ -7329,6 +7357,8 @@
 		77F681ED22DC0CA200B15C9A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				771122552302638C00075A4D /* MyAccountFanLiOrderListModel.h */,
+				771122562302638C00075A4D /* MyAccountFanLiOrderListModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -8274,6 +8304,7 @@
 				77C37B221F1DE47B00DDEED0 /* VKLoginViewController.m in Sources */,
 				77C37B351F1DE47B00DDEED0 /* MyInformDetailViewController.m in Sources */,
 				7763489420DCF699003E38FD /* UITableView+FDTemplateLayoutCellDebug.m in Sources */,
+				7711225D2302910C00075A4D /* MyAccountTXJLListModel.m in Sources */,
 				A439F98D1F9653D400118AFF /* BargainRankSubjectView.m in Sources */,
 				771933501EC19B3000B87C6D /* CheapOrOutsideSubjectsViewModel.m in Sources */,
 				77C37B0E1F1DE47B00DDEED0 /* AddressListSubjectView.m in Sources */,
@@ -8290,6 +8321,7 @@
 				777DB9F821D085390068D18F /* MyGoodsCouponViewController.m in Sources */,
 				77C37B2E1F1DE47B00DDEED0 /* ResetPasswordSubjectView.m in Sources */,
 				77A9E975207B0CD9006BDA63 /* OrderLogisticsModel.m in Sources */,
+				77D7F6E123010A5400D9D67F /* OneUserShareBuyController.m in Sources */,
 				77365CEB1F739F3A00C8E818 /* RecommendedAttentionView.m in Sources */,
 				7706A2681F29EE630097D7D1 /* CommentWebView.m in Sources */,
 				77E529491D484EA9008CF89B /* BrokeHomeViewController.m in Sources */,
@@ -8380,6 +8412,7 @@
 				775DAA1F1F0F2033005DE331 /* CMPopTipView.m in Sources */,
 				7734921F1D4A1043002BFE2D /* BrokeSuccessSubjectView.m in Sources */,
 				7753A1181DE3E9920060339D /* ZLMultiLevelMenuTableViewCell.m in Sources */,
+				771122572302638C00075A4D /* MyAccountFanLiOrderListModel.m in Sources */,
 				77C37B491F1DE47B00DDEED0 /* RemarkDataController.m in Sources */,
 				775DAA201F0F2033005DE331 /* ZLJFeaturesGuideView.m in Sources */,
 				77F920C92270445D00F768CF /* ChangePhoneNewViewController.m in Sources */,
@@ -8503,6 +8536,7 @@
 				7719334A1EC19B3000B87C6D /* HandleAlertView.m in Sources */,
 				7794D91321E87B2E00B10FE7 /* SSCardModel.m in Sources */,
 				772D9F851F04ED1C0040EB86 /* SocialBoundDataController.m in Sources */,
+				7711225A23028EDB00075A4D /* MyAccountTXJLDataController.m in Sources */,
 				777433022074AD12004D17AA /* MyOrderTableViewController.m in Sources */,
 				7773BF5822365A820033D1BB /* OtherLoginBangDingAccountViewController.m in Sources */,
 				77F920B922703B9100F768CF /* AccountAndSecurityViewController.m in Sources */,
@@ -8903,6 +8937,7 @@
 				77EED5551E4B0104009C0945 /* RemarkStatusLayout.m in Sources */,
 				7763489520DCF699003E38FD /* UITableView+FDIndexPathHeightCache.m in Sources */,
 				777057191CAA73EF00ECF95A /* FSCutViewController.m in Sources */,
+				77112254230261BB00075A4D /* MyAccountOrderListDataController.m in Sources */,
 				77C37B321F1DE47B00DDEED0 /* MyBrokeNewsViewController.m in Sources */,
 				773492131D49A447002BFE2D /* BrokeShareDataController.m in Sources */,
 				7766CFC6215C6E0F00591D4E /* DaiGouReMenShopViewController.m in Sources */,
@@ -8925,6 +8960,7 @@
 				7759B5722265B34A002CD6B6 /* MyOrderSearchListTableViewController.m in Sources */,
 				77C37B1D1F1DE47B00DDEED0 /* InviteFriendSubjectView.m in Sources */,
 				773492161D49B12D002BFE2D /* BrokeTypeActionSheetView.m in Sources */,
+				77D7F6E4230153A500D9D67F /* MyAccountDataController.m in Sources */,
 				77986324206DCE1F002C2531 /* DaiGouXiaDanMainView.m in Sources */,
 				7749CA7B1F7E478C0016DE42 /* VTMagicView.m in Sources */,
 				77EB844B1F4C210F0085ADB3 /* CheapFeaturedViewCell.m in Sources */,

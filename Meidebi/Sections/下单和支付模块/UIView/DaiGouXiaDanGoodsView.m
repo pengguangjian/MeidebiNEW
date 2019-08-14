@@ -118,7 +118,7 @@
     OrderShopInfoModel *model = _arrgoods[indexPath.section];
     
     cell.model = model.arrgoods[indexPath.row];
-    
+    cell.fcarriage_discount = _fcarriage_discount;
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

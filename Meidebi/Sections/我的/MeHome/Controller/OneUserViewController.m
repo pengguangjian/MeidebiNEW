@@ -374,7 +374,7 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
                     [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"emailcomfirm"]] forKey:@"cn.com.meidebi.www.user_emailcomfirm_key"];
                     [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"username"]] forKey:@"cn.com.meidebi.www.user_name_key"];
                     
-                    [[MDB_UserDefault defaultInstance]setisSignyes:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"isSign"]] coper:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"copper"]] name: [NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"name"]] nickName: [NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"nickname"]] coin:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"coins"]] fans:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"fansNum"]] follow:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"followNum"]] contribution:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"contribution"]] content:nil userPhoto:[[dicAll objectForKey:@"data"] objectForKey:@"headImgUrl"] userID:[[dicAll objectForKey:@"data"] objectForKey:@"userid"]];
+                    [[MDB_UserDefault defaultInstance]setisSignyes:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"isSign"]] coper:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"copper"]] name: [NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"name"]] nickName: [NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"nickname"]] coin:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"coins"]] fans:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"fansNum"]] follow:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"followNum"]] contribution:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"contribution"]] content:nil userPhoto:[[dicAll objectForKey:@"data"] objectForKey:@"headImgUrl"] userID:[[dicAll objectForKey:@"data"] objectForKey:@"userid"] balance:[[dicAll objectForKey:@"data"] objectForKey:@"balance"] commission_balance:[[dicAll objectForKey:@"data"] objectForKey:@"reward_balance"] goods_coupon_balance:[[dicAll objectForKey:@"data"] objectForKey:@"goods_coupon_balance"]];
                 }
                 
                 needPhone = [NSString nullToString:dicAll[@"data"][@"needPhone"]].integerValue;
@@ -401,6 +401,8 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
                 
                 
                 NSString *strmessag = [[dicAll objectForKey:@"data"] objectForKey:@"messagenum"];
+                
+                [[NSUserDefaults standardUserDefaults] setObject:[NSString nullToString:strmessag] forKey:@"messagenum"];
                 
                 int itemo = _commentnum.intValue+_zannum.intValue+strmessag.intValue+_ordernum.intValue;
                 

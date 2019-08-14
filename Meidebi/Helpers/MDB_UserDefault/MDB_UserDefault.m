@@ -360,7 +360,7 @@ static NSString * const kAppHotLastNewID = @"cn.com.meidebi.kAppHotLastNewID";
 
 
 
-- (void)setisSignyes:(NSString *)isSign coper:(NSString *)coper name:(NSString *)name nickName:(NSString *)nickName coin:(NSString *)coin fans:(NSString *)fans follow:(NSString *)follow contribution:(NSString *)contribution content:(NSString *)contet userPhoto:(NSString *)photoLink userID:(NSString *)userID{
+- (void)setisSignyes:(NSString *)isSign coper:(NSString *)coper name:(NSString *)name nickName:(NSString *)nickName coin:(NSString *)coin fans:(NSString *)fans follow:(NSString *)follow contribution:(NSString *)contribution content:(NSString *)contet userPhoto:(NSString *)photoLink userID:(NSString *)userID balance:(NSString *)balance commission_balance:(NSString *)commission_balance goods_coupon_balance:(NSString *)goods_coupon_balance{
      NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
      [userDefaults setObject:[NSString stringWithFormat:@"%@",isSign] forKey:kUserIssignKey];
     [userDefaults synchronize];
@@ -432,9 +432,23 @@ static NSString * const kAppHotLastNewID = @"cn.com.meidebi.kAppHotLastNewID";
     _telphone = [userDefaults objectForKey:kUserTelphoneKey];
     _emailcomfirm = [userDefaults objectForKey:kUserEmailcomfirmKey];
     
+    _balance = [self NoStringChangToNumber:balance];
+    _commission_balance = [self NoStringChangToNumber:commission_balance];
+    _goods_coupon_balance = [self NoStringChangToNumber:goods_coupon_balance];
+    
 //    _userphoto = photoLink;
 //    [userDefaults synchronize];
 }
+
+-(NSString *)NoStringChangToNumber:(NSString *)str
+{
+    if([NSString nullToString:str].length == 0)
+    {
+        return @"0.00";
+    }
+    return str;
+}
+
 - (NSString *)getIstimeSign{
     NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
     return [userDefaults objectForKey:kIsginContent];

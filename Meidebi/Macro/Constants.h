@@ -19,12 +19,12 @@ typedef NS_ENUM(NSInteger,RegCodeType) {
 
 ///http://192.168.1.117/index.php/
 //#define URL_HR @"http://api.mdb6.com/new.php/"///108 102  api.mdb5.com
-//#define URL_HR @"http://192.168.1.218/index.php/"///108 102  api.mdb5.com
+#define URL_HR @"http://192.168.1.218/index.php/"///108 102  api.mdb5.com
 //#define URL_HR @"http://192.168.1.142/"///108 102  api.mdb5.com
 //#define URL_HR @"http://api.mdb5.com/index.php/"///108 102
 //#define URL_HR @"http://api.mdb6.com/"///108 102
 //#define URL_HR @"http://114.55.101.95:80/new.php/"
-#define URL_HR @"https://a.meidebi.com/new.php/"
+//#define URL_HR @"https://a.meidebi.com/new.php/"
 
 //单个链接接口（包含单品，优惠活动，优惠卷活动）
 #define URL_onlink [NSString stringWithFormat:@"%@Share-onelink",URL_HR]
@@ -700,5 +700,30 @@ typedef NS_ENUM(NSInteger,RegCodeType) {
 
 ///消息 获取代购订单 晒单时要用到的信息
 #define URL_Unboxing_orderShowDanData [NSString stringWithFormat:@"%@V2-Unboxing-orderShowDanData",URL_HR]
+
+///分享购买 获取我的返利和等级信息
+#define URL_Popularize_Ambassador [NSString stringWithFormat:@"%@v2-popularize-ambassador",URL_HR]
+
+///帐户余额
+#define URL_Popularize_Account_balance [NSString stringWithFormat:@"%@v2-popularize-account_balance",URL_HR]
+
+
+///订单明细列表
+#define URL_Popularize_Order_Detailed [NSString stringWithFormat:@"%@v2-popularize-order_detailed",URL_HR]
+
+///返利明细主页
+#define URL_Popularize_Commission_Detailed [NSString stringWithFormat:@"%@v2-popularize-commission_detailed",URL_HR]
+
+///提现记录
+#define URL_Popularize_Tixian_Record [NSString stringWithFormat:@"%@v2-popularize-tixian_record",URL_HR]
+
+
+///提现
+#define URL_Popularize_Tixian [NSString stringWithFormat:@"%@v2-popularize-tixian",URL_HR]
+
+///上次提现账号等信息
+#define URL_Popularize_Last_Tixian_Success_Info [NSString stringWithFormat:@"%@v2-popularize-last_tixian_success_info",URL_HR]
+
+
 
 

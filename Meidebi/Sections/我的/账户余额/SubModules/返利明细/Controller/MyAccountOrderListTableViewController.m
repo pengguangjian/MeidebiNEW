@@ -14,10 +14,16 @@
 
 #import "MDBEmptyView.h"
 
+#import "MyAccountOrderListDataController.h"
+
+
 @interface MyAccountOrderListTableViewController ()
 {
     int ipage;
     
+    MyAccountOrderListDataController *dataControl;
+    
+    NSMutableArray *arrdata;
     
 }
 
@@ -38,33 +44,71 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    ipage = 1;
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-//    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-//        ipage = 1;
-//        [self loadData];
-//    }];
-//    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-//        ipage++;
-//        [self loadData];
-//    }];
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        ipage = 1;
+        [self loadData];
+    }];
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        ipage++;
+        [self loadData];
+    }];
     self.tableView.estimatedRowHeight = 0;
     self.tableView.estimatedSectionHeaderHeight = 0;
     self.tableView.estimatedSectionFooterHeight = 0;
+    
+    [self loadData];
     
 }
 
 -(void)loadData
 {
-    
+    if(dataControl==nil)
+    {
+        dataControl = [[MyAccountOrderListDataController alloc] init];
+    }
+    NSDictionary *dicpush = @{@"userkey":[NSString nullToString:[MDB_UserDefault defaultInstance].usertoken],@"type":_type,@"p":[NSString stringWithFormat:@"%d",ipage]};
+    [dataControl requestFanLiOrderListInfoDataInView:self.view dicpush:dicpush Callback:^(NSError *error, BOOL state, NSString *describle) {
+        if(self.tableView.mj_header.refreshing)
+        {
+            [self.tableView.mj_header endRefreshing];
+        }
+        if(self.tableView.mj_footer.refreshing)
+        {
+            [self.tableView.mj_footer endRefreshing];
+        }
+        if(ipage==1){
+            arrdata = [NSMutableArray new];
+        }
+        
+        if(state)
+        {
+            for(NSDictionary *dicitem in dataControl.arrresult)
+            {
+                MyAccountFanLiOrderListModel *model = [MyAccountFanLiOrderListModel new];
+                [model modelValue:dicitem];
+                [arrdata addObject:model];
+            }
+        }
+        [self.tableView reloadData];
+        [_emptyView setHidden:YES];
+        if(arrdata.count==0)
+        {
+            [_emptyView setHidden:NO];
+        }
+        
+    }];
 }
 
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return arrdata.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return section+1;
+    MyAccountFanLiOrderListModel *model = arrdata[section];
+    return model.arrmodel.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -75,6 +119,8 @@
         cell = [[MyAccountOrderListTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:strcell];
     }
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    MyAccountFanLiOrderListModel *model = arrdata[indexPath.section];
+    cell.model = model.arrmodel[indexPath.row];
     
     return cell;
 }
@@ -104,6 +150,8 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenW, 80)];
     [view setBackgroundColor:[UIColor whiteColor]];
     
+    MyAccountFanLiOrderListModel *model = arrdata[section];
+    
     UILabel *lbgjname = [[UILabel alloc] init];
     [lbgjname setText:@"国际运费金额"];
     [lbgjname setTextAlignment:NSTextAlignmentLeft];
@@ -117,7 +165,7 @@
     }];
     
     UILabel *lbgjmoney = [[UILabel alloc] init];
-    [lbgjmoney setText:@"￥100.00"];
+    [lbgjmoney setText:[NSString stringWithFormat:@"￥%@",model.carriage_amount]];
     [lbgjmoney setTextAlignment:NSTextAlignmentLeft];
     [lbgjmoney setTextColor:RGB(0, 0, 0)];
     [lbgjmoney setFont:[UIFont systemFontOfSize:15]];
@@ -129,7 +177,7 @@
     }];
     
     UILabel *lbtime = [[UILabel alloc] init];
-    [lbtime setText:@"2019.07.10 18:00:00"];
+    [lbtime setText:model.create_time];
     [lbtime setTextAlignment:NSTextAlignmentLeft];
     [lbtime setTextColor:RGB(150, 150, 150)];
     [lbtime setFont:[UIFont systemFontOfSize:12]];
@@ -152,7 +200,7 @@
         make.size.sizeOffset(CGSizeMake(150, 15));
     }];
     UILabel *lbyugumoney = [[UILabel alloc] init];
-    [lbyugumoney setText:@"￥10.00"];
+    [lbyugumoney setText:[NSString stringWithFormat:@"￥%@",model.estimated_revenue]];
     [lbyugumoney setTextAlignment:NSTextAlignmentLeft];
     [lbyugumoney setTextColor:RGB(255, 20, 20)];
     [lbyugumoney setFont:[UIFont systemFontOfSize:15]];

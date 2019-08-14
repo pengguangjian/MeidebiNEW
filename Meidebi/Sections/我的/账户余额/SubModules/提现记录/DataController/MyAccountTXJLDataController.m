@@ -1,23 +1,23 @@
 //
-//  MyGoodsCouponDataController.m
+//  MyAccountTXJLDataController.m
 //  Meidebi
 //
-//  Created by mdb-losaic on 2018/12/28.
-//  Copyright © 2018年 meidebi. All rights reserved.
+//  Created by mdb-losaic on 2019/8/13.
+//  Copyright © 2019 meidebi. All rights reserved.
 //
 
-#import "MyGoodsCouponDataController.h"
+#import "MyAccountTXJLDataController.h"
 #import "HTTPManager.h"
 
-@implementation MyGoodsCouponDataController
 
-// 我的商品券优惠券列表
-- (void)requestmyyouhuiListInView:(UIView *)view
+
+@implementation MyAccountTXJLDataController
+/// 提现记录
+- (void)requestTXJLInfoDataInView:(UIView *)view
                           dicpush:(NSDictionary *)dicpush
                          Callback:(completeCallback)callback
 {
-    
-    [HTTPManager sendGETRequestUrlToService:My_JiangLiYouHuiQuan_all withParametersDictionry:dicpush view:view completeHandle:^(NSURLSessionTask *opration, id responceObjct, NSError *error) {
+    [HTTPManager sendRequestUrlToService:URL_Popularize_Tixian_Record withParametersDictionry:dicpush view:view completeHandle:^(NSURLSessionTask *opration, id responceObjct, NSError *error) {
         BOOL state = NO;
         NSString *describle = @"";
         if (responceObjct==nil) {
@@ -27,9 +27,9 @@
             NSDictionary *dicAll=[str JSONValue];
             describle = dicAll[@"info"];
             if ([[NSString nullToString:dicAll[@"status"]] intValue] == 1) {
-                NSArray *dictemt=[dicAll objectForKey:@"data"];
-                if ([dictemt isKindOfClass:[NSArray class]]) {
-                    _arrList = dictemt;
+                if([[dicAll objectForKey:@"data"] isKindOfClass:[NSArray class]])
+                {
+                    self.arrresult = [dicAll objectForKey:@"data"];
                     state = YES;
                 }
             }
@@ -37,7 +37,7 @@
         callback(error,state,describle);
     }];
     
-    
 }
+
 
 @end

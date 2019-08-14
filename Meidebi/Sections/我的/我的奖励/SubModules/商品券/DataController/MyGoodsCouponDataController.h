@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic , retain) NSArray *arrList;
 
-// 用户奖励金统计
+/// 我的商品券优惠券列表
 - (void)requestmyyouhuiListInView:(UIView *)view
                        dicpush:(NSDictionary *)dicpush
                       Callback:(completeCallback)callback;

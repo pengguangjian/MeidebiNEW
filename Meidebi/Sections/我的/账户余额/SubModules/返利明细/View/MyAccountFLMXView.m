@@ -11,6 +11,8 @@
 #import "MenuView.h"
 #import "MyAccountOrderListViewController.h"
 
+#import "MyAccountOrderListDataController.h"
+
 @interface MyAccountFLMXView ()<MenuDelegate>
 {
     
@@ -18,6 +20,23 @@
     
     UIView *viewnowday;
     UIView *viewlastday;
+    
+    MyAccountOrderListDataController *dataControl;
+    
+    ///本月有效返利
+    UILabel *lbnowyxfanli;
+    ///上月有效返利
+    UILabel *lblastyxfanli;
+    ///本月预估返利
+    UILabel *lbnowygfanli;
+    ///累计返利
+    UILabel *lbleijifanli;
+    
+    ///今日lb
+    NSMutableArray *arrtodaylb;
+    ///昨日lb
+    NSMutableArray *arryesterdaylb;
+    
 }
 @end
 
@@ -36,8 +55,79 @@
     if(self = [super initWithFrame:frame])
     {
         [self drawUI];
+        
+        dataControl = [MyAccountOrderListDataController new];
+        [self loadData];
     }
     return self;
+}
+
+-(void)loadData
+{
+    NSDictionary *dicpush = @{@"userkey":[NSString nullToString:[MDB_UserDefault defaultInstance].usertoken]};
+    [dataControl requestFanLiMainInfoDataInView:self dicpush:dicpush Callback:^(NSError *error, BOOL state, NSString *describle) {
+       if(state)
+       {
+           [self loadValue];
+       }
+        else
+        {
+            [MDB_UserDefault showNotifyHUDwithtext:describle inView:self];
+        }
+    }];
+}
+
+-(void)loadValue
+{
+    [lbnowyxfanli setText:[NSString stringWithFormat:@"%@",[NSString nullToString:[dataControl.dicresult objectForKey:@"this_month_effective_commission"]]]];
+    
+    [lblastyxfanli setText:[NSString stringWithFormat:@"%@",[NSString nullToString:[dataControl.dicresult objectForKey:@"last_month_effective_commission"]]]];
+    
+    
+    [lbnowygfanli setText:[NSString stringWithFormat:@"%@",[NSString nullToString:[dataControl.dicresult objectForKey:@"this_month_estimate_commission"]]]];
+    
+    
+    [lbleijifanli setText:[NSString stringWithFormat:@"%@",[NSString nullToString:[dataControl.dicresult objectForKey:@"total_commission"]]]];
+    
+    
+    NSDictionary *dictoday = [dataControl.dicresult objectForKey:@"today"];
+    for(int i = 0; i < arrtodaylb.count; i++)
+    {
+        UILabel *lbitem = arrtodaylb[i];
+        if(i==0)
+        {
+            [lbitem setText:[NSString stringWithFormat:@"%@",[NSString nullToString:[dictoday objectForKey:@"estimate_commission"]]]];
+        }
+        else if (i==1)
+        {
+            [lbitem setText:[NSString stringWithFormat:@"%@",[NSString nullToString:[dictoday objectForKey:@"settlement_commission"]]]];
+        }
+        else if (i == 2)
+        {
+            [lbitem setText:[NSString stringWithFormat:@"%@",[NSString nullToString:[dictoday objectForKey:@"pay_order_number"]]]];
+        }
+        
+    }
+    
+    NSDictionary *dicyesterday = [dataControl.dicresult objectForKey:@"yesterday"];
+    for(int i = 0; i < arryesterdaylb.count; i++)
+    {
+        UILabel *lbitem = arryesterdaylb[i];
+        if(i==0)
+        {
+            [lbitem setText:[NSString stringWithFormat:@"%@",[NSString nullToString:[dicyesterday objectForKey:@"estimate_commission"]]]];
+        }
+        else if (i==1)
+        {
+            [lbitem setText:[NSString stringWithFormat:@"%@",[NSString nullToString:[dicyesterday objectForKey:@"settlement_commission"]]]];
+        }
+        else if (i == 2)
+        {
+            [lbitem setText:[NSString stringWithFormat:@"%@",[NSString nullToString:[dicyesterday objectForKey:@"pay_order_number"]]]];
+        }
+        
+    }
+    
 }
 
 -(void)drawUI
@@ -58,7 +148,7 @@
         make.width.offset(kMainScreenW/2.0);
         make.top.offset(30);
     }];
-    [self drawitemView:viewnowyg andtitel:@"本月有效返利" andValue:@"￥1000.00"];
+    lbnowygfanli = [self drawitemView:viewnowyg andtitel:@"本月有效返利" andValue:@"￥0.00"];
     
     
     UIView *viewlastyg = [[UIView alloc] init];
@@ -68,7 +158,7 @@
         make.width.offset(kMainScreenW/2.0);
         make.top.equalTo(viewnowyg);
     }];
-    [self drawitemView:viewlastyg andtitel:@"上月有效返利" andValue:@"￥1000.00"];
+    lblastyxfanli = [self drawitemView:viewlastyg andtitel:@"上月有效返利" andValue:@"￥0.00"];
     
     
     UIView *viewnow = [[UIView alloc] init];
@@ -78,7 +168,7 @@
         make.width.equalTo(viewnowyg);
         make.top.equalTo(viewnowyg.mas_bottom).offset(20);
     }];
-    [self drawitemView:viewnow andtitel:@"本月预估返利" andValue:@"￥1000.00"];
+    lbnowygfanli = [self drawitemView:viewnow andtitel:@"本月预估返利" andValue:@"￥0.00"];
     
     UIView *viewlast = [[UIView alloc] init];
     [scvback addSubview:viewlast];
@@ -87,7 +177,7 @@
         make.width.equalTo(viewnow);
         make.top.equalTo(viewnow);
     }];
-    [self drawitemView:viewlast andtitel:@"累计返利" andValue:@"￥1000.00"];
+    lbleijifanli = [self drawitemView:viewlast andtitel:@"累计返利" andValue:@"￥0.00"];
     
     
     UIView *viewddmx = [[UIView alloc] init];
@@ -138,7 +228,7 @@
         make.left.right.equalTo(menuview);
         make.top.equalTo(menuview.mas_bottom);
     }];
-    [self drawDayMoney:viewnowday];
+    arrtodaylb = [self drawDayMoney:viewnowday];
     
     viewlastday = [[UIView alloc] init];
     [scvback addSubview: viewlastday];
@@ -146,7 +236,9 @@
         make.left.right.equalTo(menuview);
         make.top.equalTo(menuview.mas_bottom);
     }];
-    [self drawDayMoney:viewlastday];
+    
+    arryesterdaylb = [self drawDayMoney:viewlastday];
+    
     [viewlastday setHidden:YES];
     [scvback mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(viewnowday.mas_bottom);
@@ -154,8 +246,9 @@
 }
 
 
--(void)drawDayMoney:(UIView *)view
+-(NSMutableArray *)drawDayMoney:(UIView *)view
 {
+    NSMutableArray *arrback = [NSMutableArray new];
     
     UIView *viewyg = [[UIView alloc] init];
     [view addSubview:viewyg];
@@ -164,7 +257,7 @@
         make.width.offset(kMainScreenW/3.0);
         make.top.offset(30);
     }];
-    [self drawitemView:viewyg andtitel:@"预估收入" andValue:@"￥1000.00"];
+    UILabel *lbyg = [self drawitemView:viewyg andtitel:@"预估收入" andValue:@"￥0.00"];
     
     UIView *viewjs = [[UIView alloc] init];
     [view addSubview:viewjs];
@@ -173,7 +266,7 @@
         make.width.offset(kMainScreenW/3.0);
         make.top.equalTo(viewyg);
     }];
-    [self drawitemView:viewjs andtitel:@"结算收入" andValue:@"￥1000.00"];
+    UILabel *lbjiesuan = [self drawitemView:viewjs andtitel:@"结算收入" andValue:@"￥0.00"];
     
     UIView *viewnumber = [[UIView alloc] init];
     [view addSubview:viewnumber];
@@ -182,19 +275,23 @@
         make.width.offset(kMainScreenW/3.0);
         make.top.equalTo(viewyg);
     }];
-    [self drawitemView:viewnumber andtitel:@"付款笔数" andValue:@"10"];
+    UILabel *lbfk = [self drawitemView:viewnumber andtitel:@"付款笔数" andValue:@"0"];
+    
+    [arrback addObject:lbyg];
+    [arrback addObject:lbjiesuan];
+    [arrback addObject:lbfk];
     
     
     [view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(viewnumber.mas_bottom).offset(20);
     }];
-    
+    return arrback;
 }
 
 
 
 
--(void)drawitemView:(UIView *)view andtitel:(NSString *)title andValue:(NSString *)value
+-(UILabel *)drawitemView:(UIView *)view andtitel:(NSString *)title andValue:(NSString *)value
 {
     
     UILabel *lbtitle = [[UILabel alloc] init];
@@ -226,6 +323,8 @@
     [view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(lbvalue.mas_bottom);
     }];
+    
+    return lbvalue;
 }
 
 

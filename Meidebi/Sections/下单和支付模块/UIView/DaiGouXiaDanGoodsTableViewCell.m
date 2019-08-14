@@ -504,13 +504,19 @@
     }
     else
     {
+        float ftemp = _fcarriage_discount;
+        if(_model.isspotgoods.integerValue == 1)
+        {
+            ftemp = 1;
+        }
+        
         if(modeltemp.transfermoney.floatValue>0)
         {
-            [lbotherMoney setText:[NSString stringWithFormat:@"本土邮费%@元，转运费%@元，税费%@元（均为预估，多退少补）",modeltemp.hpostage,modeltemp.transfermoney,modeltemp.tariff]];
+            [lbotherMoney setText:[NSString stringWithFormat:@"本土邮费%.2lf元，转运费%.2lf元，税费%@元（均为预估，多退少补）",modeltemp.hpostage.floatValue*ftemp,modeltemp.transfermoney.floatValue*ftemp,modeltemp.tariff]];
         }
         else
         {
-            [lbotherMoney setText:[NSString stringWithFormat:@"本土邮费%@元，税费%@元（均为预估，多退少补）",modeltemp.hpostage,modeltemp.tariff]];
+            [lbotherMoney setText:[NSString stringWithFormat:@"本土邮费%.2lf元，税费%@元（均为预估，多退少补）",modeltemp.hpostage.floatValue*ftemp,modeltemp.tariff]];
         }
         
     }

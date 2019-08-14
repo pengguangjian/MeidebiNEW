@@ -25,4 +25,7 @@
 
 @property (nonatomic , assign) int igoodsnomonum;
 
+//////国外转运费和国外本土邮费折扣
+@property (nonatomic , assign) float fcarriage_discount;
+
 @end

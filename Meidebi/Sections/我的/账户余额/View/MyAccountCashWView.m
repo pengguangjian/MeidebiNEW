@@ -10,11 +10,25 @@
 #import "MDB_UserDefault.h"
 #import <ShareSDKExtension/SSEThirdPartyLoginHelper.h>
 
+#import "MyAccountDataController.h"
 
-
-@interface MyAccountCashWView ()
+@interface MyAccountCashWView ()<UITextFieldDelegate>
 {
+    UILabel *lbprice;
+    
+    UILabel *lbpricemx;
+    
     UITextField *fieldMoney;
+    
+    UITextField *fieldname;
+    
+    UITextField *fieldaccount;
+    
+    MyAccountDataController *dataControl;
+    
+    ///可提现金额
+    float fktxmoney;
+    
 }
 @end
 
@@ -31,9 +45,62 @@
 {
     if(self = [super initWithFrame:frame])
     {
+        if(dataControl==nil)
+        {
+            dataControl = [MyAccountDataController new];
+        }
         [self drawUI];
+        [self loadData];
     }
     return self;
+}
+
+
+-(void)loadData
+{
+    NSDictionary *dicpush = @{@"userkey":[NSString nullToString:[MDB_UserDefault defaultInstance].usertoken],
+                              @"tx_channel":@"alipay"
+                              };
+    [dataControl requestLastTiXianActionDataInView:self dicpush:dicpush Callback:^(NSError *error, BOOL state, NSString *describle) {
+       
+        if(state)
+        {
+            /*
+             "real_name" : null,
+             "account" : null,
+             "balance" : "0.00",
+             "not_balance_accounts" : "798.66"
+             */
+            [self loadValue];
+            
+            
+        }
+        else
+        {
+            [MDB_UserDefault showNotifyHUDwithtext:describle inView:self];
+        }
+    }];
+}
+
+-(void)loadValue
+{
+    NSString *strbalance = [NSString stringWithFormat:@"￥%@",[NSString nullToString:[dataControl.dicLastTixian objectForKey:@"balance"]]];
+    strbalance = [strbalance stringByReplacingOccurrencesOfString:@"," withString:@""];
+    
+    fktxmoney = [[strbalance stringByReplacingOccurrencesOfString:@"￥" withString:@""] floatValue];
+    
+    [lbprice setText:strbalance];
+    
+    [lbprice setAttributedText:[MDB_UserDefault arrstring:lbprice.text andstart:0 andend:1 andfont:[UIFont boldSystemFontOfSize:25] andcolor:[UIColor blackColor]]];
+    
+    NSString *strnot_balance_accounts = [NSString stringWithFormat:@"￥%@",[NSString nullToString:[dataControl.dicLastTixian objectForKey:@"not_balance_accounts"]]];
+    strnot_balance_accounts = [strnot_balance_accounts stringByReplacingOccurrencesOfString:@"," withString:@""];
+    
+    [lbpricemx setText:[NSString stringWithFormat:@"（可提现金额%@，%@待生效）",strbalance,strnot_balance_accounts]];
+    
+    [fieldaccount setText:[NSString nullToString:[dataControl.dicLastTixian objectForKey:@"account"]]];
+    [fieldname setText:[NSString nullToString:[dataControl.dicLastTixian objectForKey:@"real_name"]]];
+    
 }
 
 -(void)drawUI
@@ -109,7 +176,7 @@
     }];
     
     
-    UILabel *lbprice = [[UILabel alloc] init];
+    lbprice = [[UILabel alloc] init];
     [lbprice setText:@"￥0.00"];
     [lbprice setTextColor:[UIColor blackColor]];
     [lbprice setTextAlignment:NSTextAlignmentCenter];
@@ -123,11 +190,12 @@
     }];
     [lbprice setAttributedText:[MDB_UserDefault arrstring:lbprice.text andstart:0 andend:1 andfont:[UIFont boldSystemFontOfSize:25] andcolor:[UIColor blackColor]]];
     
-    UILabel *lbpricemx = [[UILabel alloc] init];
+    lbpricemx = [[UILabel alloc] init];
     [lbpricemx setText:@"（可提现金额￥0.0，￥0.0待生效）"];
     [lbpricemx setTextColor:RGB(150, 150, 150)];
     [lbpricemx setTextAlignment:NSTextAlignmentCenter];
     [lbpricemx setFont:[UIFont systemFontOfSize:14]];
+    [lbpricemx setNumberOfLines:2];
     [view addSubview:lbpricemx];
     [lbpricemx mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.offset(10);
@@ -183,6 +251,9 @@
     [fieldMoney setTextColor:[UIColor blackColor]];
     [fieldMoney setTextAlignment:NSTextAlignmentLeft];
     [fieldMoney setFont:[UIFont systemFontOfSize:14]];
+//    [fieldMoney setKeyboardType:UIKeyboardTypeNumberPad];
+    [fieldMoney setDelegate:self];
+    [fieldMoney setTag:0];
     [fieldMoney setPlaceholder:@"请输入提现金额"];
     [view addSubview:fieldMoney];
     [fieldMoney mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -190,6 +261,19 @@
         make.left.equalTo(lbyuan.mas_right);
         make.right.equalTo(view).offset(-10);
     }];
+    
+    UIButton *btalltixian = [[UIButton alloc] init];
+    [btalltixian setTitle:@"全部提现" forState:UIControlStateNormal];
+    [btalltixian setTitleColor:RGB(60, 60, 60) forState:UIControlStateNormal];
+    [btalltixian.titleLabel setFont:[UIFont systemFontOfSize:12]];
+    [view addSubview:btalltixian];
+    [btalltixian mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.bottom.equalTo(fieldMoney);
+        make.right.equalTo(fieldMoney);
+        make.width.offset(60);
+    }];
+    [btalltixian addTarget:self action:@selector(alltixianAction) forControlEvents:UIControlEventTouchUpInside];
+    
     
     UIView *viewtixianzh = [[UIView alloc] init];
     [viewtixianzh setBackgroundColor:RGB(250, 250, 250)];
@@ -201,7 +285,7 @@
     }];
     
     UILabel *lbtixianzg = [[UILabel alloc] init];
-    [lbtixianzg setText:@"提现账户"];
+    [lbtixianzg setText:@"提现账户(支付宝)"];
     [lbtixianzg setTextColor:[UIColor blackColor]];
     [lbtixianzg setTextAlignment:NSTextAlignmentLeft];
     [lbtixianzg setFont:[UIFont systemFontOfSize:14]];
@@ -212,7 +296,7 @@
         make.right.equalTo(viewtixianzh).offset(-10);
     }];
     
-    
+    /*
     NSMutableAttributedString *noteStr = [[NSMutableAttributedString alloc]initWithString:@"还未绑定提现微信账户哦，点击授权"];
     [noteStr addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(0, noteStr.string.length)];
     [noteStr addAttribute:NSForegroundColorAttributeName value:RGB(255, 36, 36) range:NSMakeRange(0, noteStr.string.length)];
@@ -226,7 +310,7 @@
         make.top.equalTo(viewtixianzh.mas_bottom).offset(20);
         make.height.offset(50);
     }];
-    [btshouquan setHidden:YES];
+    [btshouquan setHidden:NO];
     [btshouquan addTarget:self action:@selector(shouquanAction) forControlEvents:UIControlEventTouchUpInside];
     
     ///
@@ -238,16 +322,45 @@
         make.height.offset(50);
     }];
     [self drawtxAccount:viewacItem];
+    [viewacItem setHidden:YES];
     
     
+    */
+    
+    fieldname = [[UITextField alloc] init];
+    [fieldname setTextColor:RGB(30, 30, 30)];
+    [fieldname setTextAlignment:NSTextAlignmentLeft];
+    [fieldname setFont:[UIFont systemFontOfSize:14]];
+    [fieldname setBackgroundColor:RGB(245, 245, 245)];
+    [fieldname setPlaceholder:@"支付宝收款人姓名"];
+    [view addSubview:fieldname];
+    [fieldname mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.offset(15);
+        make.top.equalTo(viewtixianzh.mas_bottom).offset(10);
+        make.right.equalTo(view).offset(-15);
+        make.height.offset(50*kScale);
+    }];
+    
+    fieldaccount = [[UITextField alloc] init];
+    [fieldaccount setTextColor:RGB(30, 30, 30)];
+    [fieldaccount setTextAlignment:NSTextAlignmentLeft];
+    [fieldaccount setFont:[UIFont systemFontOfSize:14]];
+    [fieldaccount setBackgroundColor:RGB(245, 245, 245)];
+    [fieldaccount setPlaceholder:@"支付宝收款账号（手机号或邮箱）"];
+    [view addSubview:fieldaccount];
+    [fieldaccount mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.height.equalTo(fieldname);
+        make.top.equalTo(fieldname.mas_bottom).offset(10);
+        
+    }];
     
     [view mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(btshouquan.mas_bottom).offset(20);
+        make.bottom.equalTo(fieldaccount.mas_bottom).offset(20);
     }];
     
     
 }
-
+////微信已绑定账号
 -(void)drawtxAccount:(UIView *)view
 {
     UIImageView *imgvit = [[UIImageView alloc] init];
@@ -306,6 +419,10 @@
 -(void)dismisAction
 {
     [fieldMoney resignFirstResponder];
+    [fieldname resignFirstResponder];
+    [fieldaccount resignFirstResponder];
+    
+    
 }
 
 #pragma mark - 授权
@@ -335,10 +452,70 @@
                                     
                                 }];
 }
+
+#pragma mark - 全部提现
+-(void)alltixianAction
+{
+    [fieldMoney setText:[NSString stringWithFormat:@"%.2lf",fktxmoney]];
+}
+
 #pragma mark - 提现
 -(void)tixianAction
 {
+    if(fieldMoney.text.floatValue<0.01)
+    {
+        [MDB_UserDefault showNotifyHUDwithtext:@"请输入正确的金额" inView:self];
+        return;
+    }
+    if(fieldaccount.text.length<3)
+    {
+        [MDB_UserDefault showNotifyHUDwithtext:@"请输入支付宝收款账号" inView:self];
+        return;
+    }
+    if(fieldname.text.length<1)
+    {
+        [MDB_UserDefault showNotifyHUDwithtext:@"请输入支付宝收款姓名" inView:self];
+        return;
+    }
     
+    
+    
+    NSDictionary *dicpush = @{@"userkey":[NSString nullToString:[MDB_UserDefault defaultInstance].usertoken],
+                              @"tx_channel":@"alipay",
+                              @"money":[NSString stringWithFormat:@"%.2lf",fieldMoney.text.floatValue],
+                              @"account":[NSString nullToString:fieldaccount.text],
+                              @"real_name":[NSString nullToString:fieldname.text]
+                              };
+    [dataControl requestTiXianActionDataInView:self dicpush:dicpush Callback:^(NSError *error, BOOL state, NSString *describle) {
+        if(state)
+        {
+            [MDB_UserDefault showNotifyHUDwithtext:@"提现申请成功" inView:self];
+            [self loadData];
+        }
+        else
+        {
+            [MDB_UserDefault showNotifyHUDwithtext:describle inView:self];
+        }
+    }];
+    
+    
+    
+}
+
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if(textField.tag == 0)
+    {
+        [textField setText:[NSString stringWithFormat:@"%.2lf",textField.text.floatValue]];
+        
+        ////判断输入的金额是否符合要求
+        if(textField.text.floatValue>fktxmoney)
+        {
+            [textField setText:[NSString stringWithFormat:@"%.2lf",fktxmoney]];
+        }
+        
+    }
 }
 
 @end

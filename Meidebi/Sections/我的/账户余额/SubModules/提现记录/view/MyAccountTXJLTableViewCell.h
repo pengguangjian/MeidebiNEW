@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyAccountTXJLListModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MyAccountTXJLTableViewCell : UITableViewCell
+
+@property (nonatomic, retain) MyAccountTXJLModel *model;
+
+@property (nonatomic , assign) BOOL ishidenline;
 
 @end
 

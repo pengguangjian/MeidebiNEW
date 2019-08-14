@@ -8,9 +8,19 @@
 
 #import "MyAccountOrderListTableViewCell.h"
 
+#import "MDB_UserDefault.h"
 
 @interface MyAccountOrderListTableViewCell ()
-
+{
+    UIImageView *imgvhd;
+    
+    UILabel *lbstate0;
+    
+    UILabel *lbtitle;
+    
+    UILabel *lbstate;
+    
+}
 @end
 
 @implementation MyAccountOrderListTableViewCell
@@ -38,7 +48,7 @@
             make.edges.equalTo(self);
         }];
         
-        UIImageView *imgvhd = [[UIImageView alloc] init];
+        imgvhd = [[UIImageView alloc] init];
         [imgvhd setBackgroundColor:[UIColor grayColor]];
         [viewback addSubview:imgvhd];
         [imgvhd mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -48,7 +58,7 @@
         }];
         
         ///状态
-        UILabel *lbstate0 = [[UILabel alloc] init];
+        lbstate0 = [[UILabel alloc] init];
         [lbstate0 setTextColor:RadMenuColor];
         [lbstate0 setTextAlignment:NSTextAlignmentCenter];
         [lbstate0 setFont:[UIFont systemFontOfSize:12]];
@@ -65,13 +75,13 @@
         }];
         
         
-        UILabel *lbtitle = [[UILabel alloc] init];
+        lbtitle = [[UILabel alloc] init];
         [lbtitle setTextColor:RGB(30, 30, 30)];
         [lbtitle setTextAlignment:NSTextAlignmentLeft];
         [lbtitle setNumberOfLines:2];
         [lbtitle setFont:[UIFont systemFontOfSize:15]];
         [viewback addSubview:lbtitle];
-        [lbtitle setText:@"标题标题标题标题标题标题标题标题标题标题"];
+        [lbtitle setText:@"标题"];
         [lbtitle mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(imgvhd.mas_right).offset(15);
             make.right.equalTo(viewback).offset(-15);
@@ -79,7 +89,7 @@
             make.height.offset(40);
         }];
         
-        UILabel *lbstate = [[UILabel alloc] init];
+        lbstate = [[UILabel alloc] init];
         [lbstate setTextColor:RGB(255, 255, 255)];
         [lbstate setTextAlignment:NSTextAlignmentCenter];
         [lbstate setFont:[UIFont systemFontOfSize:13]];
@@ -97,6 +107,28 @@
         
     }
     return self;
+}
+
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    [[MDB_UserDefault defaultInstance] setViewWithImage:imgvhd url:_model.pic_url];
+    
+    if([_model.is_take_effect integerValue]==1)
+    {
+        [lbstate0 setText:@"已生效"];
+    }
+    else
+    {
+        [lbstate0 setText:@"待生效"];
+    }
+    
+    [lbtitle setText:_model.title];
+    
+    [lbstate setText:_model.status_text];
+    
+    
 }
 
 @end

@@ -14,11 +14,15 @@
 
 #import "MyAccountTXJLTableViewCell.h"
 
+#import "MyAccountTXJLDataController.h"
+
 @interface MyAccountTXJLTableViewController ()
 {
     int ipage;
     
+    NSMutableArray *arrdata;
     
+    MyAccountTXJLDataController *dataControl;
 }
 
 @property (nonatomic, strong) MDBEmptyView *emptyView;
@@ -39,28 +43,71 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"提现记录";
+    ipage = 1;
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    //    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-    //        ipage = 1;
-    //        [self loadData];
-    //    }];
-    //    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-    //        ipage++;
-    //        [self loadData];
-    //    }];
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        ipage = 1;
+        [self loadData];
+    }];
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        ipage++;
+        [self loadData];
+    }];
+
     self.tableView.estimatedRowHeight = 0;
     self.tableView.estimatedSectionHeaderHeight = 0;
     self.tableView.estimatedSectionFooterHeight = 0;
+    
+    dataControl = [MyAccountTXJLDataController new];
+    [self loadData];
+    
+}
+
+-(void)loadData
+{
+    NSDictionary *dicpush = @{@"userkey":[NSString nullToString:[MDB_UserDefault defaultInstance].usertoken],@"p":[NSString stringWithFormat:@"%d",ipage]};
+    
+    [dataControl requestTXJLInfoDataInView:self.view dicpush:dicpush Callback:^(NSError *error, BOOL state, NSString *describle) {
+        if(self.tableView.mj_header.refreshing)
+        {
+            [self.tableView.mj_header endRefreshing];
+        }
+        if(self.tableView.mj_footer.refreshing)
+        {
+            [self.tableView.mj_footer endRefreshing];
+        }
+        if(ipage==1){
+            arrdata = [NSMutableArray new];
+        }
+        if(state)
+        {
+            for(NSDictionary *dictemp in dataControl.arrresult)
+            {
+                MyAccountTXJLListModel *model  = [MyAccountTXJLListModel new];
+                [model modelValue:dictemp];
+                [arrdata addObject:model];
+            }
+            
+        }
+        
+        [self.tableView reloadData];
+        [_emptyView setHidden:YES];
+        if(arrdata.count==0)
+        {
+            [_emptyView setHidden:NO];
+        }
+    }];
     
 }
 
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return arrdata.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return section+1;
+    MyAccountTXJLListModel *model = arrdata[section];
+    return model.arrmodel.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *strcell = @"MyAccountTXJLTableViewCell";
@@ -70,6 +117,18 @@
         cell = [[MyAccountTXJLTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:strcell];
     }
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    MyAccountTXJLListModel *model = arrdata[indexPath.section];
+    
+    cell.model = model.arrmodel[indexPath.row];
+    
+    if(model.arrmodel.count == indexPath.row+1 && arrdata.count != indexPath.section+1)
+    {
+        cell.ishidenline = YES;
+    }
+    else
+    {
+        cell.ishidenline = NO;
+    }
     
     return cell;
 }
@@ -90,8 +149,10 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenW, 40)];
     [view setBackgroundColor:RGB(245, 244, 245)];
     
+    MyAccountTXJLListModel *model = arrdata[section];
+    
     UILabel *lbgjname = [[UILabel alloc] init];
-    [lbgjname setText:@"2016.06"];
+    [lbgjname setText:model.strtime];
     [lbgjname setTextAlignment:NSTextAlignmentLeft];
     [lbgjname setTextColor:RGB(150, 150, 150)];
     [lbgjname setFont:[UIFont systemFontOfSize:12]];
@@ -114,5 +175,18 @@
     
     return view;
 }
+
+#pragma mark - getter / setter
+
+- (MDBEmptyView *)emptyView{
+    if (!_emptyView) {
+        _emptyView = [[MDBEmptyView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenW, kMainScreenH-50)];
+        [self.tableView addSubview:_emptyView];
+        _emptyView.remindStr = @"暂无数据！";
+        _emptyView.hidden = YES;
+    }
+    return _emptyView;
+}
+
 
 @end

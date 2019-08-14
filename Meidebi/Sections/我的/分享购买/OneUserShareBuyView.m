@@ -13,6 +13,7 @@
 
 #import "MyAccountFLMXViewController.h"
 
+#import "OneUserShareBuyController.h"
 
 @interface OneUserShareBuyView ()<MDBwebDelegate>
 {
@@ -24,6 +25,23 @@
     
     ///字体大小
     float ffontsize;
+    
+    OneUserShareBuyController *dataControl;
+    
+    UIScrollView *scvback;
+    ///
+    UIView *viewshare;
+    
+    ///我的返利
+    UILabel *lbfanliAll;
+    ///我分享的订单
+    UILabel *lbshareAll;
+    ///等级折扣
+    UILabel *lbdjzhekou;
+    ///好友在下5单，……
+    UILabel *lbonlyBuy;
+    
+    
     
 }
 @end
@@ -54,14 +72,68 @@
         
         [self drawUI];
         
+        dataControl = [[OneUserShareBuyController alloc] init];
+        [self getdata];
     }
     return self;
+}
+
+-(void)getdata
+{
+    NSDictionary *dicpush = @{@"userkey":[NSString nullToString:[MDB_UserDefault defaultInstance].usertoken]};
+    [dataControl requestDGFanLiInfoDataInView:self dicpush:dicpush Callback:^(NSError *error, BOOL state, NSString *describle) {
+        if(state)
+        {
+            [self loadValue];
+        }
+        else
+        {
+            [MDB_UserDefault showNotifyHUDwithtext:describle inView:self];
+        }
+    }];
+}
+
+-(void)loadValue
+{
+    
+    
+    [lbfanliAll setText:[NSString nullToString:[dataControl.dicresult objectForKey:@"commission_total"]]];
+    
+    [lbdjzhekou setText:[NSString stringWithFormat:@"%@/%@",[NSString nullToString:[dataControl.dicresult objectForKey:@"grade"]],[NSString nullToString:[dataControl.dicresult objectForKey:@"carriage_discount"]]]];
+    
+    [lbonlyBuy setText:[NSString stringWithFormat:@"好友再下%@单，您可享受国际运费%@",[NSString nullToString:[[dataControl.dicresult objectForKey:@"order_again"] objectForKey:@"order_number"]],[NSString nullToString:[[dataControl.dicresult objectForKey:@"order_again"] objectForKey:@"enjoy_carriage_discount"]]]];
+    
+    [lbshareAll setText:[NSString stringWithFormat:@"%@个",[NSString nullToString:[dataControl.dicresult objectForKey:@"share_order_number"]]]];
+    ////
+    UIView *viewdengji = [[UIView alloc] init];
+    [scvback addSubview:viewdengji];
+    [viewdengji mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(viewshare);
+        make.top.equalTo(viewshare.mas_bottom).offset(10);
+    }];
+    [self drawDengji:viewdengji];
+    
+    ///
+    UIView *viewguizhe = [[UIView alloc] init];
+    [scvback addSubview:viewguizhe];
+    [viewguizhe mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(viewdengji);
+        make.top.equalTo(viewdengji.mas_bottom).offset(10);
+    }];
+    [self drawGuiZhe:viewguizhe];
+    
+    
+    [scvback mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(viewguizhe.mas_bottom).offset(20);
+    }];
+    
+    
 }
 
 -(void)drawUI
 {
     
-    UIScrollView *scvback = [[UIScrollView alloc] init];
+    scvback = [[UIScrollView alloc] init];
     [self addSubview:scvback];
     [scvback mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.bottom.equalTo(self);
@@ -92,7 +164,7 @@
     [self drawMyInfo:viewinfo];
     
     ///
-    UIView *viewshare = [[UIView alloc] init];
+    viewshare = [[UIView alloc] init];
     [scvback addSubview:viewshare];
     [viewshare mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(viewinfo);
@@ -100,28 +172,6 @@
     }];
     [self drawShareAction:viewshare];
     
-    ////
-    UIView *viewdengji = [[UIView alloc] init];
-    [scvback addSubview:viewdengji];
-    [viewdengji mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(viewshare);
-        make.top.equalTo(viewshare.mas_bottom).offset(10);
-    }];
-    [self drawDengji:viewdengji];
-    
-    ///
-    UIView *viewguizhe = [[UIView alloc] init];
-    [scvback addSubview:viewguizhe];
-    [viewguizhe mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(viewdengji);
-        make.top.equalTo(viewdengji.mas_bottom).offset(10);
-    }];
-    [self drawGuiZhe:viewguizhe];
-    
-    
-    [scvback mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(viewguizhe.mas_bottom).offset(20);
-    }];
 }
 
 #pragma mark - 我的信息
@@ -142,7 +192,7 @@
     }];
     [imgvhead.layer setMasksToBounds:YES];
     [imgvhead.layer setCornerRadius:fwidth/2.0];
-    
+    [[MDB_UserDefault defaultInstance] setViewWithImage:imgvhead url:[MDB_UserDefault defaultInstance].userphoto];
 
 //    ///
 //    UIView *viewdj = [[UIView alloc]init];
@@ -203,7 +253,7 @@
         make.bottom.equalTo(imgvhead.mas_centerY);
         make.centerX.equalTo(view);
     }];
-    [self drawmyinfoItem:viewfl andtitle:@"我的返利" andvalue:@"￥9990.00"];
+    lbfanliAll = [self drawmyinfoItem:viewfl andtitle:@"我的返利" andvalue:@"￥0.00"];
     
     
     ////
@@ -215,22 +265,23 @@
         make.bottom.equalTo(imgvhead);
         make.centerX.equalTo(view);
     }];
-    [self drawmyinfoItem:viewfxdd andtitle:@"我分享的订单" andvalue:@"9990个"];
+    lbshareAll = [self drawmyinfoItem:viewfxdd andtitle:@"我分享的订单" andvalue:@"0个"];
 
     ///
     UILabel *lbdengji  =[[UILabel alloc] init];
     [lbdengji setText:@"VIP0/10折"];
     [lbdengji setTextColor:RGB(242, 157, 135)];
-    [lbdengji setTextAlignment:NSTextAlignmentCenter];
+    [lbdengji setTextAlignment:NSTextAlignmentLeft];
     [lbdengji setFont:[UIFont boldSystemFontOfSize:ffontsize]];
     [view addSubview:lbdengji];
     [lbdengji mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(imgvhead.mas_bottom);
         make.left.equalTo(imgvhead).offset(-10);
-        make.right.equalTo(imgvhead).offset(10);
+        make.right.equalTo(imgvhead).offset(35);
         make.height.offset(20);
         
     }];
+    lbdjzhekou = lbdengji;
     
     
     UILabel *lbother  =[[UILabel alloc] init];
@@ -244,6 +295,7 @@
         make.top.equalTo(imgvhead.mas_bottom).offset(20);
         make.height.offset(20);
     }];
+    lbonlyBuy = lbother;
     
     UIButton *btshowfl = [[UIButton alloc] init];
     [btshowfl setTitle:@"查看返利明细>" forState:UIControlStateNormal];
@@ -263,7 +315,7 @@
     
 }
 
--(void)drawmyinfoItem:(UIView *)view andtitle:(NSString *)title andvalue:(NSString *)value
+-(UILabel *)drawmyinfoItem:(UIView *)view andtitle:(NSString *)title andvalue:(NSString *)value
 {
     UILabel *lbtitle  =[[UILabel alloc] init];
     [lbtitle setText:title];
@@ -291,6 +343,8 @@
     [view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(lbvalue.mas_right);
     }];
+    
+    return lbvalue;
 }
 
 #pragma mark - 分享方法
@@ -466,17 +520,42 @@
         make.height.offset(1);
     }];
     
-    NSArray *arrall = @[@[@"等级",@"运费折扣",@"个人订单量",@"分享订单量"],@[@"VIP1",@"98折",@"0",@"5"],@[@"VIP2",@"95折",@"0",@"15"],@[@"VIP3",@"88折",@"0",@"50"],@[@"VIP4",@"85折",@"0",@"100"],@[@"VIP5",@"8折",@"0",@"200"]];
+    NSMutableArray *arrall = [NSMutableArray new];
+ 
+   NSArray *arrtemp = @[@{@"grade":@"等级",@"carriage_discount":@"运费折扣",@"personal_order_number":@"个人订单量",@"popularize_order_number":@"分享订单量"}];
+    [arrall addObjectsFromArray:arrtemp];
+    
+    if([[dataControl.dicresult objectForKey:@"grade_description"] isKindOfClass:[NSArray class]])
+    {
+        NSArray *arrgrade_description = [dataControl.dicresult objectForKey:@"grade_description"];
+        [arrall addObjectsFromArray:arrgrade_description];
+    }
     
     UIView *viewilast = imgvline;
-    for(int i = 0 ; i < 6; i++)
+    for(int i = 0 ; i < arrall.count; i++)
     {
-        NSArray *arritems = arrall[i];
+        NSDictionary *dicitems = arrall[i];
         UIView *viewjlast = nil;
         for(int j = 0 ; j < 4; j++)
         {
             UILabel *lbdj = [[UILabel alloc] init];
-            [lbdj setText:arritems[j]];
+            if(j==0)
+            {
+                [lbdj setText:[dicitems objectForKey:@"grade"]];
+            }
+            else if (j==1)
+            {
+                [lbdj setText:[dicitems objectForKey:@"carriage_discount"]];
+            }
+            else if (j==2)
+            {
+                [lbdj setText:[dicitems objectForKey:@"personal_order_number"]];
+            }
+            else if (j==3)
+            {
+                [lbdj setText:[dicitems objectForKey:@"popularize_order_number"]];
+            }
+            
             if(i==0)
             {
                 [lbdj setTextColor:RGB(10, 10, 10)];
@@ -562,7 +641,8 @@
         make.top.equalTo(imgvline.mas_bottom).offset(15);
         make.height.offset(10);
     }];
-    [webview loadWebByURL:@"https://www.baidu.com/"];
+//    [webview loadWebByURL:@"https://www.baidu.com/"];
+    [webview refreshHtml:[NSString stringWithFormat:@"%@",[NSString nullToString:[dataControl.dicresult objectForKey:@"rule_description"]]]];
     [view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(webview.mas_bottom);
     }];

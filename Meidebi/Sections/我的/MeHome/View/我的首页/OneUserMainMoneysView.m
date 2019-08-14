@@ -158,7 +158,7 @@
     {
         @try {
             MDB_UserDefault *_userDefault=[MDB_UserDefault defaultInstance];
-            NSArray *arrvalue = @[@"￥3.00",@"￥3.00",@"￥20.00",_userDefault.usercoper,_userDefault.ueserContribution,_userDefault.userjifen];
+            NSArray *arrvalue = @[[NSString nullToString: _userDefault.balance],[NSString nullToString:_userDefault.commission_balance],[NSString nullToString:_userDefault.goods_coupon_balance],[NSString nullToString:_userDefault.usercoper],[NSString nullToString:_userDefault.ueserContribution],[NSString nullToString:_userDefault.userjifen]];
             ///更新信息
             for(int i = 0 ; i < arrvalue.count; i++)
             {
