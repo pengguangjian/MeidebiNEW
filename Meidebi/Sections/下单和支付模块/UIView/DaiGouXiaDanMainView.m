@@ -214,6 +214,7 @@
     
     fcarriage_discount = [[NSString nullToString:[dicvalue objectForKey:@"carriage_discount"]] floatValue]/10.0;
     
+    
     if([[dicvalue objectForKey:@"defaultaddress"] isKindOfClass:[NSDictionary class]])
     {
         addressmodel = [AddressListModel dicChangeToModel:[dicvalue objectForKey:@"defaultaddress"]];

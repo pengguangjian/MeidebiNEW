@@ -462,6 +462,9 @@
 #pragma mark - 提现
 -(void)tixianAction
 {
+    
+    
+    
     if(fieldMoney.text.floatValue<0.01)
     {
         [MDB_UserDefault showNotifyHUDwithtext:@"请输入正确的金额" inView:self];

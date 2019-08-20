@@ -24,8 +24,6 @@
 
 #import "MyOrderMainViewController.h"
 
-#import "MyAccountDataController.h"
-
 
 @interface DaiGouZhiFuViewController ()
 {
@@ -34,11 +32,6 @@
     UIButton *btnowselect;
     
     BOOL ispay;
-    
-    MyAccountDataController *dataControl;
-    UIButton *btyuebt;
-    ///有多少余额
-    float fyuemoney;
     
 }
 @end
@@ -53,21 +46,6 @@
     
     [self drawSubview];
     [self setNavBarBackBtn];
-    
-    
-    dataControl = [MyAccountDataController new];
-    NSDictionary *dicpush = @{@"userkey":[NSString nullToString:[MDB_UserDefault defaultInstance].usertoken]};
-    [dataControl requestDGAccountYEInfoDataInView:self.view dicpush:dicpush Callback:^(NSError *error, BOOL state, NSString *describle) {
-       if(state)
-       {
-           fyuemoney = [[[NSString nullToString:[dataControl.dicresult objectForKey:@"balance"]] stringByReplacingOccurrencesOfString:@"," withString:@""] floatValue];
-           UILabel *lbtemp = [btyuebt viewWithTag:10000];
-           [lbtemp setText:[NSString stringWithFormat:@"账号余额（%.2lf）",fyuemoney]];
-           
-           
-           
-       }
-    }];
     
 }
 - (void)setNavBarBackBtn{
@@ -89,7 +67,7 @@
 - (void)doClickBackAction{
     NSArray *arrvc = self.navigationController.viewControllers;
     UIViewController *vc = arrvc[arrvc.count-2];
-    if([vc isKindOfClass:[OrderDetaileViewController class]] || [vc isKindOfClass:[MyOrderMainViewController class]])
+    if([vc isKindOfClass:[OrderDetaileViewController class]])
     {
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -132,25 +110,13 @@
     [scvback setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:scvback];
     
-    
-    UIView *viewddmx = [[UIView alloc] initWithFrame:CGRectMake(0, 0, scvback.width, 50)];
-    [viewddmx setBackgroundColor:RGB(245, 244, 245)];
-    [scvback addSubview:viewddmx];
-    UILabel *lbddmx = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 150, viewddmx.height)];
-    [lbddmx setText:@"支付方式"];
-    [lbddmx setTextAlignment:NSTextAlignmentLeft];
-    [lbddmx setTextColor:RGB(20, 20, 20)];
-    [lbddmx setFont:[UIFont systemFontOfSize:14]];
-    [viewddmx addSubview:lbddmx];
-    
-    
-    NSArray *arrlist = [NSArray arrayWithObjects:@"支付宝",@"微信",@"账号余额（0.00）", nil];//@"微信",
-//    NSArray *arrimage = [NSArray arrayWithObjects:@"payzhifubao",@"payweixin",@"payweixin", nil];///@"payweixin",
+    NSArray *arrlist = [NSArray arrayWithObjects:@"支付宝",@"微信", nil];//@"微信",
+    NSArray *arrimage = [NSArray arrayWithObjects:@"payzhifubao",@"payweixin", nil];///@"payweixin",
     
     float fbottom = 0.0;
     for(int i = 0 ; i < arrlist.count; i++)
     {
-        UIButton *btitem = [self drawButton:CGRectMake(0 , viewddmx.bottom + 65*kScale*i, scvback.width, 65*kScale) andtitle:arrlist[i] andimage:@""];
+        UIButton *btitem = [self drawButton:CGRectMake(0, 75*kScale*i, scvback.width, 75*kScale) andtitle:arrlist[i] andimage:arrimage[i]];
         [btitem setTag:i];
         [btitem addTarget:self action:@selector(itemAction:) forControlEvents:UIControlEventTouchUpInside];
         [scvback addSubview:btitem];
@@ -158,17 +124,13 @@
         if(i==0)
         {
             btnowselect = btitem;
-            UIImageView *imgv = [btnowselect viewWithTag:200];
-            [imgv setImage:[UIImage imageNamed:@"zhifu_select_yes_green"]];
-        }
-        if(i==2)
-        {
-            btyuebt = btitem;
+            UIImageView *imgv = [btnowselect viewWithTag:2];
+            [imgv setImage:[UIImage imageNamed:@"wuliu_first_yes"]];
         }
     }
     
     UIView *viewlin = [[UIView alloc] initWithFrame:CGRectMake(0, fbottom,scvback.width , 10)];
-    [viewlin setBackgroundColor:RGB(255,255,255)];
+    [viewlin setBackgroundColor:RGB(241,241,241)];
     [scvback addSubview:viewlin];
     
     UIButton *btsend = [[UIButton alloc] initWithFrame:CGRectMake(23, viewlin.bottom+55, BOUNDS_WIDTH-46, 50)];
@@ -176,7 +138,7 @@
     [btsend.layer setCornerRadius:4];
     [btsend setBackgroundColor:RGB(253,122,14)];
     [btsend setTitle:@"立即支付" forState:UIControlStateNormal];
-    if([NSString nullToString:_strprice].length>0)
+    if(_strprice != nil)
     {
         if([[_strprice substringWithRange:NSMakeRange(0, 1)] isEqualToString:@"￥"])
         {
@@ -200,32 +162,33 @@
 {
     UIButton *bt = [[UIButton alloc] initWithFrame:rect];
     
-//    UIImageView *imgvlog = [[UIImageView alloc] initWithFrame:CGRectMake(20, 0, bt.height*0.4, bt.height*0.4)];
-//    [imgvlog setImage:[UIImage imageNamed:strimage]];
-//    [imgvlog setCenter:CGPointMake(0, bt.height/2.0)];
-//    [imgvlog setLeft:20];
-//    [bt addSubview:imgvlog];
-    
-    UIImageView *imgv = [[UIImageView alloc] initWithFrame:CGRectMake(27, 0, 17, 17)];
-    [imgv setImage:[UIImage imageNamed:@"yuan_select_no"]];
-    [imgv setCenter:CGPointMake(0, bt.height/2.0)];
-    [imgv setLeft:20];
-    [imgv setTag:200];
-    [bt addSubview:imgv];
     
     
-    UILabel *lbkd = [[UILabel alloc] initWithFrame:CGRectMake(imgv.right+13, 0, 250, bt.height)];
+    UIImageView *imgvlog = [[UIImageView alloc] initWithFrame:CGRectMake(20, 0, bt.height*0.4, bt.height*0.4)];
+    [imgvlog setImage:[UIImage imageNamed:strimage]];
+    [imgvlog setCenter:CGPointMake(0, bt.height/2.0)];
+    [imgvlog setLeft:20];
+    [bt addSubview:imgvlog];
+    
+    UILabel *lbkd = [[UILabel alloc] initWithFrame:CGRectMake(imgvlog.right+13, 0, 150, bt.height)];
     [lbkd setText:strtitle];
     [lbkd setTextColor:RGB(102,102,102)];
     [lbkd setTextAlignment:NSTextAlignmentLeft];
     [lbkd setFont:[UIFont systemFontOfSize:16]];
-    [lbkd setTag:10000];
     [bt addSubview:lbkd];
     
     
-//    UIView *viewlin = [[UIView alloc] initWithFrame:CGRectMake(0, bt.height-1,bt.width , 1)];
-//    [viewlin setBackgroundColor:RGB(218,218,218)];
-//    [bt addSubview:viewlin];
+    UIImageView *imgv = [[UIImageView alloc] initWithFrame:CGRectMake(27, 0, 17, 17)];
+    [imgv setImage:[UIImage imageNamed:@"yuan_select_no"]];
+    [imgv setCenter:CGPointMake(0, bt.height/2.0)];
+    [imgv setRight:bt.width-20];
+    [imgv setTag:2];
+    [bt addSubview:imgv];
+    
+    
+    UIView *viewlin = [[UIView alloc] initWithFrame:CGRectMake(0, bt.height-1,bt.width , 1)];
+    [viewlin setBackgroundColor:RGB(218,218,218)];
+    [bt addSubview:viewlin];
     
     return bt;
 }
@@ -233,29 +196,20 @@
 #pragma mark - 选择支付方式
 -(void)itemAction:(UIButton *)sender
 {
-    if(sender.tag==2)
-    {
-        if(fyuemoney<_strprice.floatValue)
-        {
-            [MDB_UserDefault showNotifyHUDwithtext:@"余额不足" inView:self.view];
-            return;
-        }
-    }
-    
     if(btnowselect!=nil)
     {
-        UIImageView *imgv = [btnowselect viewWithTag:200];
+        UIImageView *imgv = [btnowselect viewWithTag:2];
         [imgv setImage:[UIImage imageNamed:@"yuan_select_no"]];
     }
     btnowselect = sender;
-    UIImageView *imgv = [btnowselect viewWithTag:200];
-    [imgv setImage:[UIImage imageNamed:@"zhifu_select_yes_green"]];
+    UIImageView *imgv = [btnowselect viewWithTag:2];
+    [imgv setImage:[UIImage imageNamed:@"wuliu_first_yes"]];
 }
 
 #pragma mark - 提交
 -(void)sendAction
 {
-//    NSLog(@"+-+-+-:%@",[[AlipaySDK defaultService] currentVersion]);
+    //    NSLog(@"+-+-+-:%@",[[AlipaySDK defaultService] currentVersion]);
     
     if(btnowselect == nil)
     {
@@ -283,20 +237,15 @@
     
     if(btnowselect.tag == 0)
     {
-        dicpush = @{@"orderNos":strordernos,@"paytype":@"alipay",@"userkey":[NSString nullToString:[MDB_UserDefault defaultInstance].usertoken]};
+        dicpush = @{@"orderNos":strordernos,@"paytype":@"alipay",@"userkey":[MDB_UserDefault defaultInstance].usertoken};
     }
-    else if(btnowselect.tag == 1)
+    else
     {
         
-        dicpush = @{@"orderNos":strordernos,@"paytype":@"weixinpay_app",@"userkey":[NSString nullToString:[MDB_UserDefault defaultInstance].usertoken]};
+        dicpush = @{@"orderNos":strordernos,@"paytype":@"weixinpay_app",@"userkey":[MDB_UserDefault defaultInstance].usertoken};
         
     }
-    else if(btnowselect.tag == 2)
-    {
-        
-        return;
-    }
-
+    
     [HTTPManager sendGETRequestUrlToService:MyOrderZhiFuViewUrl withParametersDictionry:dicpush view:self.view completeHandle:^(NSURLSessionTask *opration, id responceObjct, NSError *error) {
         NSString *describle = @"";
         if (responceObjct==nil) {
@@ -319,16 +268,12 @@
                 {
                     [self zhifubaoPay:strdata];
                 }
-                else if(btnowselect.tag == 1)
+                else
                 {
                     
                     [self weixinPay:[dicAll objectForKey:@"data"]];
                 }
-                else if(btnowselect.tag == 2)
-                {///余额支付
-                    
-                }
-
+                
             }
             else
             {
@@ -336,11 +281,11 @@
             }
         }
     }];
-//    [[AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
-//        NSLog(@"reslut = %@",resultDic);
-//    }];
-//    PaySuccessViewController *pvc = [[PaySuccessViewController alloc] init];
-//    [self.navigationController pushViewController:pvc animated:YES];
+    //    [[AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
+    //        NSLog(@"reslut = %@",resultDic);
+    //    }];
+    //    PaySuccessViewController *pvc = [[PaySuccessViewController alloc] init];
+    //    [self.navigationController pushViewController:pvc animated:YES];
     
 }
 
@@ -511,19 +456,19 @@
         NSString *str=[[NSString alloc]initWithData:responceObjct encoding:NSUTF8StringEncoding];
         NSDictionary *dicAll=[str JSONValue];
         NSLog(@"%@",dicAll);
-//        if(error!=nil)
-//        {
-//            NSDictionary * errorInfo = error.userInfo;
-//            if ([[errorInfo allKeys] containsObject: @"com.alamofire.serialization.response.error.data"]){
-//                NSData * errorData = errorInfo[@"com.alamofire.serialization.response.error.data"];
-//                NSString *strtemp = [[NSString alloc] initWithData:errorData encoding:NSUTF8StringEncoding];
-//                NSDictionary * errorDict =  [NSJSONSerialization JSONObjectWithData: errorData options:NSJSONReadingAllowFragments error:nil];
-//                NSNumber * errorCodeNum = errorDict[@"err_code"];
-//                NSLog(@"=====%@====", strtemp);
-//            }
+        if(error!=nil)
+        {
+            NSDictionary * errorInfo = error.userInfo;
+            if ([[errorInfo allKeys] containsObject: @"com.alamofire.serialization.response.error.data"]){
+                NSData * errorData = errorInfo[@"com.alamofire.serialization.response.error.data"];
+                NSString *strtemp = [[NSString alloc] initWithData:errorData encoding:NSUTF8StringEncoding];
+                NSDictionary * errorDict =  [NSJSONSerialization JSONObjectWithData: errorData options:NSJSONReadingAllowFragments error:nil];
+                NSNumber * errorCodeNum = errorDict[@"err_code"];
+                NSLog(@"=====%@====", strtemp);
+            }
             
             
-//        }
+        }
     }];
 }
 
@@ -587,13 +532,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

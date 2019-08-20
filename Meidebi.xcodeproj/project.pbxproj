@@ -341,6 +341,7 @@
 		7766284A222FC65C006E4D99 /* icon1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 77662843222FC658006E4D99 /* icon1024.png */; };
 		7766284B222FC65C006E4D99 /* 58.png in Resources */ = {isa = PBXBuildFile; fileRef = 77662844222FC65A006E4D99 /* 58.png */; };
 		7766284C222FC65C006E4D99 /* icon120.png in Resources */ = {isa = PBXBuildFile; fileRef = 77662845222FC65C006E4D99 /* icon120.png */; };
+		7766390B23050356004365EB /* MDBPayAlterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7766390A23050356004365EB /* MDBPayAlterView.m */; };
 		7766CFBC215C6E0F00591D4E /* DaiGouHomeDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7766CF74215C6E0C00591D4E /* DaiGouHomeDataController.m */; };
 		7766CFBD215C6E0F00591D4E /* DaiGouHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7766CF77215C6E0C00591D4E /* DaiGouHomeViewController.m */; };
 		7766CFBE215C6E0F00591D4E /* DaiGouSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7766CF79215C6E0C00591D4E /* DaiGouSearchViewController.m */; };
@@ -1753,6 +1754,8 @@
 		77662843222FC658006E4D99 /* icon1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1024.png; sourceTree = "<group>"; };
 		77662844222FC65A006E4D99 /* 58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 58.png; sourceTree = "<group>"; };
 		77662845222FC65C006E4D99 /* icon120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon120.png; sourceTree = "<group>"; };
+		7766390923050356004365EB /* MDBPayAlterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MDBPayAlterView.h; sourceTree = "<group>"; };
+		7766390A23050356004365EB /* MDBPayAlterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MDBPayAlterView.m; sourceTree = "<group>"; };
 		7766CF73215C6E0C00591D4E /* DaiGouHomeDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DaiGouHomeDataController.h; sourceTree = "<group>"; };
 		7766CF74215C6E0C00591D4E /* DaiGouHomeDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DaiGouHomeDataController.m; sourceTree = "<group>"; };
 		7766CF76215C6E0C00591D4E /* DaiGouHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DaiGouHomeViewController.h; sourceTree = "<group>"; };
@@ -5016,6 +5019,8 @@
 				77826F2922D5C82A006C4BFE /* MyAccountBalanceView.m */,
 				77826F2E22D5D025006C4BFE /* MyAccountCashWView.h */,
 				77826F2F22D5D025006C4BFE /* MyAccountCashWView.m */,
+				7766390923050356004365EB /* MDBPayAlterView.h */,
+				7766390A23050356004365EB /* MDBPayAlterView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -8776,6 +8781,7 @@
 				77C37B261F1DE47B00DDEED0 /* RegCodeDataController.m in Sources */,
 				771933401EC19B3000B87C6D /* ProductInfoDataController.m in Sources */,
 				7770571A1CAA73EF00ECF95A /* shotScreenModel.m in Sources */,
+				7766390B23050356004365EB /* MDBPayAlterView.m in Sources */,
 				77743B4D222E768900A82034 /* ZheXianTuView.m in Sources */,
 				77EB84511F4C33360085ADB3 /* SpecicalIndexViewController.m in Sources */,
 				77143CF322CF59310020639E /* OneUserMainMoneysView.m in Sources */,

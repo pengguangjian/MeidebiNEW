@@ -35,7 +35,7 @@
 #import "ZLJFeaturesGuideView.h"
 //#import "JoinInActivityViewController.h"
 
-//#import "OneUserView.h"
+#import "OneUserView.h"
 
 #import <YWFeedbackFMWK/YWFeedbackKit.h>
 #import <YWFeedbackFMWK/YWFeedbackViewController.h>
@@ -51,16 +51,15 @@
 
 #import "WoGuanZhuMainViewController.h"
 
-#import "OneUserMainView.h"
-
 static NSString * const kAliFeedbackAppKey = @"23342874";
 
 @interface OneUserViewController ()
+<OneUserViewDelegate>
 
 @property (nonatomic, strong) YWFeedbackKit *feedbackKit;
 @property (nonatomic ,strong) UIView *leftRemindV;
 @property (nonatomic ,strong) UIView *rightrRemindV;
-@property (nonatomic ,strong) OneUserMainView *subView;
+@property (nonatomic ,strong) OneUserView *subView;
 @property (nonatomic ,strong) NSString *commentnum;
 @property (nonatomic ,strong) NSString *zannum;
 @property (nonatomic ,strong) NSString *ordernum;
@@ -84,53 +83,44 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
     
     
     
-//    
-//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://p.mdbimg.com/share_201805_5aea6c13d7fc1hisqzm.jpg-dpdisplay1"]]];
-//    NSError *error;
-//    
-//    NSURLResponse *response = nil;
-//    
-//    NSData *datat = [NSURLConnection sendSynchronousRequest:request
-//                     
-//                                          returningResponse:&response
-//                     
-//                                                      error:&error];
-//    
-//    NSLog(@"%@",error);
-//    
-//    NSString *strtemp = [[NSString alloc] initWithData:datat encoding:CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8)];
-//    
-//    if(strtemp == nil)
-//    {
-//        strtemp = [[NSString alloc] initWithData:datat encoding:CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000)];
-//    }
-
+    
+    //
+    //    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://p.mdbimg.com/share_201805_5aea6c13d7fc1hisqzm.jpg-dpdisplay1"]]];
+    //    NSError *error;
+    //
+    //    NSURLResponse *response = nil;
+    //
+    //    NSData *datat = [NSURLConnection sendSynchronousRequest:request
+    //
+    //                                          returningResponse:&response
+    //
+    //                                                      error:&error];
+    //
+    //    NSLog(@"%@",error);
+    //
+    //    NSString *strtemp = [[NSString alloc] initWithData:datat encoding:CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8)];
+    //
+    //    if(strtemp == nil)
+    //    {
+    //        strtemp = [[NSString alloc] initWithData:datat encoding:CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000)];
+    //    }
+    
     
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
-    self.navigationController.navigationBarHidden = YES;
-//    [self.navigationController.navigationBar setBarTintColor:[UIColor clearColor]];
-    
     if ([MDB_UserDefault getIsLogin]&&[MDB_UserDefault defaultInstance].usertoken!=nil) {
         [self getUserCont];
     }else{
         [MDB_UserDefault setNeedPhoneStatue:YES];
-        [self.subView loadViewUI];
-        
+        [self.subView layoutViewWithlogout];
     }
     [self fetchUnreadCount];
-    
-    
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = NO;
-//    [self.navigationController.navigationBar setBarTintColor:[UIColor whiteColor]];
     [GMDCircleLoader hideFromView:self.view animated:YES];
 }
 
@@ -194,7 +184,7 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
         mybrokenews.zannum = _zannum;
         mybrokenews.orderunm = _ordernum;
         [self.navigationController pushViewController:mybrokenews animated:YES];
-
+        
     }else{
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
                                                             message:@"请登录后再试"
@@ -203,7 +193,7 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
                                                   otherButtonTitles:@"登录",@"取消", nil];
         [alertView setTag:111];
         [alertView show];
-
+        
     }
     
 }
@@ -214,13 +204,20 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
 }
 
 - (void)setSubView{
-    
-    _subView = [[OneUserMainView alloc] init];
-    [self.view addSubview:_subView];
-    [_subView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
+    OneUserView *subView = [[OneUserView alloc] init];
+    subView.delegate = self;
+    [self.view addSubview:subView];
+    [subView mas_makeConstraints:^(MASConstraintMaker *make) {
+        if (@available(iOS 11.0, *)) {
+            make.top.equalTo(self.view.mas_safeAreaLayoutGuideTop);
+            make.left.equalTo(self.view.mas_safeAreaLayoutGuideLeft);
+            make.right.equalTo(self.view.mas_safeAreaLayoutGuideRight);
+            make.bottom.equalTo(self.view.mas_safeAreaLayoutGuideBottom);
+        }else{
+            make.edges.equalTo(self.view);
+        }
     }];
-    
+    _subView = subView;
 }
 
 #pragma mark - OneUserViewDelegate
@@ -242,7 +239,7 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
         [alertView show];
         
     }
-     
+    
     
 }
 
@@ -272,7 +269,7 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
             [MDB_UserDefault showNotifyHUDwithtext:title inView:self.view];
         }
     }];
-
+    
 }
 
 - (void)pushToPushSetingViewControoler:(UIViewController *)targatVc{
@@ -281,17 +278,17 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
 
 - (void)clickToViewController:(UIViewController *)Vc{
     if ([Vc isKindOfClass:[VKLoginViewController class]]) {
-//        VKLoginViewController *vkVc = (VKLoginViewController *)Vc;
-//        vkVc.LoginViewDidConfi = ^() {
-//            OneUserView *subView = [[OneUserView alloc] init];
-//            subView.delegate = self;
-//            [self.view addSubview:subView];
-//            [subView mas_makeConstraints:^(MASConstraintMaker *make) {
-//                make.left.right.bottom.equalTo(self.view);
-//                make.top.equalTo(self.view).offset(64);
-//            }];
-//            _subView = subView;
-//        };
+        //        VKLoginViewController *vkVc = (VKLoginViewController *)Vc;
+        //        vkVc.LoginViewDidConfi = ^() {
+        //            OneUserView *subView = [[OneUserView alloc] init];
+        //            subView.delegate = self;
+        //            [self.view addSubview:subView];
+        //            [subView mas_makeConstraints:^(MASConstraintMaker *make) {
+        //                make.left.right.bottom.equalTo(self.view);
+        //                make.top.equalTo(self.view).offset(64);
+        //            }];
+        //            _subView = subView;
+        //        };
     }
     [self.navigationController pushViewController:Vc animated:YES];
 }
@@ -318,7 +315,7 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
         UIStoryboard *OnesStroy=[UIStoryboard storyboardWithName:@"Oneself" bundle:nil];
         MyBrokeNewsViewController *mybrokenews=[OnesStroy instantiateViewControllerWithIdentifier:@"com.mdb.MyBrokeNewsViewC"];
         [self.navigationController pushViewController:mybrokenews animated:YES];
-
+        
     }else if (btn.tag == 104){
         [MobClick event:@"wode_youhuiquan"];
         UIStoryboard *OnesStroy=[UIStoryboard storyboardWithName:@"Oneself" bundle:nil];
@@ -328,39 +325,39 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
 }
 
 - (void)subjectViewShowGuideElementRects:(NSArray *)rects{
-//    NSMutableArray *frames = [NSMutableArray arrayWithArray:rects];
-//    [frames addObject:[NSValue valueWithCGRect:CGRectMake(kMainScreenW-66, 26, 63, 30)]];
-//    if ([MDB_UserDefault getIsLogin]) {
-//        _showGuideElementRects = rects;
-//    }else{
-//        NSArray *tips = @[@"爆料入口在这里哦~",
-//                          @"我的消息和评论搬到这里了~"];
-//        [ZLJFeaturesGuideView showGuideViewWithRects:frames.mutableCopy tips:tips];
-//        [MDB_UserDefault setShowAppPersonalInfoGuide:YES];
-//    }
+    //    NSMutableArray *frames = [NSMutableArray arrayWithArray:rects];
+    //    [frames addObject:[NSValue valueWithCGRect:CGRectMake(kMainScreenW-66, 26, 63, 30)]];
+    //    if ([MDB_UserDefault getIsLogin]) {
+    //        _showGuideElementRects = rects;
+    //    }else{
+    //        NSArray *tips = @[@"爆料入口在这里哦~",
+    //                          @"我的消息和评论搬到这里了~"];
+    //        [ZLJFeaturesGuideView showGuideViewWithRects:frames.mutableCopy tips:tips];
+    //        [MDB_UserDefault setShowAppPersonalInfoGuide:YES];
+    //    }
 }
 
 - (void)subjectViewShowFansWithFollowGuideElementRects:(NSArray *)rects{
-//    if ([MDB_UserDefault showAppPersonalInfoGuide]) {
-//        [ZLJFeaturesGuideView showGuideViewWithRects:rects tips:@[@"这里可以查看粉丝和关注列表哦~"]];
-//        [MDB_UserDefault setShowAppPersonalInfoFansGuide:YES];
-//    }else{
-//        NSMutableArray *rect = [NSMutableArray arrayWithArray:_showGuideElementRects];
-//        [rect insertObject:rects.firstObject atIndex:1];
-//        NSArray *tips = @[@"爆料入口在这里哦~",
-//                          @"这里可以查看粉丝和关注列表哦~",
-//                          @"我的消息和评论搬到这里了~"];
-//        [ZLJFeaturesGuideView showGuideViewWithRects:rect.mutableCopy tips:tips];
-//        [MDB_UserDefault setShowAppPersonalInfoGuide:YES];
-//        [MDB_UserDefault setShowAppPersonalInfoFansGuide:YES];
-//    }
+    //    if ([MDB_UserDefault showAppPersonalInfoGuide]) {
+    //        [ZLJFeaturesGuideView showGuideViewWithRects:rects tips:@[@"这里可以查看粉丝和关注列表哦~"]];
+    //        [MDB_UserDefault setShowAppPersonalInfoFansGuide:YES];
+    //    }else{
+    //        NSMutableArray *rect = [NSMutableArray arrayWithArray:_showGuideElementRects];
+    //        [rect insertObject:rects.firstObject atIndex:1];
+    //        NSArray *tips = @[@"爆料入口在这里哦~",
+    //                          @"这里可以查看粉丝和关注列表哦~",
+    //                          @"我的消息和评论搬到这里了~"];
+    //        [ZLJFeaturesGuideView showGuideViewWithRects:rect.mutableCopy tips:tips];
+    //        [MDB_UserDefault setShowAppPersonalInfoGuide:YES];
+    //        [MDB_UserDefault setShowAppPersonalInfoFansGuide:YES];
+    //    }
 }
 
 
 
 -(void)getUserCont{
     [GMDCircleLoader setOnView:self.view withTitle:nil animated:YES];
-    NSDictionary *dic=@{@"userkey":[NSString nullToString:[MDB_UserDefault defaultInstance].usertoken],
+    NSDictionary *dic=@{@"userkey":[MDB_UserDefault defaultInstance].usertoken,
                         @"type":@"1"
                         };
     [HTTPManager sendRequestUrlToService:URL_usercenter withParametersDictionry:dic view:nil completeHandle:^(NSURLSessionTask *opration, id responceObjct, NSError *error) {
@@ -370,15 +367,11 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
             NSDictionary *dicAll=[str JSONValue];
             if ([[dicAll objectForKey:@"status"]intValue] == 1) {
                 if ([dicAll objectForKey: @"data"]&&[[dicAll objectForKey:@"data"]isKindOfClass:[NSDictionary class]]) {
-                    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"telphone"]] forKey:@"cn.com.meidebi.www.user_telphone_key"];
-                    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"emailcomfirm"]] forKey:@"cn.com.meidebi.www.user_emailcomfirm_key"];
-                    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"username"]] forKey:@"cn.com.meidebi.www.user_name_key"];
-                    
-                    [[MDB_UserDefault defaultInstance]setisSignyes:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"isSign"]] coper:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"copper"]] name: [NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"name"]] nickName: [NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"nickname"]] coin:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"coins"]] fans:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"fansNum"]] follow:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"followNum"]] contribution:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"contribution"]] content:nil userPhoto:[[dicAll objectForKey:@"data"] objectForKey:@"headImgUrl"] userID:[[dicAll objectForKey:@"data"] objectForKey:@"userid"] balance:[[dicAll objectForKey:@"data"] objectForKey:@"balance"] commission_balance:[[dicAll objectForKey:@"data"] objectForKey:@"reward_balance"] goods_coupon_balance:[[dicAll objectForKey:@"data"] objectForKey:@"goods_coupon_balance"]];
+                    [[MDB_UserDefault defaultInstance]setisSignyes:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"isSign"]] coper:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"copper"]] name: [NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"name"]] nickName: [NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"nickname"]] coin:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"coins"]] fans:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"fansNum"]] follow:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"followNum"]] contribution:[NSString stringWithFormat:@"%@",[[dicAll objectForKey:@"data"] objectForKey:@"contribution"]] content:nil userPhoto:[[dicAll objectForKey:@"data"] objectForKey:@"headImgUrl"] userID:[[dicAll objectForKey:@"data"] objectForKey:@"userid"] balance:@"" commission_balance:@"" goods_coupon_balance:@""];
                 }
-                
                 needPhone = [NSString nullToString:dicAll[@"data"][@"needPhone"]].integerValue;
                 [MDB_UserDefault setNeedPhoneStatue:needPhone==1?YES:NO];
+                _subView.needPhone = needPhone;
                 if ([[[dicAll objectForKey:@"data"] objectForKey:@"messagenum"] integerValue] >= 1 ||
                     [[[dicAll objectForKey:@"data"] objectForKey:@"votenum"] integerValue] >= 1 ||
                     [[[dicAll objectForKey:@"data"] objectForKey:@"commentnum"] integerValue] >= 1||
@@ -395,39 +388,32 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
                 _zannum = [[dicAll objectForKey:@"data"] objectForKey:@"votenum"];
                 _ordernum = [[dicAll objectForKey:@"data"] objectForKey:@"ordernum"];
                 
-                [[NSUserDefaults standardUserDefaults] setObject:[NSString nullToString:_commentnum] forKey:@"commentnum"];
-                [[NSUserDefaults standardUserDefaults] setObject:[NSString nullToString:_zannum] forKey:@"votenum"];
-                [[NSUserDefaults standardUserDefaults] setObject:[NSString nullToString:_ordernum] forKey:@"ordernum"];
-                
-                
                 NSString *strmessag = [[dicAll objectForKey:@"data"] objectForKey:@"messagenum"];
-                
-                [[NSUserDefaults standardUserDefaults] setObject:[NSString nullToString:strmessag] forKey:@"messagenum"];
                 
                 int itemo = _commentnum.intValue+_zannum.intValue+strmessag.intValue+_ordernum.intValue;
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbarnumessagenum" object:[NSString nullToString:[NSString stringWithFormat:@"%d",itemo]]];
                 
-
+                
             }
         }
-        
-        
-        
-        [self.subView loadViewUI];
+        [self.subView setUpheadViewData];
     }];
 }
 
 #pragma mark -///降价通知
 -(void)jiangjiatongzhiAction
 {
+//    JiangJiaTongZhiTableViewController *tvc = [[JiangJiaTongZhiTableViewController alloc] init];
+//    [self.navigationController pushViewController:tvc animated:YES];
     WoGuanZhuMainViewController *tvc = [[WoGuanZhuMainViewController alloc] init];
     [self.navigationController pushViewController:tvc animated:YES];
+    
     
 }
 /** 查询未读数 */
 - (void)fetchUnreadCount {
-//    __weak typeof(self) weakSelf = self;
+    //    __weak typeof(self) weakSelf = self;
     [self.feedbackKit getUnreadCountWithCompletionBlock:^(NSInteger unreadCount, NSError *error) {
         unreadCountStr = nil;
         if (error == nil) {
@@ -438,8 +424,8 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
             NSString *title = [error.userInfo objectForKey:@"msg"]?:@"接口调用失败，请保持网络通畅！";
             NSLog(@"%@",title);
         }
-//        NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:2];
-//        [weakSelf.tableview reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+        //        NSIndexSet *indexSet = [[NSIndexSet alloc]initWithIndex:2];
+        //        [weakSelf.tableview reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
     }];
 }
 
@@ -721,14 +707,14 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
 //}
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-     if(alertView.tag==111||alertView.tag==110 || alertView.tag == 120 || alertView.tag == 111){
+    if(alertView.tag==111||alertView.tag==110 || alertView.tag == 120 || alertView.tag == 111){
         if (buttonIndex==0) {
             if(alertView.tag == 120) [MDB_UserDefault setIsUserInfoLogin:YES];
             VKLoginViewController *vkVC = [[VKLoginViewController alloc] init];
             [self clickToViewController:vkVC];
         }
     }
-
+    
 }
 
 
@@ -1211,7 +1197,7 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
 //                                                          otherButtonTitles:@"登录",@"取消", nil];
 //                [alertView setTag:120];
 //                [alertView show];
-//                
+//
 //            }else{
 //                [MDB_UserDefault setIsUserInfoLogin:YES];
 //                BindingUserInfoViewController *bindingUserInfoVc = [[BindingUserInfoViewController alloc] init];
@@ -1230,7 +1216,7 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
 //        default:
 //            break;
 //    }
-//    
+//
 //}
 
 //- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
@@ -1265,7 +1251,7 @@ static NSString * const kAliFeedbackAppKey = @"23342874";
 #pragma mark - setters and getters
 - (YWFeedbackKit *)feedbackKit{
     if (!_feedbackKit) {
-      _feedbackKit = [[YWFeedbackKit alloc] initWithAppKey:kAliFeedbackAppKey];
+        _feedbackKit = [[YWFeedbackKit alloc] initWithAppKey:kAliFeedbackAppKey];
     }
     return _feedbackKit;
 }
